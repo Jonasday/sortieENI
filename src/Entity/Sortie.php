@@ -34,6 +34,23 @@ class Sortie
     #[ORM\Column(type: 'string', length: 255)]
     private $etat;
 
+    #[ORM\ManyToOne(targetEntity: Participant::class, inversedBy: 'ldtSortieOrganise')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $organisateur;
+
+    #[ORM\ManyToMany(targetEntity: Participant::class, mappedBy: 'lstSortie')]
+    private $lstParticipant;
+
+    public function __construct()
+    {
+        $this->lstParticipant = new ArrayCollection();
+    }
+
+
+
+
+
+
     #[ORM\ManyToOne(targetEntity: Campus::class, inversedBy: 'lstSortie')]
     #[ORM\JoinColumn(nullable: false)]
     private $campus;
@@ -154,4 +171,44 @@ class Sortie
 
         return $this;
     }
+
+    public function getOrganisateur(): ?Participant
+    {
+        return $this->organisateur;
+    }
+
+    public function setOrganisateur(?Participant $organisateur): self
+    {
+        $this->organisateur = $organisateur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Participant>
+     */
+    public function getLstParticipant(): Collection
+    {
+        return $this->lstParticipant;
+    }
+
+    public function addLstParticipant(Participant $lstParticipant): self
+    {
+        if (!$this->lstParticipant->contains($lstParticipant)) {
+            $this->lstParticipant[] = $lstParticipant;
+            $lstParticipant->addLstSortie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLstParticipant(Participant $lstParticipant): self
+    {
+        if ($this->lstParticipant->removeElement($lstParticipant)) {
+            $lstParticipant->removeLstSortie($this);
+        }
+
+        return $this;
+    }
+
 }

@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\LieuRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LieuRepository::class)]
@@ -34,6 +32,10 @@ class Lieu
     {
         $this->lstSortie = new ArrayCollection();
     }
+
+    #[ORM\ManyToOne(targetEntity: Ville::class, inversedBy: 'lstLieu')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $ville;
 
     public function getId(): ?int
     {
@@ -114,6 +116,18 @@ class Lieu
                 $lstSortie->setLieu(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getVille(): ?Ville
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?Ville $ville): self
+    {
+        $this->ville = $ville;
 
         return $this;
     }
