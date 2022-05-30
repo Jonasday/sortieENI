@@ -34,6 +34,14 @@ class Sortie
     #[ORM\Column(type: 'string', length: 255)]
     private $etat;
 
+    #[ORM\ManyToOne(targetEntity: Campus::class, inversedBy: 'lstSortie')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $campus;
+
+    #[ORM\ManyToOne(targetEntity: Lieu::class, inversedBy: 'lstSortie')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $lieu;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -119,6 +127,30 @@ class Sortie
     public function setEtat(string $etat): self
     {
         $this->etat = $etat;
+
+        return $this;
+    }
+
+    public function getCampus(): ?Campus
+    {
+        return $this->campus;
+    }
+
+    public function setCampus(?Campus $campus): self
+    {
+        $this->campus = $campus;
+
+        return $this;
+    }
+
+    public function getLieu(): ?Lieu
+    {
+        return $this->lieu;
+    }
+
+    public function setLieu(?Lieu $lieu): self
+    {
+        $this->lieu = $lieu;
 
         return $this;
     }
