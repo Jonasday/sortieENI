@@ -1,0 +1,32 @@
+h1 {
+    font-size: 150px;
+    margin-top: auto;
+    font-family: 'Koulen', cursive;
+    height: 250px;
+    text-align: center;
+    max-height: 150px;
+}
+
+h1:hover {
+    color: springgreen;
+}
+
+.bigLogo {
+    max-height: 150px;
+    max-width: 150px;
+}
+
+footer {
+    font-size: 20px;
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: deeppink;
+}
