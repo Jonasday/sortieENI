@@ -31,9 +31,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 255)]
     private $prenom;
-
-    #[ORM\Column(type: 'integer')]
-    private $telephone;
+    
 
     #[ORM\Column(type: 'boolean')]
     private $actif;
@@ -53,6 +51,9 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(targetEntity: Campus::class, inversedBy: 'lstParticipant')]
     #[ORM\JoinColumn(nullable: false)]
     private $campus;
+
+    #[ORM\Column(type: 'string', length: 50)]
+    private $telephone;
 
     public function getId(): ?int
     {
@@ -167,17 +168,6 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getTelephone(): ?int
-    {
-        return $this->telephone;
-    }
-
-    public function setTelephone(int $telephone): self
-    {
-        $this->telephone = $telephone;
-
-        return $this;
-    }
 
     public function isActif(): ?bool
     {
@@ -253,6 +243,18 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeLstSortie(Sortie $lstSortie): self
     {
         $this->lstSortie->removeElement($lstSortie);
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(string $telephone): self
+    {
+        $this->telephone = $telephone;
 
         return $this;
     }
