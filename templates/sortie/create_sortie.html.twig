@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ form_start(form) }}
+
+    {{ form_label(form.nom) }}
+    {{ form_widget(form.nom) }}<br>
+
+    {{ form_label(form.dateHeureDebut) }}
+    {{ form_widget(form.dateHeureDebut) }}<br>
+
+    {{ form_label(form.dateLimiteInscription) }}
+    {{ form_widget(form.dateLimiteInscription) }}<br>
+
+    {{ form_label(form.nbInscriptionsMax) }}
+    {{ form_widget(form.nbInscriptionsMax) }}<br>
+
+    {{ form_label(form.duree) }}
+    {{ form_widget(form.duree) }}<br>
+
+    {{ form_label(form.infosSortie) }}
+    {{ form_widget(form.infosSortie) }}<br>
+
+    {{ form_label(form.campus) }}
+    {{ form_widget(form.campus) }}<br>
+
+    {{ form_label(form.ville) }}
+    {{ form_widget(form.ville) }}<br>
+
+    {{ form_label(form.lieu) }}
+    {{ form_widget(form.lieu) }}<br>
+
+    <button>Enregistrer</button>
+    <button type="submit">Publier la sortie</button>
+    <button type="reset">Annuler</button>
+
+    {{ form_end(form) }}
+{% endblock %}
