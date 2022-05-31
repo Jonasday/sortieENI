@@ -30,13 +30,14 @@ class ProfilController extends AbstractController
                     ->setPassword()
                     ->setActif();
 
-        if($form->get('Enregister')->isClicked()){
+       /* if($form->get('Enregister')->isClicked()){
         $participantRepository->add($participant, true);
         echo "enregistrement effectué";
         die();
 
-    }
 
+    }*/
 
+}
 
 }
