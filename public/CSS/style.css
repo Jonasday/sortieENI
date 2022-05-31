@@ -7,8 +7,8 @@ h1 {
     max-height: 150px;
 }
 
-h1:hover {
-    color: springgreen;
+header {
+    background-color: mediumspringgreen;
 }
 
 .bigLogo {
