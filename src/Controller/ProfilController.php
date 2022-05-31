@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Participant;
+use App\Form\CreateProfileType;
 use App\Repository\ParticipantRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\Response\HttplugPromise;
@@ -12,31 +13,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProfilController extends AbstractController
 {
     #[Route('/profil', name: 'profil')]
-    public function index(): Response
+    public function modifyProfile(): Response
     {
-        return $this->render('profil/index.html.twig', [
-            'controller_name' => 'ProfilController',
-        ]);
-    }
+        $form = $this->createForm(CreateProfileType::class);
 
-//    public function addProfile (ParticipantRepository $participantRepository) : Response
-//    //public function add() : Response
-//    {
-//        $participant = new Participant();
-//        $participant->setNom()
-//                    ->setPrenom()
-//                    ->setTelephone()
-//                    ->setEmail()
-//                    ->setPassword()
-//                    ->setActif();
-//
-//        if($form->get('Enregister')->isClicked()){
-//        $participantRepository->add($participant, true);
-//        echo "enregistrement effectué";
-//        die();
-//
-//    }
-//    }
+        return $this->render('profil/createprofile.html.twig', [
+            'controller_name' => 'ProfilController',
+            'form' => $form-> createView()
+        ]);
+
+
+
+
+
+
+        }
 
 
 
