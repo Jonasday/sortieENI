@@ -34,8 +34,11 @@ class SortieController extends AbstractController
     #[Route('/modify_sortie', name: 'modify_sortie')]
     public function modifyActivity(): Response
     {
+        $form = $this->createForm(createActivityType::class);
+
         return $this->render('sortie/modify_sortie.html.twig', [
             'controller_name' => 'SortieController',
+            'form' => $form->createView()
         ]);
     }
 
