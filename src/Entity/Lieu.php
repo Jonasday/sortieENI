@@ -25,6 +25,18 @@ class Lieu
     #[ORM\Column(type: 'float')]
     private $longitude;
 
+    #[ORM\OneToMany(mappedBy: 'lieu', targetEntity: Sortie::class)]
+    private $lstSortie;
+
+    public function __construct()
+    {
+        $this->lstSortie = new ArrayCollection();
+    }
+
+    #[ORM\ManyToOne(targetEntity: Ville::class, inversedBy: 'lstLieu')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $ville;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +86,48 @@ class Lieu
     public function setLongitude(float $longitude): self
     {
         $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Sortie>
+     */
+    public function getLstSortie(): Collection
+    {
+        return $this->lstSortie;
+    }
+
+    public function addLstSortie(Sortie $lstSortie): self
+    {
+        if (!$this->lstSortie->contains($lstSortie)) {
+            $this->lstSortie[] = $lstSortie;
+            $lstSortie->setLieu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLstSortie(Sortie $lstSortie): self
+    {
+        if ($this->lstSortie->removeElement($lstSortie)) {
+            // set the owning side to null (unless already changed)
+            if ($lstSortie->getLieu() === $this) {
+                $lstSortie->setLieu(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getVille(): ?Ville
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?Ville $ville): self
+    {
+        $this->ville = $ville;
 
         return $this;
     }

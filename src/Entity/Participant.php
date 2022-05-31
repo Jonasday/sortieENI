@@ -50,6 +50,10 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
         $this->lstSortie = new ArrayCollection();
     }
 
+    #[ORM\ManyToOne(targetEntity: Campus::class, inversedBy: 'lstParticipant')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $campus;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -187,30 +191,42 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getCampus(): ?Campus
+    {
+        return $this->campus;
+    }
+
+    public function setCampus(?Campus $campus): self
+    {
+        $this->campus = $campus;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Sortie>
      */
-    public function getLstSortieOrganise(): Collection
+    public function getLdtSortieOrganise(): Collection
     {
-        return $this->lstSortieOrganise;
+        return $this->ldtSortieOrganise;
     }
 
-    public function addLstSortieOrganise(Sortie $lstSortieOrganise): self
+    public function addLdtSortieOrganise(Sortie $ldtSortieOrganise): self
     {
-        if (!$this->lstSortieOrganise->contains($lstSortieOrganise)) {
-            $this->lstSortieOrganise[] = $lstSortieOrganise;
-            $lstSortieOrganise->setOrganisateur($this);
+        if (!$this->ldtSortieOrganise->contains($ldtSortieOrganise)) {
+            $this->ldtSortieOrganise[] = $ldtSortieOrganise;
+            $ldtSortieOrganise->setOrganisateur($this);
         }
 
         return $this;
     }
 
-    public function removeLstSortieOrganise(Sortie $lstSortieOrganise): self
+    public function removeLdtSortieOrganise(Sortie $ldtSortieOrganise): self
     {
-        if ($this->lstSortieOrganise->removeElement($lstSortieOrganise)) {
+        if ($this->ldtSortieOrganise->removeElement($ldtSortieOrganise)) {
             // set the owning side to null (unless already changed)
-            if ($lstSortieOrganise->getOrganisateur() === $this) {
-                $lstSortieOrganise->setOrganisateur(null);
+            if ($ldtSortieOrganise->getOrganisateur() === $this) {
+                $ldtSortieOrganise->setOrganisateur(null);
             }
         }
 

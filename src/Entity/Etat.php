@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\EtatRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -18,13 +17,8 @@ class Etat
     #[ORM\Column(type: 'string', length: 255)]
     private $libelle;
 
-    #[ORM\OneToMany(mappedBy: 'lstEtat', targetEntity: Sortie::class, orphanRemoval: true)]
-    private $sortie;
-
-    public function __construct()
-    {
-        $this->sortie = new ArrayCollection();
-    }
+    #[ORM\OneToMany(mappedBy: 'etat', targetEntity: Sortie::class, orphanRemoval: true)]
+    private $lstSortie;
 
     public function getId(): ?int
     {
@@ -46,27 +40,27 @@ class Etat
     /**
      * @return Collection<int, Sortie>
      */
-    public function getSortie(): Collection
+    public function getLstSortie(): Collection
     {
-        return $this->sortie;
+        return $this->lstSortie;
     }
 
-    public function addSortie(Sortie $sortie): self
+    public function addLstSortie(Sortie $lstSortie): self
     {
-        if (!$this->sortie->contains($sortie)) {
-            $this->sortie[] = $sortie;
-            $sortie->setLstEtat($this);
+        if (!$this->lstSortie->contains($lstSortie)) {
+            $this->lstSortie[] = $lstSortie;
+            $lstSortie->setEtat($this);
         }
 
         return $this;
     }
 
-    public function removeSortie(Sortie $sortie): self
+    public function removeLstSortie(Sortie $lstSortie): self
     {
-        if ($this->sortie->removeElement($sortie)) {
+        if ($this->lstSortie->removeElement($lstSortie)) {
             // set the owning side to null (unless already changed)
-            if ($sortie->getLstEtat() === $this) {
-                $sortie->setLstEtat(null);
+            if ($lstSortie->getEtat() === $this) {
+                $lstSortie->setEtat(null);
             }
         }
 
