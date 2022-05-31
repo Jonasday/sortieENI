@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}} - Nouveau titre{% endblock %}
+
+
+    <h1>Mon profil</h1>
+
+    {% block body %}
+        {{form_start(form)}}
+            {{ form_label(form.pseudo) }}
+            {{ form_widget(form.pseudo) }}
+
+            {{ form_label(form.prenom) }}
+            {{form_widget(form.prenom) }}
+
+            {{ form_label(form.nom)}}
+            {{form_widget(form.nom)}}
+
+            {{form_label(form.telephone)}}
+            {{form_widget(form.teléphone)}}
+
+            {{form_label(form.email)}}
+            {{form_widget(form.email)}}
+
+            {{form_label(form.motdepasse)}}
+            {{form_widget(form.motdepasse)}}
+
+            {{form_label(form.confirmation)}}
+            {{form_widget(form.confirmation)}}
+
+            {{form_label(form.campus)}}
+            {{form_widget(form.campus)}}
+
+            {{form_label(form.maphoto)}}
+            {{form_widget(form.maphoto)}}
+
+            {{ form_rest(form) }}
+            <button type="submit">Enregistrer</button>
+            <button type="submit">Annuler</button>
+        {{ form_end(form) }}
+    {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
