@@ -2,10 +2,29 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}ENI - Sortie{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
     </head>
+    <header>
+        {% block header%}
+            <img src= "{{ asset('img/SortieLogo.png')}}" alt="" class="bigLogo"/>
+
+            <h1>Sortie ENI</h1>
+
+            <nav class="nav bg-light justify-content-center">
+                {% block menu%}
+                    <a href="{{ path ('home')}}" class="nav-link text-dark">Accueil</a><br>
+                    <a href="{{ path ('profil')}}" class="nav-link text-dark">Mon profil</a><br>
+                    <a href="{{ path ('login')}}" class="nav-link text-dark">Se connecter/Se déconnecter</a><br>
+                {% endblock %}
+            </nav>
+
+        {% endblock %}
+
+    </header>
     <body>
-        {% block body %}{% endblock %}
+        {% block body %}
+
+        {% endblock %}
     </body>
 </html>

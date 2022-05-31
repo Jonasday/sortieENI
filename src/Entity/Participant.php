@@ -32,7 +32,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255)]
     private $prenom;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column( type: 'integer')]
     private $telephone;
 
     #[ORM\Column(type: 'boolean')]
