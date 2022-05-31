@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\SortieRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: SortieRepository::class)]
 class Sortie
@@ -19,7 +20,7 @@ class Sortie
     #[ORM\Column(type: 'datetime')]
     private $dateHeureDebut;
 
-    #[ORM\Column(type: 'time')]
+    #[ORM\Column(type: 'integer')]
     private $duree;
 
     #[ORM\Column(type: 'datetime')]
@@ -43,11 +44,6 @@ class Sortie
     {
         $this->lstParticipant = new ArrayCollection();
     }
-
-
-
-
-
 
     #[ORM\ManyToOne(targetEntity: Campus::class, inversedBy: 'lstSortie')]
     #[ORM\JoinColumn(nullable: false)]
@@ -90,12 +86,12 @@ class Sortie
         return $this;
     }
 
-    public function getDuree(): ?\DateTimeInterface
+    public function getDuree(): ?int
     {
         return $this->duree;
     }
 
-    public function setDuree(\DateTimeInterface $duree): self
+    public function setDuree(int $duree): self
     {
         $this->duree = $duree;
 
