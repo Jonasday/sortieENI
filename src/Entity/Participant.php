@@ -35,22 +35,18 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'integer')]
     private $telephone;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $mail;
-
-
     #[ORM\Column(type: 'boolean')]
     private $actif;
 
     #[ORM\OneToMany(mappedBy: 'organisateur', targetEntity: Sortie::class, orphanRemoval: true)]
-    private $ldtSortieOrganise;
+    private $lstSortieOrganise;
 
     #[ORM\ManyToMany(targetEntity: Sortie::class, inversedBy: 'lstParticipant')]
     private $lstSortie;
 
     public function __construct()
     {
-        $this->ldtSortieOrganise = new ArrayCollection();
+        $this->lstSortieOrganise = new ArrayCollection();
         $this->lstSortie = new ArrayCollection();
     }
 
@@ -179,18 +175,6 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getMail(): ?string
-    {
-        return $this->mail;
-    }
-
-    public function setMail(string $mail): self
-    {
-        $this->mail = $mail;
-
-        return $this;
-    }
-
     public function isActif(): ?bool
     {
         return $this->actif;
@@ -206,27 +190,27 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Sortie>
      */
-    public function getLdtSortieOrganise(): Collection
+    public function getLstSortieOrganise(): Collection
     {
-        return $this->ldtSortieOrganise;
+        return $this->lstSortieOrganise;
     }
 
-    public function addLdtSortieOrganise(Sortie $ldtSortieOrganise): self
+    public function addLstSortieOrganise(Sortie $lstSortieOrganise): self
     {
-        if (!$this->ldtSortieOrganise->contains($ldtSortieOrganise)) {
-            $this->ldtSortieOrganise[] = $ldtSortieOrganise;
-            $ldtSortieOrganise->setOrganisateur($this);
+        if (!$this->lstSortieOrganise->contains($lstSortieOrganise)) {
+            $this->lstSortieOrganise[] = $lstSortieOrganise;
+            $lstSortieOrganise->setOrganisateur($this);
         }
 
         return $this;
     }
 
-    public function removeLdtSortieOrganise(Sortie $ldtSortieOrganise): self
+    public function removeLstSortieOrganise(Sortie $lstSortieOrganise): self
     {
-        if ($this->ldtSortieOrganise->removeElement($ldtSortieOrganise)) {
+        if ($this->lstSortieOrganise->removeElement($lstSortieOrganise)) {
             // set the owning side to null (unless already changed)
-            if ($ldtSortieOrganise->getOrganisateur() === $this) {
-                $ldtSortieOrganise->setOrganisateur(null);
+            if ($lstSortieOrganise->getOrganisateur() === $this) {
+                $lstSortieOrganise->setOrganisateur(null);
             }
         }
 
