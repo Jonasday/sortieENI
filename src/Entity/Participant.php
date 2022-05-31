@@ -3,15 +3,28 @@
 namespace App\Entity;
 
 use App\Repository\ParticipantRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: ParticipantRepository::class)]
-class Participant
+class Participant implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
+
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    private $email;
+
+    #[ORM\Column(type: 'json')]
+    private $roles = [];
+
+    #[ORM\Column(type: 'string')]
+    private $password;
 
     #[ORM\Column(type: 'string', length: 255)]
     private $nom;
@@ -22,24 +35,18 @@ class Participant
     #[ORM\Column(type: 'integer')]
     private $telephone;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $mail;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private $motPasse;
-
     #[ORM\Column(type: 'boolean')]
     private $actif;
 
     #[ORM\OneToMany(mappedBy: 'organisateur', targetEntity: Sortie::class, orphanRemoval: true)]
-    private $ldtSortieOrganise;
+    private $lstSortieOrganise;
 
     #[ORM\ManyToMany(targetEntity: Sortie::class, inversedBy: 'lstParticipant')]
     private $lstSortie;
 
     public function __construct()
     {
-        $this->ldtSortieOrganise = new ArrayCollection();
+        $this->lstSortieOrganise = new ArrayCollection();
         $this->lstSortie = new ArrayCollection();
     }
 
@@ -172,30 +179,6 @@ class Participant
         return $this;
     }
 
-    public function getMail(): ?string
-    {
-        return $this->mail;
-    }
-
-    public function setMail(string $mail): self
-    {
-        $this->mail = $mail;
-
-        return $this;
-    }
-
-    public function getMotPasse(): ?string
-    {
-        return $this->motPasse;
-    }
-
-    public function setMotPasse(string $motPasse): self
-    {
-        $this->motPasse = $motPasse;
-
-        return $this;
-    }
-
     public function isActif(): ?bool
     {
         return $this->actif;
@@ -223,27 +206,27 @@ class Participant
     /**
      * @return Collection<int, Sortie>
      */
-    public function getLdtSortieOrganise(): Collection
+    public function getLstSortieOrganise(): Collection
     {
-        return $this->ldtSortieOrganise;
+        return $this->lstSortieOrganise;
     }
 
-    public function addLdtSortieOrganise(Sortie $ldtSortieOrganise): self
+    public function addLdtSortieOrganise(Sortie $lstSortieOrganise): self
     {
-        if (!$this->ldtSortieOrganise->contains($ldtSortieOrganise)) {
-            $this->ldtSortieOrganise[] = $ldtSortieOrganise;
-            $ldtSortieOrganise->setOrganisateur($this);
+        if (!$this->lstSortieOrganise->contains($lstSortieOrganise)) {
+            $this->lstSortieOrganise[] = $lstSortieOrganise;
+            $lstSortieOrganise->setOrganisateur($this);
         }
 
         return $this;
     }
 
-    public function removeLdtSortieOrganise(Sortie $ldtSortieOrganise): self
+    public function removeLstSortieOrganise(Sortie $lstSortieOrganise): self
     {
-        if ($this->ldtSortieOrganise->removeElement($ldtSortieOrganise)) {
+        if ($this->lstSortieOrganise->removeElement($lstSortieOrganise)) {
             // set the owning side to null (unless already changed)
-            if ($ldtSortieOrganise->getOrganisateur() === $this) {
-                $ldtSortieOrganise->setOrganisateur(null);
+            if ($lstSortieOrganise->getOrganisateur() === $this) {
+                $lstSortieOrganise->setOrganisateur(null);
             }
         }
 
