@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Participant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
@@ -55,6 +56,17 @@ class ParticipantRepository extends ServiceEntityRepository implements PasswordU
 
         $this->add($user, true);
     }
+
+////    Test de double authentification username
+//    public function loadUserByUsername($username)
+//    {
+//        return $this->createQueryBuilder('u')
+//            ->where('u.pseudo = :pseudo OR u.email = :email')
+//            ->setParameter('pseudo', $username)
+//            ->setParameter('email', $username)
+//            ->getQuery()
+//            ->getOneOrNullResult();
+//    }
 
 //    /**
 //     * @return Participant[] Returns an array of Participant objects

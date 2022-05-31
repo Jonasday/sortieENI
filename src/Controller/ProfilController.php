@@ -19,23 +19,25 @@ class ProfilController extends AbstractController
         ]);
     }
 
-    public function addProfile (ParticipantRepository $participantRepository) : Response
-    //public function add() : Response
-    {
-        $participant = new Participant();
-        $participant->setNom()
-                    ->setPrenom()
-                    ->setTelephone()
-                    ->setEmail()
-                    ->setPassword()
-                    ->setActif();
+//    public function addProfile (ParticipantRepository $participantRepository) : Response
+//    //public function add() : Response
+//    {
+//        $participant = new Participant();
+//        $participant->setNom()
+//                    ->setPrenom()
+//                    ->setTelephone()
+//                    ->setEmail()
+//                    ->setPassword()
+//                    ->setActif();
+//
+//        if($form->get('Enregister')->isClicked()){
+//        $participantRepository->add($participant, true);
+//        echo "enregistrement effectué";
+//        die();
+//
+//    }
+//    }
 
-        if($form->get('Enregister')->isClicked()){
-        $participantRepository->add($participant, true);
-        echo "enregistrement effectué";
-        die();
-
-    }
 
 
 

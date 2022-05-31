@@ -133,6 +133,7 @@ class AppFixtures extends Fixture
                 ->setEmail($this->faker->email)
                 ->setActif($this->faker->boolean($chanceOfGettingTrue = 50))
                 ->setCampus($this->faker->randomElement($campus))
+                    ->setPseudo($this->faker->word)
                 ->setPassword(
                     $this->hasher->hashPassword(
                         $participant,
@@ -191,6 +192,7 @@ class AppFixtures extends Fixture
                 ->setEmail("Arthur.legeas@gmail.com")
                 ->setActif($this->faker->boolean($chanceOfGettingTrue = 50))
                 ->setCampus($this->faker->randomElement($campus))
+                ->setPseudo("Arthur")
                 ->setPassword(
                     $this->hasher->hashPassword(
                         $admin,
