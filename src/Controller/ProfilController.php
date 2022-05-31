@@ -19,14 +19,6 @@ class ProfilController extends AbstractController
         ]);
     }
 
-    public function list(ParticipantRepository $participantRepository) : Response
-    {
-        $ListParticipants = $participantRepository->findAll();
-        return $this->render( , [
-            'listParticipants' => $ListParticipants,
-        ]);
-    }
-
     public function addProfile (ParticipantRepository $participantRepository) : Response
     //public function add() : Response
     {
@@ -44,7 +36,4 @@ class ProfilController extends AbstractController
 
     }
 
-    public function editProfile {
-
-    }
 }

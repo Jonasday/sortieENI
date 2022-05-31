@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SortieController extends AbstractController
 {
     # Créer une sortie
-    #[Route('/sortie', name: 'app_sortie')]
+    #[Route('/sortie', name: 'create_sortie')]
     public function createActivity(): Response
     {
         return $this->render('sortie/index.html.twig', [
@@ -18,7 +18,7 @@ class SortieController extends AbstractController
     }
 
     #Afficher une sortie
-    #[Route('/sortie', name: 'app_sortie')]
+    #[Route('/sortie', name: 'display_sortie')]
     public function displayActivity(): Response
     {
         return $this->render('sortie/index.html.twig', [
@@ -27,7 +27,7 @@ class SortieController extends AbstractController
     }
 
     #Modifier une sortie
-    #[Route('/sortie', name: 'app_sortie')]
+    #[Route('/sortie', name: 'modify_sortie')]
     public function modifyActivity(): Response
     {
         return $this->render('sortie/index.html.twig', [
@@ -36,7 +36,7 @@ class SortieController extends AbstractController
     }
 
     #Annuler une sortie
-    #[Route('/sortie', name: 'app_sortie')]
+    #[Route('/sortie', name: 'cancel_sortie')]
     public function cancelActivity(): Response
     {
         return $this->render('sortie/index.html.twig', [
