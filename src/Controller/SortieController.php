@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Commande\EtatSortieUpdate;
 use App\Form\CreateActivityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

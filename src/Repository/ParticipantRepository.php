@@ -9,6 +9,7 @@ use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @extends ServiceEntityRepository<Participant>
@@ -19,6 +20,7 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  * @method Participant[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class ParticipantRepository extends ServiceEntityRepository implements PasswordUpgraderInterface, UserLoaderInterface
+//    , UserLoaderInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -57,17 +59,6 @@ class ParticipantRepository extends ServiceEntityRepository implements PasswordU
         $this->add($user, true);
     }
 
-//    Test de double authentification username
-    public function loadUserByUsername($username)
-    {
-        return $this->createQueryBuilder('u')
-            ->where('u.pseudo = :pseudo OR u.email = :email')
-            ->setParameter('pseudo', $username)
-            ->setParameter('email', $username)
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
-
 //    /**
 //     * @return Participant[] Returns an array of Participant objects
 //     */
@@ -92,4 +83,17 @@ class ParticipantRepository extends ServiceEntityRepository implements PasswordU
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function loadUserByUsername(string $username)
+    {
+        $entityManager = $this->getEntityManager();
+
+        return $entityManager->createQuery(
+            'SELECT u
+                FROM App\Entity\Participant u
+                WHERE u.pseudo = :query
+                OR u.email = :query'
+        )
+            ->setParameter('query', $username)
+            ->getOneOrNullResult();
+    }
 }
