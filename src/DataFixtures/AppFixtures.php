@@ -181,18 +181,18 @@ class AppFixtures extends Fixture
     {
         $campus = $manager->getRepository(Campus::class)->findAll();
 
-        // Création des participants
+        // Création de jonas
 
-            $plainTextPassword = "Passw0rd";
+            $plainTextPassword = "Jonas35";
 
             $admin = new Participant();
             $admin->setPrenom($this->faker->firstName($gender = null))
                 ->setNom($this->faker->lastName)
                 ->setTelephone($this->faker->phoneNumber())
-                ->setEmail("Arthur.legeas@gmail.com")
+                ->setEmail("Jonas@gmail.com")
                 ->setActif($this->faker->boolean($chanceOfGettingTrue = 50))
                 ->setCampus($this->faker->randomElement($campus))
-                ->setPseudo("Arthur")
+                ->setPseudo("Jonas")
                 ->setPassword(
                     $this->hasher->hashPassword(
                         $admin,
@@ -200,6 +200,66 @@ class AppFixtures extends Fixture
                     ));
             $manager->persist($admin);
             $manager->flush();
+
+        // Création de Cedric
+
+        $plainTextPassword = "Cedric357";
+
+        $admin = new Participant();
+        $admin->setPrenom($this->faker->firstName($gender = null))
+            ->setNom($this->faker->lastName)
+            ->setTelephone($this->faker->phoneNumber())
+            ->setEmail("Cedric@gmail.com")
+            ->setActif($this->faker->boolean($chanceOfGettingTrue = 50))
+            ->setCampus($this->faker->randomElement($campus))
+            ->setPseudo("Cedric")
+            ->setPassword(
+                $this->hasher->hashPassword(
+                    $admin,
+                    $plainTextPassword
+                ));
+        $manager->persist($admin);
+        $manager->flush();
+
+        // Création de Arthur
+
+        $plainTextPassword = "Arthur2";
+
+        $admin = new Participant();
+        $admin->setPrenom($this->faker->firstName($gender = null))
+            ->setNom($this->faker->lastName)
+            ->setTelephone($this->faker->phoneNumber())
+            ->setEmail("Arthur@gmail.com")
+            ->setActif($this->faker->boolean($chanceOfGettingTrue = 50))
+            ->setCampus($this->faker->randomElement($campus))
+            ->setPseudo("Arthur")
+            ->setPassword(
+                $this->hasher->hashPassword(
+                    $admin,
+                    $plainTextPassword
+                ));
+        $manager->persist($admin);
+        $manager->flush();
+
+        // Création de Sylvain
+
+        $plainTextPassword = "Sylvain1";
+
+        $admin = new Participant();
+        $admin->setPrenom($this->faker->firstName($gender = null))
+            ->setNom($this->faker->lastName)
+            ->setTelephone($this->faker->phoneNumber())
+            ->setEmail("Sylvain@gmail.com")
+            ->setActif($this->faker->boolean($chanceOfGettingTrue = 50))
+            ->setCampus($this->faker->randomElement($campus))
+            ->setPseudo("SylvainLeBoss")
+            ->setPassword(
+                $this->hasher->hashPassword(
+                    $admin,
+                    $plainTextPassword
+                ));
+        $manager->persist($admin);
+        $manager->flush();
     }
 }
 
