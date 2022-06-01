@@ -32,9 +32,6 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 50)]
     private $prenom;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $pseudo;
-
     #[ORM\Column(type: 'boolean')]
     private $actif;
 
@@ -282,15 +279,4 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPseudo(): ?string
-    {
-        return $this->pseudo;
-    }
-
-    public function setPseudo(string $pseudo): self
-    {
-        $this->pseudo = $pseudo;
-
-        return $this;
-    }
 }

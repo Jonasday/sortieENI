@@ -183,7 +183,7 @@ class AppFixtures extends Fixture
 
         // Création des participants
 
-            $plainTextPassword = "Arthurle2";
+            $plainTextPassword = "Passw0rd";
 
             $admin = new Participant();
             $admin->setPrenom($this->faker->firstName($gender = null))

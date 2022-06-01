@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  * @method Participant[]    findAll()
  * @method Participant[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ParticipantRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
+class ParticipantRepository extends ServiceEntityRepository implements PasswordUpgraderInterface, UserLoaderInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -57,16 +57,16 @@ class ParticipantRepository extends ServiceEntityRepository implements PasswordU
         $this->add($user, true);
     }
 
-////    Test de double authentification username
-//    public function loadUserByUsername($username)
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->where('u.pseudo = :pseudo OR u.email = :email')
-//            ->setParameter('pseudo', $username)
-//            ->setParameter('email', $username)
-//            ->getQuery()
-//            ->getOneOrNullResult();
-//    }
+//    Test de double authentification username
+    public function loadUserByUsername($username)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.pseudo = :pseudo OR u.email = :email')
+            ->setParameter('pseudo', $username)
+            ->setParameter('email', $username)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 
 //    /**
 //     * @return Participant[] Returns an array of Participant objects
