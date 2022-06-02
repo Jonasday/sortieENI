@@ -1,38 +1,127 @@
 {% extends 'base.html.twig' %}
 
+
+{% block title%}<h1>Creer une sortie</h1>{%endblock%}
+
 {% block body %}
+    <div class="container">
     {{ form_start(form) }}
 
+        <div class="row">
+            <div class="col-md-3">
     {{ form_label(form.nom) }}
+            </div>
+            <div class="col-md-3">
     {{ form_widget(form.nom) }}<br>
+            </div>
+                <div class="col-md-3">
+                    {{ form_label(form.campus) }}
+                </div>
+        <div class="col-md-3">
+                    {{ form_widget(form.campus) }}<br>
+            <br>
+        </div>
+        </div>
 
+        <div class="row">
+            <div class="col-md-3">
     {{ form_label(form.dateHeureDebut) }}
+            </div>
+            <div class="col-md-3">
     {{ form_widget(form.dateHeureDebut) }}<br>
+            </div>
+            <div class="col-md-3">
+                {{ form_label(form.ville) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_widget(form.ville) }}<br>
+                <br>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-md-3">
     {{ form_label(form.dateLimiteInscription) }}
+            </div>
+            <div class="col-md-3">
     {{ form_widget(form.dateLimiteInscription) }}<br>
+            </div>
+            <div class="col-md-3">
+                {{ form_label(form.lieu) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_widget(form.lieu) }}<br>
+                <br>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-md-3">
     {{ form_label(form.nbInscriptionsMax) }}
+            </div>
+            <div class="col-md-3">
     {{ form_widget(form.nbInscriptionsMax) }}<br>
+            </div>
+            <div class="col-md-3">
+                {{ form_label(form.rue) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_widget(form.rue) }}<br>
+                <br>
+            </div>
+        </div>
 
+
+        <div class="row">
+            <div class="col-md-3">
     {{ form_label(form.duree) }}
+            </div>
+            <div class="col-md-3">
     {{ form_widget(form.duree) }}<br>
+            </div>
+            <div class="col-md-3">
+                {{ form_label(form.codePostal) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_widget(form.codePostal) }}<br>
+                <br>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-md-3">
     {{ form_label(form.infosSortie) }}
+            </div>
+            <div class="col-md-3">
     {{ form_widget(form.infosSortie) }}<br>
+            </div>
+            <div class="col-md-3">
+                {{ form_label(form.latitude) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_widget(form.latitude) }}<br>
+                <br>
+            </div>
+        </div>
 
-    {{ form_label(form.campus) }}
-    {{ form_widget(form.campus) }}<br>
+        <div class="row">
+            <div class="col-md-3 offset-md-6">
+                {{ form_label(form.longitude) }}
+                <div class="col-md-3 offset-md-9">
+                {{ form_widget(form.longitude) }}<br>
+                </div>
+            </div>
+        </div>
 
-    {{ form_label(form.ville) }}
-    {{ form_widget(form.ville) }}<br>
 
-    {{ form_label(form.lieu) }}
-    {{ form_widget(form.lieu) }}<br>
-
-    <button>Enregistrer</button>
-    <button type="submit">Publier la sortie</button>
-    <button type="reset">Annuler</button>
+    {%block buttons%}
+        <div class="buttons">
+        <button type="button" class="btn btn-success">Enregistrer</button>
+        <button type="submit" class="btn btn-success">Publier la sortie</button>
+        <button type="reset" class="btn btn-success">Annuler</button>
+        </div>
+    {%endblock%}
 
     {{ form_end(form) }}
+    </div>
 {% endblock %}

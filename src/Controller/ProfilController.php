@@ -15,21 +15,25 @@ class ProfilController extends AbstractController
     #[Route('/profil', name: 'profil')]
     public function modifyProfile(): Response
     {
-        $form = $this->createForm(CreateProfileType::class);
+
+        $form = $this->createForm(CreateProfileType::class, $this->getUser());
 
         return $this->render('profil/createprofile.html.twig', [
             'controller_name' => 'ProfilController',
             'form' => $form-> createView()
         ]);
 
+    }
+    #[Route('/research/{id}', 'research')]
+    public function ResearchOtherProfliles($id, ParticipantRepository $participantRepository): Response
+    {
+        $profil=$participantRepository->find($id);
 
-
-
-
-
-        }
-
-
-
+        return $this->render('profil/research_other_profiles.html.twig', [
+            'id' => $id,
+            'profil' => $profil
+        ]);
+    }
 
 }
+

@@ -1,34 +1,36 @@
 {% extends 'base.html.twig' %}
 
 
-
+    {% block title %} Mon profil {% endblock %}
 
 
     {% block body %}
+        <h2 align="center"> Mon profil</h2>
+
         {{form_start(form)}}
             {{ form_label(form.pseudo) }}
-            {{ form_widget(form.pseudo) }}
+            {{ form_widget(form.pseudo) }} </br>
 
             {{ form_label(form.prenom) }}
-            {{form_widget(form.prenom) }}
+            {{form_widget(form.prenom) }} </br>
 
             {{ form_label(form.nom)}}
-            {{form_widget(form.nom)}}
+            {{form_widget(form.nom)}} </br>
 
             {{form_label(form.telephone)}}
-            {{form_widget(form.telephone)}}
+            {{form_widget(form.telephone)}} </br>
 
             {{form_label(form.email)}}
-            {{form_widget(form.email)}}
+            {{form_widget(form.email)}} </br>
 
             {{form_label(form.password)}}
-            {{form_widget(form.password)}}
+            {{form_widget(form.password)}} </br>
 
             {{form_label(form.confirmation)}}
-            {{form_widget(form.confirmation)}}
+            {{form_widget(form.confirmation)}} </br>
 
             {{form_label(form.campus)}}
-            {{form_widget(form.campus)}}
+            {{form_widget(form.campus)}} </br>
 
 
             {{ form_rest(form) }}
