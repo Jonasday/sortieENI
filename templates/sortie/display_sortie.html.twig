@@ -1,8 +1,100 @@
 {% extends 'base.html.twig' %}
 
+{%block title%}<h1>Afficher une sortie</h1>{%endblock%}
+
 {% block body %}
-    {{ form_start(form) }}
-    {{ form_label(form.nom) }}
-    {{ form_widget(form.nom) }}
-    {{ form_end(form) }}
+    <div class="container">
+<div class="row">
+    <div class="col-md-3">
+    <p>Nom de la sortie : </p>
+    </div>
+    <div class="col-md-3">
+        <p>INPUT DU NOM</p>
+    </div>
+    <div class="col-md-3">
+        <p>Campus : </p>
+    </div>
+    <div class="col-md-3">
+        <p>INPUT DU CAMPUS</p>
+    </div>
+</div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <p>Date et heure de la sortie : </p>
+            </div>
+            <div class="col-md-3">
+                <p>INPUT DE LA DATE/HEURE</p>
+            </div>
+            <div class="col-md-3">
+                <p>Ville : </p>
+            </div>
+            <div class="col-md-3">
+                <p>INPUT DE LA VILLE</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <p>Date limite d'inscription : </p>
+            </div>
+            <div class="col-md-3">
+                <p>INPUT LIMITE D INSCRIPTION</p>
+            </div>
+            <div class="col-md-3">
+                <p>Lieu: </p>
+            </div>
+            <div class="col-md-3">
+                <p>INPUT DU LIEU</p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                <p>Nombre de places : </p>
+                </div>
+                <div class="col-md-3">
+                    <p>INPUT NB PLACES : </p>
+                </div>
+                <div class="col-md-3">
+                    <p>Rue : </p>
+                </div>
+                <div class="col-md-3">
+                    <p>INPUT DE LA RUE</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <p>Durée : </p>
+                </div>
+                <div class="col-md-3">
+                    <p>INPUT DUREE</p>
+                </div>
+                <div class="col-md-3">
+                    <p>Code Postal : </p>
+                </div>
+                <div class="col-md-3">
+                    <p>INPUT CODE POSTAL</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <p>Description et infos : </p>
+                </div>
+                <div class="col-md-3">
+                    <p>INPUT DESCRIPTION</p>
+                </div>
+                <div class="col-md-3">
+                    <p>Latitude : </p>
+                </div>
+                <div class="col-md-3">
+                    <p>INPUT LATITUDE</p>
+                </div>
+            </div>
+
+    <p>Longitude : </p>
+
+    <p>Liste des participants inscrits : </p>
+    </div>
 {% endblock %}

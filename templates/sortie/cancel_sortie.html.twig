@@ -1,8 +1,25 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}<h1>Annuler une sortie</h1>{% endblock %}
+
 {% block body %}
-    {{ form_start(form) }}
-    {{ form_label(form.nom) }}
-    {{ form_widget(form.nom) }}
-    {{ form_end(form) }}
+
+    <div class="container">
+        <div class="annuler">
+            <p>Nom de la sortie : </p>
+            <p>Date de la sortie : </p>
+            <p>Campus : </p>
+            <p>Lieu : </p>
+            <p>Motif : <textarea id="motif"></textarea></p>
+        </div>
+
+        {% block buttons %}
+            <div class="buttons">
+                <button type="button" class="btn btn-success">Enregistrer</button>
+                <button type="reset" class="btn btn-success">Annuler</button>
+            </div>
+        {% endblock %}
+
+    </div>
 {% endblock %}
+
