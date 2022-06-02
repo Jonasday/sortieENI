@@ -5,7 +5,7 @@ namespace App\Form\Model;
 use App\Entity\Campus;
 use phpDocumentor\Reflection\Types\Boolean;
 
-class Search
+class Search extends \App\Form\FiltreSortieType
 {
 
     private Campus $campus;

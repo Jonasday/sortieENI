@@ -10,4 +10,40 @@
     {{ form_row(form.motsClef) }}
     {{ form_rest(form) }}
 
+    <div class="col-md-10 offset-md-1">
+        <div class="row">
+            <table>
+
+                <thead> <!-- En-tête du tableau -->
+                <tr>
+                    <th>Nom de la sortie</th>
+                    <th>Date de la sortie</th>
+                    <th>Clôture</th>
+                    <th>Inscrits/Places</th>
+                    <th>Etat</th>
+                    <th>Inscrit</th>
+                    <th>Organisateur</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+
+                <tbody> <!-- Corps du tableau -->
+                {% for item in sorties %}
+                    <tr>
+                        <td>{{ item.nom }}</td>
+                        <td>{{ item.dateHeureDebut|date('H:i d M Y ') }}</td>
+                        <td>{{ item.dateLimiteInscription|date(' d M Y ') }}</td>
+                        <td>{{ item.lstParticipant }}/{{ item.nbInscriptionsMax }}</td>
+                        <td>{{ item.etat.libelle }}</td>
+        {#                {% if in_array({{user}}, {{ item.lstParticipant }}) %}#}
+        {#                    <td>x</td>#}
+        {#                {% endif %}#}
+                        <td>{{ item.organisateur.nom }}</td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}
