@@ -12,10 +12,10 @@ class Search extends \App\Form\FiltreSortieType
     private $motsClef;
     private $dateMin;
     private $dateMax;
-    private Boolean $sortieOrganisateur;
-    private Boolean $sortieInscrit;
-    private Boolean $sortiePasInscrit;
-    private Boolean $sortiePasse;
+    private $sortieOrganisateur;
+    private $sortieInscrit;
+    private $sortiePasInscrit;
+    private $sortiePasse;
 
     /**
      * @return Campus

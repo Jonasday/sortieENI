@@ -43,10 +43,6 @@ class EtatSortieUpdate
             $currentNbInscriptionMax = $item->getNbInscriptionsMax();
             $currentLstInscript = $item->getLstParticipant();
 
-            if ($currentEtat != "CREA" && sizeof($currentLstInscript)<$currentNbInscriptionMax && $dateDuJours <= $currentDateLimiteInscription){
-                $etatOpen = $this->etatRepository->findOneBy(['code' => 'O']);
-                $item->setEtat($etatOpen);
-            }
             if ($currentEtat != "CREA" && sizeof($currentLstInscript)>=$currentNbInscriptionMax && $dateDuJours > $currentDateLimiteInscription){
                 $etatCloturee = $this->etatRepository->findOneBy(['code' => 'CLO']);
                 $item->setEtat($etatCloturee);

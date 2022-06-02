@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Commande\EtatSortieUpdate;
+use App\Entity\Campus;
 use App\Form\FiltreSortieType;
 
 use App\Form\Model\Search;
 use App\Repository\SortieRepository;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +23,7 @@ class MainController extends AbstractController
 //        $etatSortieUpdate->update();
 
         $search = new Search();
+        $currentuser = $this->getUser();
         $form = $this->createForm(FiltreSortieType::class, $search);
 
         //Envoie de toutes les sortie par défault
@@ -30,11 +33,11 @@ class MainController extends AbstractController
         // Hydrater $search avec le retour de la requête de type POST
         $form->handleRequest($request);
 
-//On vérifi que le form est bien rempli avec les bon type etc..
+            //On vérifi que le form est bien rempli avec les bon type etc..
         if ($form->isSubmitted() && $form->isValid()){
-            //Appeler la classe et la fonction pour le filtreSortie
-            $sortieRepository->filterFormCustomQuery($search);
 
+            //Appeler la classe et la fonction pour le filtreSortie
+            $sortieArray = $sortieRepository->filterFormCustomQuery($search,$currentuser);
 
         }
 
