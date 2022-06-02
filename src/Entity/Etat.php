@@ -21,6 +21,9 @@ class Etat
     #[ORM\OneToMany(mappedBy: 'etat', targetEntity: Sortie::class, orphanRemoval: true)]
     private $lstSortie;
 
+    #[ORM\Column(type: 'string', length: 50)]
+    private $code;
+
     public function __construct()
     {
         $this->lstSortie = new ArrayCollection();
@@ -69,6 +72,18 @@ class Etat
                 $lstSortie->setEtat(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): self
+    {
+        $this->code = $code;
 
         return $this;
     }

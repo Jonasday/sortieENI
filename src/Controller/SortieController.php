@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Form\CancelActivityType;
+use App\Commande\EtatSortieUpdate;
 use App\Form\CreateActivityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,8 +26,6 @@ class SortieController extends AbstractController
     #[Route('/display_sortie', name: 'display_sortie')]
     public function displayActivity(): Response
     {
-        $form = $this->createForm(createActivityType::class);
-
         return $this->render('sortie/display_sortie.html.twig', [
             'controller_name' => 'SortieController',
         ]);
