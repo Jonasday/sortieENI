@@ -25,7 +25,7 @@ class MainController extends AbstractController
 
         //Envoie de toutes les sortie par défault
         $sortieArray = $sortieRepository->findAll();
-        $user = $this->getUser();
+
 
         // Hydrater $search avec le retour de la requête de type POST
         $form->handleRequest($request);
@@ -41,7 +41,7 @@ class MainController extends AbstractController
         return $this->render('main/index.html.twig', [
             'form' => $form->createView(),
             'sorties' => $sortieArray,
-            'user'=> $user
+
         ]);
     }
 }

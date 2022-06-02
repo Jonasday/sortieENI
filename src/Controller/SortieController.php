@@ -51,4 +51,22 @@ class SortieController extends AbstractController
             'controller_name' => 'SortieController',
         ]);
     }
+
+    #Se désister une sortie
+    #[Route('/desist_sortie', name: 'desist_sortie')]
+    public function desistActivity(): Response
+    {
+        return $this->render('main/index.html.twig', [
+            'controller_name' => 'SortieController',
+        ]);
+    }
+
+    #S'inscrire une sortie
+    #[Route('/desist_sortie', name: 'registre_sortie')]
+    public function registreToActivity(): Response
+    {
+        return $this->render('main/index.html.twig', [
+            'controller_name' => 'SortieController',
+        ]);
+    }
 }

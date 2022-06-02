@@ -24,13 +24,13 @@ class ProfilController extends AbstractController
         ]);
 
     }
-    #[Route('/research/{id}', 'research')]
+
+    #[Route('/research/{id}', name : 'profil_research')]
     public function ResearchOtherProfliles($id, ParticipantRepository $participantRepository): Response
     {
         $profil=$participantRepository->find($id);
 
         return $this->render('profil/research_other_profiles.html.twig', [
-            'id' => $id,
             'profil' => $profil
         ]);
     }

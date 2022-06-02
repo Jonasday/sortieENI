@@ -3,7 +3,7 @@
 {% block title %}{{ parent()}} - Research_other_profiles{% endblock %}
 
 {% block body %}
-<h1>Profile Research_other_profiles -{{id}}</h1>
+<h1>{{profil.pseudo}}</h1>
     <ul>
         <li>{{profil.prenom}} </li>
         <li>{{profil.nom}} </li>
@@ -11,6 +11,12 @@
         <li>{{profil.email}} </li>
         <li>{{profil.campus.nom}} </li>
     </ul>
+
+    <a href="{{ path("home") }}">
+        <input class="btn btn-success"
+               type="button"
+               value="Retour">
+    </a>
 {% endblock %}
 
 

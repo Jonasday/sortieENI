@@ -30,12 +30,15 @@ class CreateActivityType extends AbstractType
 
             ->add('dateHeureDebut', DateTimeType::class, [
                 'label' => 'Date et heure de la sortie : ',
-                'required' => true
+                'required' => true,
+                'date_widget'=>'single_text',
+                'time_widget'=>'single_text'
             ])
 
             ->add('dateLimiteInscription', DateType::class, [
                 'label' => 'Date limite d\'inscription : ',
-                'required' => true
+                'required' => true,
+                'widget' => 'single_text'
             ])
 
             ->add('nbInscriptionsMax', NumberType::class, [
