@@ -30,30 +30,37 @@ class AppFixtures extends Fixture
         // Création Etat
         $Etat1 = new Etat();
         $Etat1->setLibelle("En création");
+        $Etat1->setCode("CREA");
         $manager->persist($Etat1);
 
         $Etat2 = new Etat();
         $Etat2->setLibelle("Ouverte");
+        $Etat2->setCode("O");
         $manager->persist($Etat2);
 
         $Etat3 = new Etat();
         $Etat3->setLibelle("Clôturée");
+        $Etat3->setCode("CLO");
         $manager->persist($Etat3);
 
         $Etat4 = new Etat();
         $Etat4->setLibelle("Activité en cours");
+        $Etat4->setCode("AEC");
         $manager->persist($Etat4);
 
         $Etat5 = new Etat();
         $Etat5->setLibelle("Activité terminée");
+        $Etat5->setCode("AT");
         $manager->persist($Etat5);
 
         $Etat6 = new Etat();
         $Etat6->setLibelle("Activité historisée");
+        $Etat6->setCode("AH");
         $manager->persist($Etat6);
 
         $Etat7 = new Etat();
         $Etat7->setLibelle("Annulée");
+        $Etat6->setCode("AN");
         $manager->persist($Etat7);
 
         //Création Campus

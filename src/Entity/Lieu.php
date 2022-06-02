@@ -3,8 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\LieuRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints\Collection;
 
 #[ORM\Entity(repositoryClass: LieuRepository::class)]
 class Lieu
@@ -91,10 +93,8 @@ class Lieu
         return $this;
     }
 
-    /**
-     * @return Collection<int, Sortie>
-     */
-    public function getLstSortie(): Collection
+
+    public function getLstSortie()
     {
         return $this->lstSortie;
     }

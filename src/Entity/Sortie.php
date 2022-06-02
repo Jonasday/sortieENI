@@ -170,10 +170,8 @@ class Sortie
         return $this;
     }
 
-    /**
-     * @return Collection<int, Participant>
-     */
-    public function getLstParticipant(): Collection
+
+    public function getLstParticipant()
     {
         return $this->lstParticipant;
     }
