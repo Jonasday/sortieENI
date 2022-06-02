@@ -31,12 +31,14 @@ class FiltreSortieType extends AbstractType
             ->add('dateMin', DateTimeType::class, [
                 'label' => 'Entre le',
                 'date_widget'=>'single_text',
-                'time_widget'=>'single_text'
+                'time_widget'=>'single_text',
+                'required' => false,
             ])
             ->add('dateMax', DateTimeType::class, [
                 'label' => 'Et le',
                 'date_widget'=>'single_text',
-                'time_widget'=>'single_text'
+                'time_widget'=>'single_text',
+                'required' => false,
             ])
             ->add('sortieOrganisateur', CheckboxType::class, [
                 'label' => "Sorties dont je suis l'organisateur/trice",

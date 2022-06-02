@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\FiltreSortieType;
+use App\Form\Model\Search;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -43,25 +45,53 @@ class SortieRepository extends ServiceEntityRepository
     /**
      * @return Sortie[] Returns an array of Sortie objects
      */
-    public function filterFormCustomQuery(FiltreSortieType $form): array
+    public function filterFormCustomQuery(Search $search, $currentuser): array
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $queryBuilder = $this->createQueryBuilder('p');
+
+        if ($search->getCampus()){
+            $queryBuilder->andWhere('p.campus = :campus' )
+                    ->setParameter('campus', $search->getCampus());
+        }
+
+        if ($search->getMotsClef()){
+            $queryBuilder->andWhere('p.nom = :motclef' )
+                ->setParameter('motclef', $search->getMotsClef());
+        }
+
+        if ($search->getDateMin()){
+            $queryBuilder->andWhere('p.dateHeureDebut > :dateMin' )
+                ->setParameter('dateMin', $search->getDateMin());
+        }
+
+        if ($search->getDateMax()){
+            $queryBuilder->andWhere('p.dateHeureDebut < :dateMax' )
+                ->setParameter('dateMin', $search->getDateMax());
+        }
+
+        if ($search->isSortieOrganisateur()){
+            $queryBuilder->andWhere('p.organisateur = :user')
+                ->setParameter('user', $currentuser);
+        }
+
+        if ($search->isSortieInscrit()){
+            $queryBuilder->andWhere(':user MEMBER OF p.lstParticipant')
+                ->setParameter('user', $currentuser);
+        }
+
+        if ($search->isSortiePasInscrit()){
+            $queryBuilder->andWhere(':user NOT MEMBER OF p.lstParticipant')
+                ->setParameter('user', $currentuser);
+        }
+
+        if ($search->isSortiePasse()){
+            $etat = $queryBuilder->getEntityManager()->getRepository(EtatRepository::class)->findBy(['code' => 'CLO']);
+            $queryBuilder->andWhere('p.etat = :etat')
+                ->setParameter('etat', $etat);
+        }
+
+        $query = $queryBuilder->getQuery();
+        return $query->getResult();
     }
 
-//    public function findOneBySomeField($value): ?Sortie
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }
