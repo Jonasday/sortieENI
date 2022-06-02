@@ -5,12 +5,13 @@
 {% block body %}
 
     <div class="container">
+        {% block nomPage %}<h2>Annuler une sortie</h2>{% endblock %}
         <div class="annuler">
-            <p>Nom de la sortie : </p>
-            <p>Date de la sortie : </p>
-            <p>Campus : </p>
-            <p>Lieu : </p>
-            <p>Motif : <textarea id="motif"></textarea></p>
+            <p>Nom de la sortie : {{ sortie.nom }}</p>
+            <p>Date de la sortie : {{ sortie.dateHeureDebut|date("H:i d M y") }}</p>
+            <p>Campus : {{ sortie.Campus.nom }}</p>
+            <p>Lieu : {{ sortie.Lieu.nom }}</p>
+            <p>Motif : <textarea id="motif">{{ sortie.infosSortie }}</textarea></p>
         </div>
 
         {% block buttons %}

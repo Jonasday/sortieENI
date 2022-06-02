@@ -3,8 +3,13 @@
 namespace App\Controller;
 
 use App\Commande\EtatSortieUpdate;
+use App\Entity\Campus;
+use App\Entity\Sortie;
 use App\Form\CreateActivityType;
+use App\Repository\EtatRepository;
+use App\Repository\SortieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -12,9 +17,36 @@ class SortieController extends AbstractController
 {
     # Créer une sortie
     #[Route('/create_sortie', name: 'create_sortie')]
-    public function createActivity(): Response
+    public function createActivity(Request $request, SortieRepository $sortieRepository, EtatRepository $etatRepository): Response
     {
-        $form = $this->createForm(createActivityType::class);
+        $sortie = new Sortie();
+
+        $form = $this->createForm(createActivityType::class, $sortie);
+
+        $saveButton = $form->get('checkpoint');
+        $publishButton = $form->get('publish');
+
+        $currentuser = $sortie->setOrganisateur($this->getUser());
+        $sortie->setCampus($currentuser->getCampus());
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if ($saveButton->isClicked()) {
+                $etat = $etatRepository->findOneBy(['code' => 'CREA']);
+                $sortie->setEtat($etat);
+                $sortieRepository->add($sortie, true);
+                $this->addFlash("success", "La sortie a été enregitrée !");
+            }
+
+            if ($publishButton->isClicked()) {
+                $etat = $etatRepository->findOneBy(['code' => 'O']);
+                $sortie->setEtat($etat);
+                $sortieRepository->add($sortie, true);
+                $this->addFlash("success", "La sortie a été publiée !");
+            }
+        }
 
         return $this->render('sortie/create_sortie.html.twig', [
             'controller_name' => 'SortieController',
@@ -23,32 +55,40 @@ class SortieController extends AbstractController
     }
 
     #Afficher une sortie
-    #[Route('/display_sortie', name: 'display_sortie')]
-    public function displayActivity(): Response
+    #[Route('/display_sortie/{id}', name: 'display_sortie')]
+    public function displayActivity($id, SortieRepository $sortieRepository): Response
     {
+        $sortie = $sortieRepository->find($id);
+
         return $this->render('sortie/display_sortie.html.twig', [
-            'controller_name' => 'SortieController',
+            'id' => $id,
+            'sortie' => $sortie,
         ]);
     }
 
     #Modifier une sortie
-    #[Route('/modify_sortie', name: 'modify_sortie')]
-    public function modifyActivity(): Response
+    #[Route('/modify_sortie/{id}', name: 'modify_sortie')]
+    public function modifyActivity($id, SortieRepository $sortieRepository): Response
     {
-        $form = $this->createForm(createActivityType::class);
+        $sortie = $sortieRepository->find($id);
+        $form = $this->createForm(createActivityType::class, $sortie);
 
         return $this->render('sortie/modify_sortie.html.twig', [
             'controller_name' => 'SortieController',
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'sortie' => $sortie
         ]);
     }
 
     #Annuler une sortie
-    #[Route('/cancel_sortie', name: 'cancel_sortie')]
-    public function cancelActivity(): Response
+    #[Route('/cancel_sortie/{id}', name: 'cancel_sortie')]
+    public function cancelActivity($id, SortieRepository $sortieRepository): Response
     {
+        $sortie = $sortieRepository->find($id);
+
         return $this->render('sortie/cancel_sortie.html.twig', [
             'controller_name' => 'SortieController',
+            'sortie' => $sortie
         ]);
     }
 
@@ -69,4 +109,5 @@ class SortieController extends AbstractController
             'controller_name' => 'SortieController',
         ]);
     }
+
 }

@@ -8,9 +8,11 @@ use App\Entity\Sortie;
 use App\Entity\Ville;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -66,7 +68,8 @@ class CreateActivityType extends AbstractType
 
             ->add('ville', EntityType::class, [
                 'class' => Ville::class,
-                'choice_label' => 'nom'
+                'choice_label' => 'nom',
+                'mapped' => false
             ])
 
             ->add('lieu',EntityType::class, [
@@ -78,26 +81,34 @@ class CreateActivityType extends AbstractType
                 'class' => Lieu::class,
                 'choice_label' => 'rue',
                 'label' => 'Rue : ',
+                'mapped' => false
             ])
 
             ->add('codePostal', EntityType::class, [
                 'class' => Ville::class,
                 'choice_label' => 'codePostal',
                 'label' => 'Code Postal : ',
-
+                'mapped' => false
             ])
 
             ->add('latitude', EntityType::class, [
                 'class' => Lieu::class,
                 'choice_label' => 'latitude',
                 'label' => 'Latitude : ',
+                'mapped' => false
             ])
 
             ->add('longitude', EntityType::class, [
                 'class' => Lieu::class,
                 'choice_label' => 'longitude',
                 'label' => 'Longitude : ',
+                'mapped' => false
             ])
+
+            ->add('checkpoint', SubmitType::class)
+
+
+            ->add('publish', SubmitType::class)
 
         ;
     }
