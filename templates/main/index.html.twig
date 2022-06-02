@@ -2,4 +2,12 @@
 
 
 {% block body %}
+
+    <h2>Filtrer les sorties</h2>
+
+    {{ form_start(form) }}
+    {{ form_row(form.campus) }}
+    {{ form_row(form.motsClef) }}
+    {{ form_rest(form) }}
+
 {% endblock %}

@@ -3,20 +3,39 @@
 namespace App\Controller;
 
 use App\Commande\EtatSortieUpdate;
+use App\Form\FiltreSortieType;
+use App\Form\Model\FiltreSortie;
+use App\Form\Model\Search;
 use App\Repository\SortieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MainController extends AbstractController
 {
     #[Route('/home', name: 'home')]
-    public function home(EtatSortieUpdate $etatSortieUpdate): Response
+    public function home(Request $request, EtatSortieUpdate $etatSortieUpdate, FiltreSortie $filtreSortie): Response
     {
-        $etatSortieUpdate->update();
+        // Mise a jour des etat
+//        $etatSortieUpdate->update();
+
+        $search = new Search();
+        $form = $this->createForm(FiltreSortieType::class, $search);
+
+        // Hydrater $search avec le retour de la requête de type POST
+        $form->handleRequest($request);
+
+//On vérifi que le form est bien rempli avec les bon type etc..
+        if ($form->isSubmitted() && $form->isValid()){
+            //Appeler la classe et la fonction pour le filtreSortie
+            $filtreSortie->filtreSortie($form);
+
+
+        }
 
         return $this->render('main/index.html.twig', [
-            'controller_name' => 'MainController',
+            'form' => $form->createView()
         ]);
     }
 }

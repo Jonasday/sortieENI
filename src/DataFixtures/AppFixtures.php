@@ -28,40 +28,40 @@ class AppFixtures extends Fixture
     {
 
         // Création Etat
-        $Etat1 = new Etat();
-        $Etat1->setLibelle("En création");
-        $Etat1->setCode("CREA");
-        $manager->persist($Etat1);
+        $etat1 = new Etat();
+        $etat1->setLibelle("En création");
+        $etat1->setCode("CREA");
+        $manager->persist($etat1);
 
-        $Etat2 = new Etat();
-        $Etat2->setLibelle("Ouverte");
-        $Etat2->setCode("O");
-        $manager->persist($Etat2);
+        $etat2 = new Etat();
+        $etat2->setLibelle("Ouverte");
+        $etat2->setCode("O");
+        $manager->persist($etat2);
 
-        $Etat3 = new Etat();
-        $Etat3->setLibelle("Clôturée");
-        $Etat3->setCode("CLO");
-        $manager->persist($Etat3);
+        $etat3 = new Etat();
+        $etat3->setLibelle("Clôturée");
+        $etat3->setCode("CLO");
+        $manager->persist($etat3);
 
-        $Etat4 = new Etat();
-        $Etat4->setLibelle("Activité en cours");
-        $Etat4->setCode("AEC");
-        $manager->persist($Etat4);
+        $etat4 = new Etat();
+        $etat4->setLibelle("Activité en cours");
+        $etat4->setCode("AEC");
+        $manager->persist($etat4);
 
-        $Etat5 = new Etat();
-        $Etat5->setLibelle("Activité terminée");
-        $Etat5->setCode("AT");
-        $manager->persist($Etat5);
+        $etat5 = new Etat();
+        $etat5->setLibelle("Activité terminée");
+        $etat5->setCode("AT");
+        $manager->persist($etat5);
 
-        $Etat6 = new Etat();
-        $Etat6->setLibelle("Activité historisée");
-        $Etat6->setCode("AH");
-        $manager->persist($Etat6);
+        $etat6 = new Etat();
+        $etat6->setLibelle("Activité historisée");
+        $etat6->setCode("AH");
+        $manager->persist($etat6);
 
-        $Etat7 = new Etat();
-        $Etat7->setLibelle("Annulée");
-        $Etat6->setCode("AN");
-        $manager->persist($Etat7);
+        $etat7 = new Etat();
+        $etat7->setLibelle("Annulée");
+        $etat7->setCode("AN");
+        $manager->persist($etat7);
 
         //Création Campus
         $Campus1 = new Campus();
