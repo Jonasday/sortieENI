@@ -8,14 +8,14 @@ use phpDocumentor\Reflection\Types\Boolean;
 class Search extends \App\Form\FiltreSortieType
 {
 
-    private Campus $campus;
+    private ?Campus $campus;
     private $motsClef;
-    private $dateMin;
-    private $dateMax;
-    private $sortieOrganisateur;
-    private $sortieInscrit;
-    private $sortiePasInscrit;
-    private $sortiePasse;
+    private ?\DateTimeInterface $dateMin = null;
+    private ?\DateTimeInterface $dateMax = null;
+    private bool $sortieOrganisateur = false;
+    private bool $sortieInscrit = false;
+    private bool $sortiePasInscrit = false;
+    private bool $sortiePasse = false;
 
     /**
      * @return Campus
