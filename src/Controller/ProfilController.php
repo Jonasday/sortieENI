@@ -15,43 +15,63 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProfilController extends AbstractController
 {
     #[Route('/profil', name: 'profil')]
-    public function modifyProfile(Request $request , EntityManagerInterface $entityManager): Response
+    public function modifyProfile(Request $request, EntityManagerInterface $entityManager): Response
     {
 
         $currentParticipant = $this->getUser();
-        $form = $this->createForm(CreateProfileType::class,$currentParticipant);
+        $form = $this->createForm(CreateProfileType::class, $currentParticipant);
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $entityManager->persist($currentParticipant);
             $entityManager->flush();
             //Si formulaire valider je redirige
             return $this->redirectToRoute("home");
-
         }
 
         return $this->render('profil/createprofile.html.twig', [
             'controller_name' => 'ProfilController',
-            'form' => $form-> createView()
+            'form' => $form->createView()
         ]);
+
 
     }
 
-    #[Route('/research/{id}', name : 'profil_research')]
+    #[
+        Route('/research/{id}', name: 'profil_research')]
     public function ResearchOtherProfliles($id, ParticipantRepository $participantRepository): Response
     {
-        $profil=$participantRepository->find($id);
+        $profil = $participantRepository->find($id);
 
-        if(!$profil){
+        if (!$profil) {
             throw $this->createNotFoundException("oops");
-        }
 
+        }
         return $this->render('profil/research_other_profiles.html.twig', [
             'profil' => $profil
+
+
         ]);
     }
 
 }
+
+  public function registration(ParticipantRepository $participantRepository) : Response
+    {
+
+    $participant = new Participant();
+    $defaultPassword = "aaa000";
+
+    password_hash()
+
+
+
+        return new Participant();
+
+    }
+
+
+
 
