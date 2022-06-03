@@ -102,7 +102,7 @@ class SortieController extends AbstractController
     }
 
     #S'inscrire une sortie
-    #[Route('/desist_sortie', name: 'registre_sortie')]
+    #[Route('/registre_sortie', name: 'registre_sortie')]
     public function registreToActivity(): Response
     {
         return $this->render('main/index.html.twig', [

@@ -9,6 +9,7 @@ use App\Form\FiltreSortieType;
 use App\Form\Model\Search;
 use App\Repository\SortieRepository;
 use phpDocumentor\Reflection\Types\Boolean;
+use phpDocumentor\Reflection\Types\False_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,14 +21,22 @@ class MainController extends AbstractController
     public function home(Request $request, EtatSortieUpdate $etatSortieUpdate, SortieRepository $sortieRepository  ): Response
     {
         // Mise a jour des etat
-//        $etatSortieUpdate->update();
+        $etatSortieUpdate->update();
 
         $search = new Search();
         $currentuser = $this->getUser();
+        $search ->setCampus($currentuser->getCampus());
+        $search->setSortieOrganisateur(False);
+        $search->setSortieInscrit(False);
+        $search->setSortiePasInscrit(False);
+        $search->setSortiePasse(False);
+
+
+
         $form = $this->createForm(FiltreSortieType::class, $search);
 
         //Envoie de toutes les sortie par défault
-        $sortieArray = $sortieRepository->findAll();
+        $sortieArray = $sortieRepository->filterFormCustomQuery($search,$currentuser);
 
 
         // Hydrater $search avec le retour de la requête de type POST

@@ -3,7 +3,7 @@
 {% block title %}{{ parent()}} - Research_other_profiles{% endblock %}
 
 {% block body %}
-<h1>{{profil.pseudo}}</h1>
+<h2>{{profil.pseudo}}</h2>
     <ul>
         <li>{{profil.prenom}} </li>
         <li>{{profil.nom}} </li>
@@ -12,11 +12,13 @@
         <li>{{profil.campus.nom}} </li>
     </ul>
 
-    <a href="{{ path("home") }}">
-        <input class="btn btn-success"
-               type="button"
-               value="Retour">
-    </a>
+    <div class="col-md-2 offset-md-1">
+        <a href="{{ path("home") }}">
+            <input class="btn btn-success"
+                   type="button"
+                   value="Retour">
+        </a>
+    </div>
 {% endblock %}
 
 
