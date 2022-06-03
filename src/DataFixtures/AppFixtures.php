@@ -160,7 +160,7 @@ class AppFixtures extends Fixture
         $campus = $manager->getRepository(Campus::class)->findAll();
         $participant = $manager->getRepository(Participant::class)->findAll();
 
-            for ($x=1; $x <= 15; $x++){
+            for ($x=1; $x <= 30; $x++){
                 $sortie = new Sortie();
                 $debut = $this->faker->dateTimeBetween('-6 months');
                 $sortie->setNom($this->faker->word)
