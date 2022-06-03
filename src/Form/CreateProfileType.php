@@ -19,45 +19,43 @@ class CreateProfileType extends AbstractType
                 'label' => 'Pseudo : ',
                 'required' => true
             ])
+            ->add('prenom', TextType::class, [
+                'label' => 'Prenom :',
+                'required' => true
+            ])
+
+            ->add('telephone', TextType::class, [
+                'label' => 'Telephone :',
+                'required' => true
+            ])
+            ->add('campus', EntityType::class, [
+                'class' => Campus::class,
+                'choice_label' => 'nom'
+            ])
 
             ->add('email', TextType::class, [
-                'label' => 'email : ',
+                'label' => 'Email : ',
                 'required' => true
             ])
             //->add('roles')
             ->add('password', TextType::class, [
-                'label' => 'password : ',
+                'label' => 'Password : ',
                 'required' => true
             ])
-            ->add('confirmation',TextType::class,[
+            ->add('confirmation', TextType::class, [
                 'mapped' => false
             ])
             ->add('nom', TextType::class, [
-                'label' => 'confirmation',
+                'label' => 'Confirmation :',
                 'required' => true
-            ])
-            ->add('prenom', TextType::class, [
-                'label' => 'prenom',
-                'required' => true
-            ])
-            ->add('telephone', TextType::class, [
-                'label' => 'telephone',
-                 'required' => true
-            ])
-            ->add('actif', TextType::class, [
-                'label' => 'actif',
-                'required' => true
-            ])
-           // ->add('lstSortie')
-            ->add('campus', EntityType::class, [
-                'class' => Campus::class,
-                'choice_label' => 'nom'
-               ])
-        ;
+            ]);
+            //->add('actif')
+
+
+
     }
 
-
-
+    // ->add('lstSortie')
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
