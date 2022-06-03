@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <h2>Vous êtes désinscrit !</h2>
+        <p>Sortie : {{ sortie.nom }}</p>
+        <p>Date : {{ sortie.dateLimiteInscription|date("d M y") }}</p>
+        <p>Lieu : {{ sortie.Lieu.nom }}</p>
+        <p>Campus : {{ sortie.Campus.nom }}</p>
+
+        <button type="button" class="btn btn-success" name="home">Retourner à l'accueil</button>
+    </div>
+
+{% endblock %}
+
+
+
+

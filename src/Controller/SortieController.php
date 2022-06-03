@@ -20,31 +20,40 @@ class SortieController extends AbstractController
     public function createActivity(Request $request, SortieRepository $sortieRepository, EtatRepository $etatRepository): Response
     {
         $sortie = new Sortie();
+        $user = $this->getUser();
 
         $form = $this->createForm(createActivityType::class, $sortie);
 
-        $saveButton = $form->get('checkpoint');
-        $publishButton = $form->get('publish');
+        #Pour récupérer le bouton du twig
+        //$saveButton = $request->get('checkpoint');
+        //$publishButton = $request->get('publish');
 
-        $currentuser = $sortie->setOrganisateur($this->getUser());
-        $sortie->setCampus($currentuser->getCampus());
+        #Pour récupérer le bouton du FormType
+//        $saveButton = $form->get('checkpoint')->isClicked();
+//        $publishButton = $form->get('publish')->isClicked();
+
+        $sortie->setOrganisateur($user);
+        $sortie->setCampus($user->getCampus());
+        $sortie->addLstParticipant($user);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if ($saveButton->isClicked()) {
+            if ($form->get('checkpoint')->isClicked()) {
                 $etat = $etatRepository->findOneBy(['code' => 'CREA']);
                 $sortie->setEtat($etat);
                 $sortieRepository->add($sortie, true);
-                $this->addFlash("success", "La sortie a été enregitrée !");
             }
 
-            if ($publishButton->isClicked()) {
+            if ($form->get('publish')->isClicked()) {
                 $etat = $etatRepository->findOneBy(['code' => 'O']);
                 $sortie->setEtat($etat);
                 $sortieRepository->add($sortie, true);
-                $this->addFlash("success", "La sortie a été publiée !");
+            }
+
+            if ($form->get('cancel')->isClicked()) {
+                return $this->redirectToRoute('home');
             }
         }
 
@@ -68,16 +77,40 @@ class SortieController extends AbstractController
 
     #Modifier une sortie
     #[Route('/modify_sortie/{id}', name: 'modify_sortie')]
-    public function modifyActivity($id, SortieRepository $sortieRepository): Response
+    public function modifyActivity($id,Request $request, SortieRepository $sortieRepository, EtatRepository $etatRepository): Response
     {
         $sortie = $sortieRepository->find($id);
         $form = $this->createForm(createActivityType::class, $sortie);
 
-        return $this->render('sortie/modify_sortie.html.twig', [
-            'controller_name' => 'SortieController',
-            'form' => $form->createView(),
-            'sortie' => $sortie
-        ]);
+        $user = $this->getUser();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if ($form->get('checkpoint')->isClicked()) {
+                $etat = $etatRepository->findOneBy(['code' => 'CREA']);
+                $sortie->setEtat($etat);
+                $sortieRepository->add($sortie, true);
+            }
+
+            if ($form->get('publish')->isClicked()) {
+                $etat = $etatRepository->findOneBy(['code' => 'O']);
+                $sortie->setEtat($etat);
+                $sortieRepository->add($sortie, true);
+            }
+
+            if ($form->get('cancel')->isClicked()) {
+                return $this->redirectToRoute('home');
+            }
+
+            return $this->render('sortie/modify_sortie.html.twig', [
+                'controller_name' => 'SortieController',
+                'form' => $form->createView(),
+                'id' => $id,
+                'sortie' => $sortie
+            ]);
+        }
     }
 
     #Annuler une sortie
@@ -88,25 +121,34 @@ class SortieController extends AbstractController
 
         return $this->render('sortie/cancel_sortie.html.twig', [
             'controller_name' => 'SortieController',
+            'id' => $id,
             'sortie' => $sortie
         ]);
     }
 
     #Se désister une sortie
-    #[Route('/desist_sortie', name: 'desist_sortie')]
-    public function desistActivity(): Response
+    #[Route('/desist_sortie/{id}', name: 'desist_sortie')]
+    public function desistActivity($id, SortieRepository $sortieRepository): Response
     {
-        return $this->render('main/index.html.twig', [
+        $sortie = $sortieRepository->find($id);
+
+        return $this->render('sortie/desist_sortie.html.twig', [
             'controller_name' => 'SortieController',
+            'id' => $id,
+            'sortie' => $sortie
         ]);
     }
 
     #S'inscrire une sortie
-    #[Route('/desist_sortie', name: 'registre_sortie')]
-    public function registreToActivity(): Response
+    #[Route('/register_sortie/{id}', name: 'register_sortie')]
+    public function registerToActivity($id, SortieRepository $sortieRepository): Response
     {
-        return $this->render('main/index.html.twig', [
+        $sortie = $sortieRepository->find($id);
+
+        return $this->render('sortie/register_sortie.html.twig', [
             'controller_name' => 'SortieController',
+            'id' => $id,
+            'sortie' => $sortie
         ]);
     }
 

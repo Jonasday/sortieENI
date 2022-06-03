@@ -19,7 +19,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
-
 class CreateActivityType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -29,34 +28,29 @@ class CreateActivityType extends AbstractType
                 'label' => 'Nom de la sortie : ',
                 'required' => true
             ])
-
             ->add('dateHeureDebut', DateTimeType::class, [
                 'label' => 'Date et heure de la sortie : ',
                 'required' => true,
-                'date_widget'=>'single_text',
-                'time_widget'=>'single_text'
+                'date_widget' => 'single_text',
+                'time_widget' => 'single_text'
             ])
-
             ->add('dateLimiteInscription', DateType::class, [
                 'label' => 'Date limite d\'inscription : ',
                 'required' => true,
                 'widget' => 'single_text'
             ])
-
             ->add('nbInscriptionsMax', NumberType::class, [
                 'label' => 'Nombre de places : ',
                 'required' => true
             ])
-
             ->add('duree', NumberType::class, [
                 'label' => 'Durée : ',
                 'required' => true
             ])
-
             ->add('infosSortie', TextareaType::class, [
                 'label' => 'Description : ',
                 'required' => false
-                    ])
+            ])
 
             //->add('organisateur')
             //->add('lstParticipant')
@@ -65,50 +59,58 @@ class CreateActivityType extends AbstractType
                 'class' => Campus::class,
                 'choice_label' => 'nom'
             ])
-
             ->add('ville', EntityType::class, [
                 'class' => Ville::class,
                 'choice_label' => 'nom',
                 'mapped' => false
             ])
-
-            ->add('lieu',EntityType::class, [
+            ->add('lieu', EntityType::class, [
                 'class' => Lieu::class,
                 'choice_label' => 'nom'
             ])
-
             ->add('rue', EntityType::class, [
                 'class' => Lieu::class,
                 'choice_label' => 'rue',
                 'label' => 'Rue : ',
                 'mapped' => false
             ])
-
             ->add('codePostal', EntityType::class, [
                 'class' => Ville::class,
                 'choice_label' => 'codePostal',
                 'label' => 'Code Postal : ',
                 'mapped' => false
             ])
-
             ->add('latitude', EntityType::class, [
                 'class' => Lieu::class,
                 'choice_label' => 'latitude',
                 'label' => 'Latitude : ',
                 'mapped' => false
             ])
-
             ->add('longitude', EntityType::class, [
                 'class' => Lieu::class,
                 'choice_label' => 'longitude',
                 'label' => 'Longitude : ',
                 'mapped' => false
             ])
+            ->add('checkpoint', SubmitType::class, [
+                'label' => 'Enregistrer',
+                'attr' => [
+                    'type' => 'submit',
+                    'class' => 'btn btn-success',
+                    'name' => 'checkpoint',
+                    'id' => 'buttons'
+                ]
 
-            ->add('checkpoint', SubmitType::class)
-
-
-            ->add('publish', SubmitType::class)
+            ])
+            ->add('publish', SubmitType::class, [
+                'label' => 'Publier la sortie',
+                'attr' =>
+                    [
+                        'type' => 'submit',
+                        'class' => 'btn btn-success',
+                        'id' => 'buttons'
+                    ]
+            ])
 
         ;
     }
