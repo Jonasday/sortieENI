@@ -30,6 +30,10 @@ class ProfilController extends AbstractController
     {
         $profil=$participantRepository->find($id);
 
+        if(!$profil){
+            throw $this->createNotFoundException("oops");
+        }
+
         return $this->render('profil/research_other_profiles.html.twig', [
             'profil' => $profil
         ]);
