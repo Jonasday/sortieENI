@@ -55,6 +55,7 @@ class CreateProfileType extends AbstractType
                     'label' => 'Confirmation du mot de passe.',
                 ],
                 'mapped' => false,
+
                 'required' => false,
                 'invalid_message' => 'Le mot de passe ne correspond pas à sa confirmation.',
 
