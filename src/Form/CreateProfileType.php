@@ -106,3 +106,4 @@ class CreateProfileType extends AbstractType
         ]);
     }
 }
+

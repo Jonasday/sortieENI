@@ -3,11 +3,18 @@
 {%block nomPage%}<h2>Modifier une sortie</h2>{%endblock%}
 
     {% block buttons %}
-    <div class="buttons">
-        <button type="button" class="btn btn-success">Enregistrer</button>
-        <button type="submit" class="btn btn-success">Publier la sortie</button>
-        <button type="button" class="btn btn-success">Supprimer la sortie</button>
-        <button type="reset" class="btn btn-success">Annuler</button>
-    </div>
-
-{% endblock %}
+        <div class="buttons">
+            {{ form_widget(form.checkpoint) }}
+            {{ form_widget(form.publish) }}
+            <a href="{{ path("cancel_sortie", {'id':sortie.id}) }}">
+                <input class="btn btn-success"
+                       type="button"
+                       value="Supprimer la sortie">
+            </a>
+            <a href="{{ path("home") }}">
+                <input class="btn btn-success"
+                       type="button"
+                       value="Annuler">
+            </a>
+        </div>
+    {% endblock %}

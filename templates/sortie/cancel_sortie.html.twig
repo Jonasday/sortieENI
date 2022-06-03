@@ -3,7 +3,7 @@
 {% block title %}<h1>Annuler une sortie</h1>{% endblock %}
 
 {% block body %}
-
+    {{ form_start(form) }}
     <div class="container">
         {% block nomPage %}<h2>Annuler une sortie</h2>{% endblock %}
         <div class="annuler">
@@ -16,11 +16,18 @@
 
         {% block buttons %}
             <div class="buttons">
-                <button type="button" class="btn btn-success">Enregistrer</button>
-                <button type="reset" class="btn btn-success">Annuler</button>
+
+                {{ form_widget(form.delete) }}
+                </a>
+                <a href="{{ path("create_sortie") }}">
+                    <input class="btn btn-success"
+                           type="button"
+                           value="Annuler">
+                </a>
+
             </div>
         {% endblock %}
-
+        {{ form_end(form) }}
     </div>
 {% endblock %}
 

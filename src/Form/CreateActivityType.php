@@ -97,8 +97,6 @@ class CreateActivityType extends AbstractType
                 'attr' => [
                     'type' => 'submit',
                     'class' => 'btn btn-success',
-                    'name' => 'checkpoint',
-                    'id' => 'buttons'
                 ]
 
             ])
@@ -108,7 +106,6 @@ class CreateActivityType extends AbstractType
                     [
                         'type' => 'submit',
                         'class' => 'btn btn-success',
-                        'id' => 'buttons'
                     ]
             ])
 

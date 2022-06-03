@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Service\EtatSortieUpdate;
 use App\Entity\Campus;
 use App\Entity\Sortie;
+use App\Form\CancelActivityType;
 use App\Form\CreateActivityType;
 use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
@@ -51,10 +52,6 @@ class SortieController extends AbstractController
                 $sortie->setEtat($etat);
                 $sortieRepository->add($sortie, true);
             }
-
-            if ($form->get('cancel')->isClicked()) {
-                return $this->redirectToRoute('home');
-            }
         }
 
         return $this->render('sortie/create_sortie.html.twig', [
@@ -77,12 +74,11 @@ class SortieController extends AbstractController
 
     #Modifier une sortie
     #[Route('/modify_sortie/{id}', name: 'modify_sortie')]
-    public function modifyActivity($id,Request $request, SortieRepository $sortieRepository, EtatRepository $etatRepository): Response
+    public function modifyActivity($id, Request $request, SortieRepository $sortieRepository, EtatRepository $etatRepository): Response
     {
         $sortie = $sortieRepository->find($id);
-        $form = $this->createForm(createActivityType::class, $sortie);
 
-        $user = $this->getUser();
+        $form = $this->createForm(createActivityType::class, $sortie);
 
         $form->handleRequest($request);
 
@@ -100,29 +96,39 @@ class SortieController extends AbstractController
                 $sortieRepository->add($sortie, true);
             }
 
-            if ($form->get('cancel')->isClicked()) {
-                return $this->redirectToRoute('home');
-            }
-
-            return $this->render('sortie/modify_sortie.html.twig', [
-                'controller_name' => 'SortieController',
-                'form' => $form->createView(),
-                'id' => $id,
-                'sortie' => $sortie
-            ]);
         }
+        return $this->render('sortie/modify_sortie.html.twig', [
+            'controller_name' => 'SortieController',
+            'form' => $form->createView(),
+            'id' => $id,
+            'sortie' => $sortie
+        ]);
+
     }
 
     #Annuler une sortie
     #[Route('/cancel_sortie/{id}', name: 'cancel_sortie')]
-    public function cancelActivity($id, SortieRepository $sortieRepository): Response
+    public function cancelActivity($id, Request $request, SortieRepository $sortieRepository): Response
     {
         $sortie = $sortieRepository->find($id);
+
+        $form = $this->createForm(cancelActivityType::class, $sortie);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if ($form->get('delete')->isClicked()) {
+                $sortieRepository->remove($sortie, true);
+                return $this->redirectToRoute('home');
+            }
+        }
 
         return $this->render('sortie/cancel_sortie.html.twig', [
             'controller_name' => 'SortieController',
             'id' => $id,
-            'sortie' => $sortie
+            'sortie' => $sortie,
+            'form' => $form->createView()
         ]);
     }
 
