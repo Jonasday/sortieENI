@@ -3,15 +3,59 @@
 {% block title %}{{ parent()}} - Research_other_profiles{% endblock %}
 
 {% block body %}
-<h1>{{profil.pseudo}}</h1>
-    <ul>
-        <li>{{profil.prenom}} </li>
-        <li>{{profil.nom}} </li>
-        <li>{{profil.telephone}} </li>
-        <li>{{profil.email}} </li>
-        <li>{{profil.campus.nom}} </li>
-    </ul>
+    <h2> {{profil.pseudo}} </h2>
+    <div class="container">
 
+        <div class="row">
+            <div class="col">
+            Prénom :
+            </div>
+            <div class="col">
+            {{profil.prenom}} <br>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+            Nom :
+            </div>
+            <div class="col">
+            {{profil.nom}} <br>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col">
+        Téléphone :
+            </div>
+            <div class="col">
+            {{profil.telephone}} </br>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col">
+        Email :
+            </div>
+            <div class="col">
+                {{profil.email}} </br>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+        Campus
+            </div>
+            <div class="col">
+                {{profil.campus.nom}} </br>
+            </div>
+        </div>
+
+    </div>
+        </div>
+        </div>
     <a href="{{ path("home") }}">
         <input class="btn btn-success"
                type="button"

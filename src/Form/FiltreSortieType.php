@@ -27,6 +27,9 @@ class FiltreSortieType extends AbstractType
             ->add('motsClef', SearchType::class,[
                 'label' => 'Le nom de la sortie contient :',
                 'required' => false,
+                'attr' => [
+                    'placeholder' => 'search'
+                ]
             ])
             ->add('dateMin', DateTimeType::class, [
                 'label' => 'Entre le',

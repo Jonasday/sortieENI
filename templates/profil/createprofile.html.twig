@@ -1,43 +1,99 @@
 {% extends 'base.html.twig' %}
 
+{% block title %} Mon profil {% endblock %}
 
-    {% block title %} Mon profil {% endblock %}
 
+{% block body %}
+    <h2 align="center"> Mon profil</h2>
+    <div class="container">
+            {{form_start(form)}}
 
-    {% block body %}
-        <h2 align="center"> Mon profil</h2>
-
-        {{form_start(form)}}
+        <div class="row">
+            <div class="col">
             {{ form_label(form.pseudo) }}
-            {{ form_widget(form.pseudo) }} </br>
+            </div>
+            <div class="col">
+            {{ form_widget(form.pseudo) }} <br>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col">
             {{ form_label(form.prenom) }}
-            {{form_widget(form.prenom) }} </br>
+            </div>
+            <div class="col">
+            {{form_widget(form.prenom) }} <br>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col">
             {{ form_label(form.nom)}}
-            {{form_widget(form.nom)}} </br>
+            </div>
+            <div class="col">
+            {{form_widget(form.nom)}} <br>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col">
             {{form_label(form.telephone)}}
-            {{form_widget(form.telephone)}} </br>
+            </div>
+            <div class="col">
+            {{form_widget(form.telephone)}} <br>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col">
             {{form_label(form.email)}}
-            {{form_widget(form.email)}} </br>
+            </div>
+            <div class="col">
+            {{form_widget(form.email)}} <br>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col">
             {{form_label(form.password)}}
-            {{form_widget(form.password)}} </br>
+            </div>
+            <div class="col">
+            {{form_widget(form.password)}} <br>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col">
             {{form_label(form.confirmation)}}
-            {{form_widget(form.confirmation)}} </br>
+            </div>
+            <div class="col">
+            {{form_widget(form.confirmation)}} <br>
+            </div>
+        <div>
 
+            
+            <div class="row">
+            <div class="col">
             {{form_label(form.campus)}}
-            {{form_widget(form.campus)}} </br>
+            </div>
+            <div class="col">
+            {{form_widget(form.campus)}} <br>
+            </div>
+        </div>
 
 
-            {{ form_rest(form) }}
-            <button type="submit">Enregistrer</button>
-            <button type="submit">Annuler</button>
-        {{ form_end(form) }}
-    {% endblock %}
+            {%block buttons%}
+        <div class="buttons">
+
+            <button type="submit" class="btn btn-success" >Enregistrer</button>
+            <button type="submit" class="btn btn-success" >Annuler</button>
+        </div>
+            {%endblock%}
+
+            {{ form_end(form) }}
+
+    </div>
+{% endblock %}
 
 
 
