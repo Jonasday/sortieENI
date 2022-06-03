@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Commande;
+namespace App\Service;
 
 use App\Entity\Sortie;
 use App\Repository\EtatRepository;

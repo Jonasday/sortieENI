@@ -140,7 +140,7 @@ class AppFixtures extends Fixture
                 ->setEmail($this->faker->email)
                 ->setActif($this->faker->boolean($chanceOfGettingTrue = 50))
                 ->setCampus($this->faker->randomElement($campus))
-                    ->setPseudo($this->faker->word)
+                ->setPseudo($this->faker->word)
                 ->setPassword(
                     $this->hasher->hashPassword(
                         $participant,
@@ -200,6 +200,7 @@ class AppFixtures extends Fixture
                 ->setActif($this->faker->boolean($chanceOfGettingTrue = 50))
                 ->setCampus($this->faker->randomElement($campus))
                 ->setPseudo("Jonas")
+                ->setImage('Avatar.jpg')
                 ->setPassword(
                     $this->hasher->hashPassword(
                         $admin,
@@ -220,6 +221,7 @@ class AppFixtures extends Fixture
             ->setActif($this->faker->boolean($chanceOfGettingTrue = 50))
             ->setCampus($this->faker->randomElement($campus))
             ->setPseudo("Cedric")
+            ->setImage('Avatar.jpg')
             ->setPassword(
                 $this->hasher->hashPassword(
                     $admin,
@@ -240,6 +242,7 @@ class AppFixtures extends Fixture
             ->setActif($this->faker->boolean($chanceOfGettingTrue = 50))
             ->setCampus($this->faker->randomElement($campus))
             ->setPseudo("Arthur")
+            ->setImage('Avatar.jpg')
             ->setPassword(
                 $this->hasher->hashPassword(
                     $admin,
@@ -260,6 +263,7 @@ class AppFixtures extends Fixture
             ->setActif($this->faker->boolean($chanceOfGettingTrue = 50))
             ->setCampus($this->faker->randomElement($campus))
             ->setPseudo("SylvainLeBoss")
+            ->setImage('Avatar.jpg')
             ->setPassword(
                 $this->hasher->hashPassword(
                     $admin,

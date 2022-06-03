@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Commande\EtatSortieUpdate;
+use App\Service\EtatSortieUpdate;
 use App\Entity\Campus;
 use App\Entity\Sortie;
 use App\Form\CancelActivityType;
