@@ -7,6 +7,7 @@ use App\Entity\Campus;
 use App\Form\FiltreSortieType;
 
 use App\Form\Model\Search;
+use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
 use phpDocumentor\Reflection\Types\Boolean;
 use phpDocumentor\Reflection\Types\False_;
@@ -18,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController
 {
     #[Route('/home', name: 'home')]
-    public function home(Request $request, EtatSortieUpdate $etatSortieUpdate, SortieRepository $sortieRepository  ): Response
+    public function home(Request $request, EtatSortieUpdate $etatSortieUpdate, SortieRepository $sortieRepository, EtatRepository $etatRepository  ): Response
     {
         // Mise a jour des etat
         $etatSortieUpdate->update();
@@ -26,17 +27,11 @@ class MainController extends AbstractController
         $search = new Search();
         $currentuser = $this->getUser();
         $search ->setCampus($currentuser->getCampus());
-        $search->setSortieOrganisateur(False);
-        $search->setSortieInscrit(False);
-        $search->setSortiePasInscrit(False);
-        $search->setSortiePasse(False);
-
-
 
         $form = $this->createForm(FiltreSortieType::class, $search);
 
         //Envoie de toutes les sortie par défault
-        $sortieArray = $sortieRepository->filterFormCustomQuery($search,$currentuser);
+        $sortieArray = $sortieRepository->filterFormCustomQuery($search,$currentuser,$etatRepository);
 
 
         // Hydrater $search avec le retour de la requête de type POST
@@ -46,7 +41,7 @@ class MainController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
 
             //Appeler la classe et la fonction pour le filtreSortie
-            $sortieArray = $sortieRepository->filterFormCustomQuery($search,$currentuser);
+            $sortieArray = $sortieRepository->filterFormCustomQuery($search,$currentuser,$etatRepository);
 
         }
 

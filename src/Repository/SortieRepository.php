@@ -45,7 +45,7 @@ class SortieRepository extends ServiceEntityRepository
     /**
      * @return Sortie[] Returns an array of Sortie objects
      */
-    public function filterFormCustomQuery(Search $search, $currentuser): array
+    public function filterFormCustomQuery(Search $search, $currentuser, $etatRepository): array
     {
         $queryBuilder = $this->createQueryBuilder('p');
 
@@ -85,7 +85,7 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         if ($search->isSortiePasse()){
-            $etat = $queryBuilder->getEntityManager()->getRepository(EtatRepository::class)->findBy(['code' => 'CLO']);
+            $etat = $etatRepository->findOneBy(['code' => 'CLO']);
             $queryBuilder->andWhere('p.etat = :etat')
                 ->setParameter('etat', $etat);
         }
