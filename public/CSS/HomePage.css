@@ -11,3 +11,18 @@ table td{
 table th{
     border: black 1px solid;
 }
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding-top: 25px;
+}
+
+h2 {
+    margin-bottom: 35px;
+}
+
+p {
+    margin-bottom: 10px;
+}

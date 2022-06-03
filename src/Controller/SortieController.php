@@ -22,6 +22,7 @@ class SortieController extends AbstractController
     {
         $sortie = new Sortie();
         $user = $this->getUser();
+        $sortie->setCampus($user->getCampus());
 
         $form = $this->createForm(createActivityType::class, $sortie);
 
@@ -65,10 +66,12 @@ class SortieController extends AbstractController
     public function displayActivity($id, SortieRepository $sortieRepository): Response
     {
         $sortie = $sortieRepository->find($id);
+        $lstParticipant = $sortie->getLstParticipant();
 
         return $this->render('sortie/display_sortie.html.twig', [
             'id' => $id,
             'sortie' => $sortie,
+            'lstParticipant' => $lstParticipant
         ]);
     }
 
