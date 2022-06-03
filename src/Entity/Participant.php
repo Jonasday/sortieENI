@@ -57,6 +57,9 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 50)]
     private $pseudo;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $image;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -268,6 +271,18 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTelephone(string $telephone): self
     {
         $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

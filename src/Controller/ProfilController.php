@@ -5,17 +5,21 @@ namespace App\Controller;
 use App\Entity\Participant;
 use App\Form\CreateProfileType;
 use App\Repository\ParticipantRepository;
+use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
+
 use \Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpClient\Response\HttplugPromise;
+
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 class ProfilController extends AbstractController
 {
     #[Route('/profil', name: 'profil')]
-    public function modifyProfile(Request $request , EntityManagerInterface $entityManager): Response
+    public function modifyProfile(Request $request , EntityManagerInterface $entityManager, FileUploader $fileUploader, UserPasswordHasherInterface $userPasswordHasher): Response
     {
 
         $currentParticipant = $this->getUser();
@@ -24,6 +28,26 @@ class ProfilController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
+            //$imageFile = l'image à upload
+            $imageFile = $form->get('image')->getData();
+
+            if ($imageFile){
+
+                $imageFileName = $fileUploader->upload($imageFile);
+
+                $currentParticipant->setImage($imageFileName);
+
+            }
+
+            $plainPassword = $form->get('password')['first']->getData();
+
+            if ($plainPassword){
+                $hashedPassword = $userPasswordHasher->hashPassword($currentParticipant, $plainPassword);
+                $currentParticipant->setPassword($hashedPassword);
+            }
+
+
+
 
             $entityManager->persist($currentParticipant);
             $entityManager->flush();
@@ -33,7 +57,6 @@ class ProfilController extends AbstractController
         }
 
         return $this->render('profil/createprofile.html.twig', [
-            'controller_name' => 'ProfilController',
             'form' => $form-> createView()
         ]);
 
@@ -45,7 +68,7 @@ class ProfilController extends AbstractController
         $profil=$participantRepository->find($id);
 
         if(!$profil){
-            throw $this->createNotFoundException("oops");
+            throw $this->createNotFoundException("Le profile recherché n'existe pas");
         }
 
         return $this->render('profil/research_other_profiles.html.twig', [

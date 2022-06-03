@@ -140,7 +140,7 @@ class AppFixtures extends Fixture
                 ->setEmail($this->faker->email)
                 ->setActif($this->faker->boolean($chanceOfGettingTrue = 50))
                 ->setCampus($this->faker->randomElement($campus))
-                    ->setPseudo($this->faker->word)
+                ->setPseudo($this->faker->word)
                 ->setPassword(
                     $this->hasher->hashPassword(
                         $participant,

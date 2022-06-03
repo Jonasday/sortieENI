@@ -55,8 +55,8 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         if ($search->getMotsClef()){
-            $queryBuilder->andWhere('p.nom = :motclef' )
-                ->setParameter('motclef', $search->getMotsClef());
+            $queryBuilder->andWhere('p.nom LIKE :motclef' )
+                ->setParameter('motclef', "%{$search->getMotsClef()}%");
         }
 
         if ($search->getDateMin()){
@@ -66,7 +66,7 @@ class SortieRepository extends ServiceEntityRepository
 
         if ($search->getDateMax()){
             $queryBuilder->andWhere('p.dateHeureDebut < :dateMax' )
-                ->setParameter('dateMin', $search->getDateMax());
+                ->setParameter('dateMax', $search->getDateMax());
         }
 
         if ($search->isSortieOrganisateur()){
