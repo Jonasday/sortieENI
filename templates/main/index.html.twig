@@ -59,7 +59,7 @@
                                     {% endif %}
 
                                     {% if  app.user not in item.lstParticipant and item.etat.code == 'O' and app.user != item.organisateur%}
-                                        <a href="{{ path("registre_sortie", {'id':item.id}) }}">S'inscrire</a>
+                                        <a href="{{ path("register_sortie", {'id':item.id}) }}">S'inscrire</a>
                                     {% endif %}
 
                                     {% if  app.user == item.organisateur and item.etat.code == 'O'%}
