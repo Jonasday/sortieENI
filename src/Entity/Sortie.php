@@ -3,10 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\SortieRepository;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SortieRepository::class)]
 class Sortie
@@ -19,18 +19,35 @@ class Sortie
     #[ORM\Column(type: 'string', length: 255)]
     private $nom;
 
+    /**
+     * @Assert\GreaterThan("today", message="La date de début ne peut être antérieure à aujourd'hui !")
+     */
     #[ORM\Column(type: 'datetime')]
     private $dateHeureDebut;
 
+    /**
+     * @Assert\GreaterThanOrEqual("30", message="La durée de la sortie doit être supérieure à 30 minutes  !")
+     */
     #[ORM\Column(type: 'integer')]
     private $duree;
 
+    /**
+     * @Assert\LessThanOrEqual(propertyPath="dateHeureDebut", message="La date de clôture des inscriptions doit être avant le début de la sortie !")
+     * @Assert\GreaterThanOrEqual("today", message="La date de clôture des inscriptions ne peut être antérieure à aujourd'hui !")
+     */
     #[ORM\Column(type: 'datetime')]
     private $dateLimiteInscription;
 
+    /**
+     * @Assert\GreaterThanOrEqual("2", message="Pour créer une sortie il faut au minimun 2 personnes !")
+     */
     #[ORM\Column(type: 'integer')]
     private $nbInscriptionsMax;
 
+    /**
+     * @Assert\GreaterThanOrEqual("2", message="Pour créer une sortie il faut au minimun 2 personnes !")
+     * @Assert\Regex(pattern="/[a-zA-Z0-9 ]+/", match=true, message="Les caractères spéciaux sont interdits dans la description")
+     */
     #[ORM\Column(type: 'text')]
     private $infosSortie;
 
@@ -38,6 +55,14 @@ class Sortie
     #[ORM\ManyToOne(targetEntity: Participant::class, inversedBy: 'ldtSortieOrganise')]
     #[ORM\JoinColumn(nullable: false)]
     private $organisateur;
+
+    #[ORM\ManyToMany(targetEntity: Participant::class, mappedBy: 'lstSortie')]
+    private $lstParticipant;
+
+    public function __construct()
+    {
+        $this->lstParticipant = new ArrayCollection();
+    }
 
     #[ORM\ManyToOne(targetEntity: Campus::class, inversedBy: 'lstSortie')]
     #[ORM\JoinColumn(nullable: false)]
@@ -47,20 +72,11 @@ class Sortie
     #[ORM\JoinColumn(nullable: false)]
     private $lieu;
 
+    //ccouou
+
     #[ORM\ManyToOne(targetEntity: Etat::class, inversedBy: 'lstSortie')]
     #[ORM\JoinColumn(nullable: false)]
     private $etat;
-
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $motif;
-
-    #[ORM\OneToMany(mappedBy: 'sortie', targetEntity: SortieInscription::class)]
-    private $lstParticipantInscript;
-
-    public function __construct()
-    {
-        $this->lstParticipantInscript = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -175,6 +191,31 @@ class Sortie
         return $this;
     }
 
+
+    public function getLstParticipant()
+    {
+        return $this->lstParticipant;
+    }
+
+    public function addLstParticipant(Participant $lstParticipant): self
+    {
+        if (!$this->lstParticipant->contains($lstParticipant)) {
+            $this->lstParticipant[] = $lstParticipant;
+            $lstParticipant->addLstSortie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLstParticipant(Participant $lstParticipant): self
+    {
+        if ($this->lstParticipant->removeElement($lstParticipant)) {
+            $lstParticipant->removeLstSortie($this);
+        }
+
+        return $this;
+    }
+
     public function getEtat(): ?Etat
     {
         return $this->etat;
@@ -187,64 +228,21 @@ class Sortie
         return $this;
     }
 
-    public function getMotif(): ?string
-    {
-        return $this->motif;
-    }
-
-    public function setMotif(?string $motif): self
-    {
-        $this->motif = $motif;
-
-        return $this;
-    }
-
-
-    /**
-     * Teste si un User est inscrit à cette sortie
-     *
-     * @param UserInterface $user
-     * @return bool
-     */
-    public function isSubscribed(UserInterface $user): bool
-    {
-        foreach($this->getLstParticipantInscript() as $participant){
-            if ($participant->getParticipant() === $user){
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @return Collection<int, SortieInscription>
-     */
-    public function getLstParticipantInscript(): Collection
-    {
-        return $this->lstParticipantInscript;
-    }
-
-    public function addLstParticipantInscript(SortieInscription $lstParticipantInscript): self
-    {
-        if (!$this->lstParticipantInscript->contains($lstParticipantInscript)) {
-            $this->lstParticipantInscript[] = $lstParticipantInscript;
-            $lstParticipantInscript->setSortie($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLstParticipantInscript(SortieInscription $lstParticipantInscript): self
-    {
-        if ($this->lstParticipantInscript->removeElement($lstParticipantInscript)) {
-            // set the owning side to null (unless already changed)
-            if ($lstParticipantInscript->getSortie() === $this) {
-                $lstParticipantInscript->setSortie(null);
-            }
-        }
-
-        return $this;
-    }
+//    /**
+//     * Teste si un User est inscrit à cette sortie
+//     *
+//     * @param UserInterface $user
+//     * @return bool
+//     */
+//    public function isSubscribed(UserInterface $user): bool
+//    {
+//        foreach($this->getLstParticipant() as $participant){
+//            if ($participant->getParticipant() === $user){
+//                return true;
+//            }
+//        }
+//
+//        return false;
+//    }
 
 }
