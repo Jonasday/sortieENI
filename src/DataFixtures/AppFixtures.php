@@ -7,6 +7,7 @@ use App\Entity\Etat;
 use App\Entity\Lieu;
 use App\Entity\Participant;
 use App\Entity\Sortie;
+use App\Entity\SortieInscription;
 use App\Entity\Ville;
 use App\Repository\VilleRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -87,6 +88,7 @@ class AppFixtures extends Fixture
     $this->lieux($manager);
     $this->Participants($manager);
     $this->Sortie($manager);
+    $this->SortieInscription($manager);
     $this->Admin($manager);
 
 
@@ -141,6 +143,7 @@ class AppFixtures extends Fixture
                 ->setActif($this->faker->boolean($chanceOfGettingTrue = 50))
                 ->setCampus($this->faker->randomElement($campus))
                 ->setPseudo($this->faker->word)
+                ->setImage('Avatar.jpg')
                 ->setPassword(
                     $this->hasher->hashPassword(
                         $participant,
@@ -152,6 +155,8 @@ class AppFixtures extends Fixture
             $manager->flush();
         }
 
+
+
         public function Sortie(ObjectManager $manager): void{
 
             // Création des sorties
@@ -162,27 +167,39 @@ class AppFixtures extends Fixture
 
             for ($x=1; $x <= 30; $x++){
                 $sortie = new Sortie();
-                $debut = $this->faker->dateTimeBetween('-6 months');
+                $duree = $this->faker->numberBetween(10, 50);
+                $debut = $this->faker->dateTimeBetween('-5 months');
+                $debutPlusDuree = $debut->modify('- 5 days');
+
                 $sortie->setNom($this->faker->word)
                     ->setDateHeureDebut($debut)
-                    ->setDuree($this->faker->numberBetween(10, 50))
-                    ->setDateLimiteInscription($this->faker->dateTimeBetween($startDate = $debut, $endDate = 'now'))
-                    ->setNbInscriptionsMax($this->faker->numberBetween(0,150))
+                    ->setDuree($duree)
+                    ->setDateLimiteInscription($this->faker->dateTimeBetween($startDate = $debutPlusDuree, $endDate = $debut))
+                    ->setNbInscriptionsMax($this->faker->numberBetween(0,20))
                     ->setInfosSortie(join(" ", $this->faker->words(10)))
                     ->setEtat($this->faker->randomElement($etat))
                     ->setLieu($this->faker->randomElement($lieu))
                     ->setCampus($this->faker->randomElement($campus))
-                    ->setOrganisateur($this->faker->randomElement($participant))
-                    ->addLstParticipant($sortie->getOrganisateur());
-
-                    for ($q=1; $q <= $sortie->getNbInscriptionsMax(); $q++){
-                        $sortie->addLstParticipant($this->faker->randomElement($participant));
-                    }
+                    ->setOrganisateur($this->faker->randomElement($participant));
 
                 $manager->persist($sortie);
             }
             $manager->flush();
         }
+
+    public function SortieInscription(ObjectManager $manager):void{
+
+        $participant = $manager->getRepository(Participant::class)->findAll();
+        $sortie = $manager->getRepository(Sortie::class)->findAll();
+
+        for ($q=1; $q <= 20; $q++){
+            $sortieInscription = new SortieInscription();
+            $sortieInscription->setSortie($this->faker->randomElement($sortie));
+            $sortieInscription->setParticipant($this->faker->randomElement($participant));
+            $manager->persist($sortieInscription);
+            }
+        $manager->flush();
+    }
 
     public function Admin(ObjectManager $manager): void
     {

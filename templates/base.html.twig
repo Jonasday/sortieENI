@@ -16,12 +16,11 @@
     </head>
     <header>
         {% block header%}
-            <img src= "{{ asset('img/SortieLogo.png')}}" alt="" class="bigLogo"/>
+        <a href="{{ path('home')}}"> <img src= "{{ asset('img/SortieLogo.png')}}" alt="" class="bigLogo"/></a>
 
-            <h1>Sortie ENI</h1>
+        <a href="{{ path('home')}}"><h1>Sortie ENI</h1></a>
             {% if app.user %}
-            <h2>Bonjour {{ app.user.nom }}</h2>
-            <p>Vous êtes connecté(e) en tant que {{ app.user.pseudo }}</p>
+            <h2>Bonjour {{ app.user.pseudo}}</h2>
             {% endif %}
 
             <nav class="nav bg-light justify-content-center">

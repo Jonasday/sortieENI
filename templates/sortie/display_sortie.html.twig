@@ -1,50 +1,53 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="container">
-    {%block nomPage%}<h2>Afficher une sortie</h2>{%endblock%}
-    <div class="row">
-        <div class="col-md-3">
-            <p>Nom de la sortie : </p>
-        </div>
-        <div class="col-md-3">
-            <p>{{ sortie.nom }}</p>
-        </div>
-        <div class="col-md-3">
-            <p>Campus : </p>
-        </div>
-        <div class="col-md-3">
-            <p>{{ sortie.Campus.nom }}</p>
-        </div>
-    </div>
+    <div class="container">
 
-    <div class="row">
-        <div class="col-md-3">
-            <p>Date et heure de la sortie : </p>
-        </div>
-        <div class="col-md-3">
-            <p>{{ sortie.dateHeureDebut|date("H:i d M y") }}</p>
-        </div>
-        <div class="col-md-3">
-            <p>Ville : </p>
-        </div>
-        <div class="col-md-3">
-            <p>{{ sortie.Lieu.Ville.nom }}</p>
-        </div>
-    </div>
+        {% block nomPage %}<h2>Afficher une sortie</h2>{% endblock %}
 
-    <div class="row">
-        <div class="col-md-3">
-            <p>Date limite d'inscription : </p>
+        <div class="row">
+            <div class="col-md-3">
+                <p>Nom de la sortie : </p>
+            </div>
+            <div class="col-md-3">
+                <p>{{ sortie.nom }}</p>
+            </div>
+            <div class="col-md-3">
+                <p>Campus : </p>
+            </div>
+            <div class="col-md-3">
+                <p>{{ sortie.Campus.nom }}</p>
+            </div>
         </div>
-        <div class="col-md-3">
-            <p>{{ sortie.dateLimiteInscription|date("d M y") }}</p>
+
+        <div class="row">
+            <div class="col-md-3">
+                <p>Date et heure de la sortie : </p>
+            </div>
+            <div class="col-md-3">
+                <p>{{ sortie.dateHeureDebut|date("H:i d M y") }}</p>
+            </div>
+            <div class="col-md-3">
+                <p>Ville : </p>
+            </div>
+            <div class="col-md-3">
+                <p>{{ sortie.Lieu.Ville.nom }}</p>
+            </div>
         </div>
-        <div class="col-md-3">
-            <p>Lieu: </p>
-        </div>
-        <div class="col-md-3">
-            <p>{{ sortie.Lieu.nom }}</p>
+
+        <div class="row">
+            <div class="col-md-3">
+                <p>Date limite d'inscription : </p>
+            </div>
+            <div class="col-md-3">
+                <p>{{ sortie.dateLimiteInscription|date("d M y") }}</p>
+            </div>
+            <div class="col-md-3">
+                <p>Lieu: </p>
+            </div>
+            <div class="col-md-3">
+                <p>{{ sortie.Lieu.nom }}</p>
+            </div>
         </div>
 
         <div class="row">
@@ -94,25 +97,31 @@
 
         <p>Longitude : {{ sortie.Lieu.longitude }}</p>
 
-        <p>Liste des participants inscrits : </p>
 
-        <thead> <!-- En-tête du tableau -->
-        <tr>
-            <th>Pseudo</th>
-            <th>Nom</th>
-        </tr>
-        </thead>
+        <div class="table">
+            <p>Liste des participants inscrits : </p>
+            <div class="row">
+                <div class="col-md-10 offset-md-5">
+                    <table>
+                        <thead> <!-- En-tête du tableau -->
+                        <tr>
+                            <th>Pseudo</th>
+                            <th>Nom</th>
+                        </tr>
+                        </thead>
+                        <tbody> <!-- Corps du tableau -->
+                        {% for friend in lstParticipant %}
+                            <tr>
+                                <td>{{ friend.pseudo }}</td>
+                                <td>{{ friend.nom }}</td>
+                            </tr>
+                        {% endfor %}
 
-        <tbody> <!-- Corps du tableau -->
-        {% for item in sortie %}
-            {% for friend in item.lstParticipant %}
-                <tr>
-                    <td>{{ friend.pseudo }}</td>
-                    <td>{{ friend.nom }}</td>
-                </tr>
-            {% endfor %}
-        {% endfor %}
-        </tbody>
-
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-    {% endblock %}
+
+{% endblock %}

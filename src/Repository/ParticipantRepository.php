@@ -96,4 +96,31 @@ class ParticipantRepository extends ServiceEntityRepository implements PasswordU
             ->setParameter('query', $username)
             ->getOneOrNullResult();
     }
+
+    public function customQuerrySortieDisplay ($sortieID):array
+    {
+        //permet de récupérer le nom er le prénom des participant à une sortie
+
+        $queryBuilder = $this->createQueryBuilder('u');
+        $queryBuilder->select('u.pseudo','u.nom')
+                     ->innerJoin('u.lstSortieInscrit' , 'p','WITH','u.id = p.participant AND p.sortie = :sortie')
+                     ->setParameter('sortie', $sortieID);
+
+        $query = $queryBuilder->getQuery();
+        return $query->getResult();
+    }
+
+    public function customQuerrySortieInscrit ($sortieID):array
+    {
+        //permet de récupérer le nom er le prénom des participant à une sortie
+
+        $queryBuilder = $this->createQueryBuilder('u');
+        $queryBuilder->select('u.id')
+            ->innerJoin('u.lstSortieInscrit' , 'p','WITH','u.id = p.participant AND p.sortie = :sortie')
+            ->setParameter('sortie', $sortieID);
+
+        $query = $queryBuilder->getQuery();
+        return $query->getResult();
+    }
+
 }
