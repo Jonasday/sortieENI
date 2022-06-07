@@ -17,6 +17,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 
 class CreateActivityType extends AbstractType
@@ -26,8 +28,11 @@ class CreateActivityType extends AbstractType
         $builder
             ->add('nom', TextType::class, [
                 'label' => 'Nom de la sortie : ',
-                'required' => true
-            ])
+                'required' => true,
+                'constraints' => [
+                    new NotBlank(),
+                    new Regex('/[0-9]{3,}[a-zA-Z]{7,}/')]
+                ])
             ->add('dateHeureDebut', DateTimeType::class, [
                 'label' => 'Date et heure de la sortie : ',
                 'required' => true,
@@ -107,9 +112,7 @@ class CreateActivityType extends AbstractType
                         'type' => 'submit',
                         'class' => 'btn btn-success',
                     ]
-            ])
-
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
