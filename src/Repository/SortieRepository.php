@@ -4,10 +4,12 @@ namespace App\Repository;
 
 use App\Entity\Participant;
 use App\Entity\Sortie;
+use App\Entity\SortieInscription;
 use App\Form\FiltreSortieType;
 use App\Form\Model\Search;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @extends ServiceEntityRepository<Sortie>
@@ -42,10 +44,11 @@ class SortieRepository extends ServiceEntityRepository
         }
     }
 
+
     /**
      * @return Sortie[] Returns an array of Sortie objects
      */
-    public function filterFormCustomQuery(Search $search, $currentuser, $etatRepository): array
+    public function filterFormCustomQuery(Search $search, UserInterface $user, $etatRepository): array
     {
         $queryBuilder = $this->createQueryBuilder('p');
 
@@ -69,29 +72,36 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('dateMax', $search->getDateMax());
         }
 
-        if ($search->isSortieOrganisateur()){
-            $queryBuilder->andWhere('p.organisateur = :user')
-                ->setParameter('user', $currentuser);
-        }
-
-        if ($search->isSortieInscrit()){
-            $queryBuilder->andWhere(':user MEMBER OF p.lstParticipant')
-                ->setParameter('user', $currentuser);
-        }
-
-        if ($search->isSortiePasInscrit()){
-            $queryBuilder->andWhere(':user NOT MEMBER OF p.lstParticipant')
-                ->setParameter('user', $currentuser);
-        }
-
         if ($search->isSortiePasse()){
-            $etat = $etatRepository->findOneBy(['code' => 'CLO']);
+            $etat = $etatRepository->findOneBy(['code' => 'AT']);
             $queryBuilder->andWhere('p.etat = :etat')
                 ->setParameter('etat', $etat);
         }
 
+
+        if ($search->isSortieOrganisateur()){
+            $queryBuilder->andWhere('p.organisateur = :user')
+                ->setParameter('user', $user);
+        }
+
+        if ($search->isSortieInscrit()){
+            $queryBuilder->andWhere(':user MEMBER OF p.lstParticipantInscript')
+                ->setParameter('user', $user);
+        }
+
+        if ($search->isSortiePasInscrit()){
+            $queryBuilder->andWhere(':user NOT MEMBER OF p.lstParticipantInscript')
+                ->setParameter('user', $user);
+        }
+
+        if ($search->isSortiePasse()){
+            $etat = $etatRepository->findOneBy(['code' => 'AT']);
+            $queryBuilder->andWhere('p.etat = :etat')
+                ->setParameter('etat', $etat);
+        }
+
+
         $query = $queryBuilder->getQuery();
         return $query->getResult();
     }
-
 }
