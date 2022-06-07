@@ -129,8 +129,8 @@ class CreateActivityType extends AbstractType
                 // this would be your entity, i.e. SportMeetup
                 $data = $event->getData();
 
-                $sortie = $data->getSport();
-                $positions = null === $sortie ? [] : $sortie->getAvailablePositions();
+                $ville = $data->getVille();
+                $positions = null === $ville ? [] : $ville->getAvailablePositions();
 
                 $form->add('position', EntityType::class, [
                     'class' => Position::class,
