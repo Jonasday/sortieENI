@@ -30,44 +30,42 @@
                 <tbody> <!-- Corps du tableau -->
                 {% for item in sorties %}
                     <tr>
-                        {% if item.etat.code != 'AH' %}
-                            <td>{{ item.nom }}</td>
-                            <td>{{ item.dateHeureDebut|date('H:i d M Y ') }}</td>
-                            <td>{{ item.dateLimiteInscription|date(' d M Y ') }}</td>
-                            <td>{{ item.lstParticipant | length }}/{{ item.nbInscriptionsMax }}</td>
-                            <td>{{ item.etat.libelle }}</td>
+                        {% if item.etat.code != 'AH' and item.etat.code != 'AN' %}
+                                <td>{{ item.nom }}</td>
+                                <td>{{ item.dateHeureDebut|date('H:i d M Y ') }}</td>
+                                <td>{{ item.dateLimiteInscription|date(' d M Y ') }}</td>
+                                <td>{{ item.lstParticipantInscript | length }}/{{ item.nbInscriptionsMax }}</td>
+                                <td>{{ item.etat.libelle }}</td>
 
-                            <td>
-                                {% if app.user in item.lstParticipant or app.user == item.organisateur %}
+                                <td>
+                                {% if item.isSubscribed(app.user) or app.user == item.organisateur %}
                                     x
                                 {% endif %}
-                            </td>
+                                </td>
 
-                            <td>
-                                <a href="{{ path("profil_research", {'id':item.organisateur.id}) }}">{{ item.organisateur.nom }}</a>
-                            </td>
+                                <td><a href="{{ path("profil_research", {'id':item.organisateur.id}) }}">{{ item.organisateur.nom }}</a></td>
 
-                            <td>
-                                {% if app.user != item.organisateur %}
-                                    <a href="{{ path("display_sortie", {'id':item.id}) }}">Afficher</a>
-                                {% endif %}
+                                <td>
+                                    {% if app.user != item.organisateur %}
+                                        <a href="{{ path("display_sortie", {'id':item.id}) }}">Afficher</a>
+                                    {% endif %}
 
-                                {% if app.user in item.lstParticipant and app.user != item.organisateur and item.etat.code == 'AT' %}
-                                    <a href="{{ path("desist_sortie", {'id':item.id}) }}">Se désister</a>
-                                {% endif %}
+{#                                    {% if app.user in item.lstParticipantInscript and app.user != item.organisateur and item.etat.code != 'AT'%}#}
+                                        <a href="{{ path("desist_sortie", {'id':item.id}) }}">Se désister</a>
+{#                                    {% endif %}#}
 
-                                {% if app.user == item.organisateur and item.etat.code == 'CREA' %}
-                                    <a href="{{ path("modify_sortie", {'id':item.id}) }}">Modifier</a>
-                                {% endif %}
+                                    {% if app.user == item.organisateur and item.etat.code == 'CREA'%}
+                                        <a href="{{ path("modify_sortie", {'id':item.id}) }}">Modifier</a>
+                                    {% endif %}
 
-                                {% if  app.user not in item.lstParticipant and item.etat.code == 'O' and app.user != item.organisateur %}
-                                    <a href="{{ path("register_sortie", {'id':item.id}) }}">S'inscrire</a>
-                                {% endif %}
+                                    {% if  item.isSubscribed(app.user) != true and item.etat.code == 'O' and app.user != item.organisateur%}
+                                        <a href="{{ path("register_sortie", {'id':item.id}) }}">S'inscrire</a>
+                                    {% endif %}
 
-                                {% if  app.user == item.organisateur and item.etat.code == 'O' %}
-                                    <a href="{{ path("cancel_sortie", {'id':item.id}) }}">Annuler</a>
-                                {% endif %}
-                            </td>
+                                    {% if  app.user == item.organisateur and item.etat.code == 'O'%}
+                                        <a href="{{ path("cancel_sortie", {'id':item.id}) }}">Annuler</a>
+                                    {% endif %}
+                                </td>
                         {% endif %}
                     </tr>
                 {% endfor %}
@@ -76,11 +74,10 @@
         </div>
     </div>
 
-    <div class="buttons">
-        <a href="{{ path("create_sortie") }}">
-            <input class="btn btn-success"
-                   type="button"
-                   value="Créer une sortie">
-        </a>
-    </div>
+    <a href="{{ path("create_sortie") }}">
+        <input class="btn btn-success"
+           type="button"
+           value="Créer une sortie">
+    </a>
+
 {% endblock %}
