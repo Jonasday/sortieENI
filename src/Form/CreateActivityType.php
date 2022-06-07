@@ -130,12 +130,12 @@ class CreateActivityType extends AbstractType
                 $data = $event->getData();
 
                 $ville = $data->getVille();
-                $positions = null === $ville ? [] : $ville->getAvailablePositions();
+                $lieux = null === $ville ? [] : $ville->getLstLieu();
 
-                $form->add('position', EntityType::class, [
-                    'class' => Position::class,
-                    'placeholder' => '',
-                    'choices' => $positions,
+                $form->add('lieu', EntityType::class, [
+                    'class' => Lieu::class,
+                    'placeholder' => 'Choisir un lieu...',
+                    'choices' => $lieux,
                 ]);
             }
         );
