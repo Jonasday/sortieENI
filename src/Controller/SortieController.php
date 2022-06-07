@@ -140,6 +140,8 @@ class SortieController extends AbstractController
     public function desistActivity($id, SortieRepository $sortieRepository): Response
     {
         $sortie = $sortieRepository->find($id);
+        $sortie->removeLstParticipant($this->getUser());
+        $sortieRepository->add($sortie, true);
 
         return $this->render('sortie/desist_sortie.html.twig', [
             'controller_name' => 'SortieController',
@@ -153,6 +155,8 @@ class SortieController extends AbstractController
     public function registerToActivity($id, SortieRepository $sortieRepository): Response
     {
         $sortie = $sortieRepository->find($id);
+        $sortie->addLstParticipant($this->getUser());
+        $sortieRepository->add($sortie, true);
 
         return $this->render('sortie/register_sortie.html.twig', [
             'controller_name' => 'SortieController',

@@ -17,6 +17,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Regex;
 
 
 class CreateActivityType extends AbstractType
@@ -26,7 +28,7 @@ class CreateActivityType extends AbstractType
         $builder
             ->add('nom', TextType::class, [
                 'label' => 'Nom de la sortie : ',
-                'required' => true
+                'required' => true,
             ])
             ->add('dateHeureDebut', DateTimeType::class, [
                 'label' => 'Date et heure de la sortie : ',
@@ -37,7 +39,7 @@ class CreateActivityType extends AbstractType
             ->add('dateLimiteInscription', DateType::class, [
                 'label' => 'Date limite d\'inscription : ',
                 'required' => true,
-                'widget' => 'single_text'
+                'widget' => 'single_text',
             ])
             ->add('nbInscriptionsMax', NumberType::class, [
                 'label' => 'Nombre de places : ',

@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SortieRepository::class)]
 class Sortie
@@ -17,18 +19,35 @@ class Sortie
     #[ORM\Column(type: 'string', length: 255)]
     private $nom;
 
+    /**
+     * @Assert\GreaterThan("today", message="La date de début ne peut être antérieure à aujourd'hui !")
+     */
     #[ORM\Column(type: 'datetime')]
     private $dateHeureDebut;
 
+    /**
+     * @Assert\GreaterThanOrEqual("30", message="La durée de la sortie doit être supérieure à 30 minutes  !")
+     */
     #[ORM\Column(type: 'integer')]
     private $duree;
 
+    /**
+     * @Assert\LessThanOrEqual(propertyPath="dateHeureDebut", message="La date de clôture des inscriptions doit être avant le début de la sortie !")
+     * @Assert\GreaterThanOrEqual("today", message="La date de clôture des inscriptions ne peut être antérieure à aujourd'hui !")
+     */
     #[ORM\Column(type: 'datetime')]
     private $dateLimiteInscription;
 
+    /**
+     * @Assert\GreaterThanOrEqual("2", message="Pour créer une sortie il faut au minimun 2 personnes !")
+     */
     #[ORM\Column(type: 'integer')]
     private $nbInscriptionsMax;
 
+    /**
+     * @Assert\GreaterThanOrEqual("2", message="Pour créer une sortie il faut au minimun 2 personnes !")
+     * @Assert\Regex(pattern="/[a-zA-Z0-9 ]+/", match=true, message="Les caractères spéciaux sont interdits dans la description")
+     */
     #[ORM\Column(type: 'text')]
     private $infosSortie;
 
@@ -52,6 +71,8 @@ class Sortie
     #[ORM\ManyToOne(targetEntity: Lieu::class, inversedBy: 'lstSortie')]
     #[ORM\JoinColumn(nullable: false)]
     private $lieu;
+
+    //ccouou
 
     #[ORM\ManyToOne(targetEntity: Etat::class, inversedBy: 'lstSortie')]
     #[ORM\JoinColumn(nullable: false)]
@@ -206,5 +227,22 @@ class Sortie
 
         return $this;
     }
+
+//    /**
+//     * Teste si un User est inscrit à cette sortie
+//     *
+//     * @param UserInterface $user
+//     * @return bool
+//     */
+//    public function isSubscribed(UserInterface $user): bool
+//    {
+//        foreach($this->getLstParticipant() as $participant){
+//            if ($participant->getParticipant() === $user){
+//                return true;
+//            }
+//        }
+//
+//        return false;
+//    }
 
 }

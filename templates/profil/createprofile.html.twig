@@ -5,12 +5,13 @@
 
 {% block body %}
 
+
 {% if app.user.image %}
     <img src="{{ asset('uploads/StockageAvatar/' ~ app.user.image) }}" alt="Avatar du profile">
 {% endif %}
 
 
-    <h2 align="center"> Mon profil</h2>
+    <h2> Mon profil</h2>
     <div class="container">
             {{form_start(form)}}
 
