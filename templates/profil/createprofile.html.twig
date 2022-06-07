@@ -5,13 +5,15 @@
 
 {% block body %}
 
+    <div class="container_photo">
 {% if app.user.image %}
-    <img src="{{ asset('uploads/StockageAvatar/' ~ app.user.image) }}" alt="Avatar du profile">
+    <img src="{{ asset('uploads/StockageAvatar/' ~ app.user.image) }}" alt="Avatar du profile" class="photoprofile">
 {% endif %}
+    </div>
 
 
-    <h2 align="center"> Mon profil</h2>
     <div class="container">
+        <h2> Mon profil</h2>
             {{form_start(form)}}
 
         <div class="row">

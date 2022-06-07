@@ -61,3 +61,8 @@ text-align: center;
 .table>:not(:first-child) {
     border: none;
 }
+
+img {
+    width: 200px;
+    object-fit: cover;
+}
