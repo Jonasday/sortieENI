@@ -62,7 +62,9 @@ text-align: center;
     border: none;
 }
 
-img {
+.img {
     width: 200px;
     object-fit: cover;
+    text-align: center;
+
 }
