@@ -14,7 +14,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
 class CreateProfileType extends AbstractType
@@ -27,12 +26,17 @@ class CreateProfileType extends AbstractType
                 'required' => true
             ])
             ->add('prenom', TextType::class, [
-                'label' => 'Prenom :',
+                'label' => 'Prénom :',
+                'required' => true
+            ])
+
+            ->add('nom', TextType::class, [
+                'label' => 'Nom :',
                 'required' => true
             ])
 
             ->add('telephone', TextType::class, [
-                'label' => 'Telephone :',
+                'label' => 'Téléphone :',
                 'required' => true
             ])
             ->add('campus', EntityType::class, [
@@ -44,15 +48,27 @@ class CreateProfileType extends AbstractType
                 'label' => 'Email : ',
                 'required' => true
             ])
+
+
+
+
+
+
+
             //->add('roles')
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
+                'label' => 'Mot de passe : ',
                 'first_options' => [
-                    'label' => 'Mot de passe',
+
+
                     'help' => 'Le mot de passe doit contenir au minimum 8 caractères dont une minuscule, une majuscule, un chiffre et un caractère spécial.',
                 ],
+
+
+
                 'second_options' => [
-                    'label' => 'Confirmation du mot de passe.',
+                    'label' => 'Confirmation du mot de passe :',
                 ],
                 'mapped' => false,
 
@@ -73,11 +89,9 @@ class CreateProfileType extends AbstractType
                     ])
                 ]
 
-            ])
 
-            ->add('nom', TextType::class, [
-                'label' => 'Nom :',
-                'required' => true
+
+
             ])
             ->add('image', FileType::class, [
             'label' => 'Ma photo :',
