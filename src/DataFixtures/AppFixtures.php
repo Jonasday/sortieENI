@@ -7,7 +7,6 @@ use App\Entity\Etat;
 use App\Entity\Lieu;
 use App\Entity\Participant;
 use App\Entity\Sortie;
-use App\Entity\SortieInscription;
 use App\Entity\Ville;
 use App\Repository\VilleRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -88,7 +87,6 @@ class AppFixtures extends Fixture
     $this->lieux($manager);
     $this->Participants($manager);
     $this->Sortie($manager);
-    $this->SortieInscription($manager);
     $this->Admin($manager);
 
 
