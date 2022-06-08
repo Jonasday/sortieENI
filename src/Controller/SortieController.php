@@ -46,12 +46,14 @@ class SortieController extends AbstractController
                 $etat = $etatRepository->findOneBy(['code' => 'CREA']);
                 $sortie->setEtat($etat);
                 $sortieRepository->add($sortie, true);
+                return $this->redirectToRoute('home');
             }
 
             if ($form->get('publish')->isClicked()) {
                 $etat = $etatRepository->findOneBy(['code' => 'O']);
                 $sortie->setEtat($etat);
                 $sortieRepository->add($sortie, true);
+                return $this->redirectToRoute('home');
             }
         }
 

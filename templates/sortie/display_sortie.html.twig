@@ -7,13 +7,13 @@
 
         <div class="row">
             <div class="col-md-3">
-                <p>Nom de la sortie : </p>
+                <p><strong>Nom de la sortie : </strong></p>
             </div>
             <div class="col-md-3">
                 <p>{{ sortie.nom }}</p>
             </div>
             <div class="col-md-3">
-                <p>Campus : </p>
+                <p><strong>Campus : </strong></p>
             </div>
             <div class="col-md-3">
                 <p>{{ sortie.Campus.nom }}</p>
@@ -22,13 +22,13 @@
 
         <div class="row">
             <div class="col-md-3">
-                <p>Date et heure de la sortie : </p>
+                <p><strong>Date et heure de la sortie : </strong></p>
             </div>
             <div class="col-md-3">
                 <p>{{ sortie.dateHeureDebut|date("H:i d M y") }}</p>
             </div>
             <div class="col-md-3">
-                <p>Ville : </p>
+                <p><strong>Ville : </strong></p>
             </div>
             <div class="col-md-3">
                 <p>{{ sortie.Lieu.Ville.nom }}</p>
@@ -37,13 +37,13 @@
 
         <div class="row">
             <div class="col-md-3">
-                <p>Date limite d'inscription : </p>
+                <p><strong>Date limite d'inscription : </strong></p>
             </div>
             <div class="col-md-3">
                 <p>{{ sortie.dateLimiteInscription|date("d M y") }}</p>
             </div>
             <div class="col-md-3">
-                <p>Lieu: </p>
+                <p><strong>Lieu: </strong></p>
             </div>
             <div class="col-md-3">
                 <p>{{ sortie.Lieu.nom }}</p>
@@ -52,13 +52,13 @@
 
         <div class="row">
             <div class="col-md-3">
-                <p>Nombre de places : </p>
+                <p><strong>Nombre de places : </strong></p>
             </div>
             <div class="col-md-3">
                 <p>{{ sortie.nbInscriptionsMax }}</p>
             </div>
             <div class="col-md-3">
-                <p>Rue : </p>
+                <p><strong>Rue : </strong></p>
             </div>
             <div class="col-md-3">
                 <p>{{ sortie.Lieu.rue }}</p>
@@ -67,13 +67,13 @@
 
         <div class="row">
             <div class="col-md-3">
-                <p>Durée : </p>
+                <p><strong>Durée : </strong></p>
             </div>
             <div class="col-md-3">
                 <p>{{ sortie.duree }}</p>
             </div>
             <div class="col-md-3">
-                <p>Code Postal : </p>
+                <p><strong>Code Postal : </strong></p>
             </div>
             <div class="col-md-3">
                 <p>{{ sortie.Lieu.Ville.codePostal }}</p>
@@ -82,24 +82,24 @@
 
         <div class="row">
             <div class="col-md-3">
-                <p>Description et infos : </p>
+                <p><strong>Description et infos : </strong></p>
             </div>
             <div class="col-md-3">
                 <p>{{ sortie.infosSortie }}</p>
             </div>
             <div class="col-md-3">
-                <p>Latitude : </p>
+                <p><strong>Latitude : </strong></p>
             </div>
             <div class="col-md-3">
                 <p>{{ sortie.Lieu.latitude }}</p>
             </div>
         </div>
 
-        <p>Longitude : {{ sortie.Lieu.longitude }}</p>
+        <p><strong>Longitude :</strong> {{ sortie.Lieu.longitude }}</p>
 
 
         <div class="table">
-            <p>Liste des participants inscrits : </p>
+            <p><strong>Liste des participants inscrits : </p>
             <div class="row">
                 <div class="col-md-10 offset-md-5">
                     <table>
