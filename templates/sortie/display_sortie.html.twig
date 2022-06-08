@@ -1,107 +1,118 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container">
+<div class="container">
 
-        {% block nomPage %}<h2>Afficher une sortie</h2>{% endblock %}
+    {% block nomPage %}<h2>Afficher une sortie</h2>{% endblock %}
 
-        <div class="row">
-            <div class="col-md-3">
-                <p><strong>Nom de la sortie : </strong></p>
-            </div>
-            <div class="col-md-3">
-                <p>{{ sortie.nom }}</p>
-            </div>
-            <div class="col-md-3">
-                <p><strong>Campus : </strong></p>
-            </div>
-            <div class="col-md-3">
-                <p>{{ sortie.Campus.nom }}</p>
-            </div>
+    <div class="row">
+        <div class="col-md-3">
+            <p><strong>Nom de la sortie : </strong></p>
         </div>
-
-        <div class="row">
-            <div class="col-md-3">
-                <p><strong>Date et heure de la sortie : </strong></p>
-            </div>
-            <div class="col-md-3">
-                <p>{{ sortie.dateHeureDebut|date("H:i d M y") }}</p>
-            </div>
-            <div class="col-md-3">
-                <p><strong>Ville : </strong></p>
-            </div>
-            <div class="col-md-3">
-                <p>{{ sortie.Lieu.Ville.nom }}</p>
-            </div>
+        <div class="col-md-3">
+            <p>{{ sortie.nom }}</p>
         </div>
-
-        <div class="row">
-            <div class="col-md-3">
-                <p><strong>Date limite d'inscription : </strong></p>
-            </div>
-            <div class="col-md-3">
-                <p>{{ sortie.dateLimiteInscription|date("d M y") }}</p>
-            </div>
-            <div class="col-md-3">
-                <p><strong>Lieu: </strong></p>
-            </div>
-            <div class="col-md-3">
-                <p>{{ sortie.Lieu.nom }}</p>
-            </div>
+        <div class="col-md-3">
+            <p><strong>Campus : </strong></p>
         </div>
-
-        <div class="row">
-            <div class="col-md-3">
-                <p><strong>Nombre de places : </strong></p>
-            </div>
-            <div class="col-md-3">
-                <p>{{ sortie.nbInscriptionsMax }}</p>
-            </div>
-            <div class="col-md-3">
-                <p><strong>Rue : </strong></p>
-            </div>
-            <div class="col-md-3">
-                <p>{{ sortie.Lieu.rue }}</p>
-            </div>
+        <div class="col-md-3">
+            <p>{{ sortie.Campus.nom }}</p>
         </div>
+    </div>
 
-        <div class="row">
-            <div class="col-md-3">
-                <p><strong>Durée : </strong></p>
-            </div>
-            <div class="col-md-3">
-                <p>{{ sortie.duree }}</p>
-            </div>
-            <div class="col-md-3">
-                <p><strong>Code Postal : </strong></p>
-            </div>
-            <div class="col-md-3">
-                <p>{{ sortie.Lieu.Ville.codePostal }}</p>
-            </div>
+    <div class="row">
+        <div class="col-md-3">
+            <p><strong>Date et heure de la sortie : </strong></p>
         </div>
-
-        <div class="row">
-            <div class="col-md-3">
-                <p><strong>Description et infos : </strong></p>
-            </div>
-            <div class="col-md-3">
-                <p>{{ sortie.infosSortie }}</p>
-            </div>
-            <div class="col-md-3">
-                <p><strong>Latitude : </strong></p>
-            </div>
-            <div class="col-md-3">
-                <p>{{ sortie.Lieu.latitude }}</p>
-            </div>
+        <div class="col-md-3">
+            <p>{{ sortie.dateHeureDebut|date("H:i d M y") }}</p>
         </div>
+        <div class="col-md-3">
+            <p><strong>Ville : </strong></p>
+        </div>
+        <div class="col-md-3">
+            <p>{{ sortie.Lieu.Ville.nom }}</p>
+        </div>
+    </div>
 
-        <p><strong>Longitude :</strong> {{ sortie.Lieu.longitude }}</p>
+    <div class="row">
+        <div class="col-md-3">
+            <p><strong>Date limite d'inscription : </strong></p>
+        </div>
+        <div class="col-md-3">
+            <p>{{ sortie.dateLimiteInscription|date("d M y") }}</p>
+        </div>
+        <div class="col-md-3">
+            <p><strong>Lieu: </strong></p>
+        </div>
+        <div class="col-md-3">
+            <p>{{ sortie.Lieu.nom }}</p>
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="col-md-3">
+            <p><strong>Nombre de places : </strong></p>
+        </div>
+        <div class="col-md-3">
+            <p>{{ sortie.nbInscriptionsMax }}</p>
+        </div>
+        <div class="col-md-3">
+            <p><strong>Rue : </strong></p>
+        </div>
+        <div class="col-md-3">
+            <p>{{ sortie.Lieu.rue }}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <p><strong>Durée : </strong></p>
+        </div>
+        <div class="col-md-3">
+            <p>{{ sortie.duree }}</p>
+        </div>
+        <div class="col-md-3">
+            <p><strong>Code Postal : </strong></p>
+        </div>
+        <div class="col-md-3">
+            <p>{{ sortie.Lieu.Ville.codePostal }}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <p><strong>Description et infos : </strong></p>
+        </div>
+        <div class="col-md-3">
+            <p>{{ sortie.infosSortie }}</p>
+        </div>
+        <div class="col-md-3">
+            <p><strong>Latitude : </strong></p>
+        </div>
+        <div class="col-md-3">
+            <p>{{ sortie.Lieu.latitude }}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <p></p>
+        </div>
+        <div class="col-md-3">
+            <p></p>
+        </div>
+        <div class="col-md-3">
+            <p><strong>Longitude :</strong></p>
+        </div>
+        <div class="col-md-3">
+            <p>{{ sortie.Lieu.longitude }}</p>
+        </div>
 
         <div class="table">
             <h2>Liste des participants inscrits : </h2>
             <div class="row">
-                <div class="col-md-10 offset-md-5">
+                <div class="liste">
                     <table>
                         <thead> <!-- En-tête du tableau -->
                         <tr>
@@ -112,7 +123,8 @@
                         <tbody> <!-- Corps du tableau -->
                         {% for friend in lstParticipant %}
                             <tr>
-                                <td><a href="{{ path("profil_research", {'id':friend.id}) }}">{{ friend.pseudo }}</a></td>
+                                <td><a href="{{ path("profil_research", {'id':friend.id}) }}">{{ friend.pseudo }}</a>
+                                </td>
                                 <td>{{ friend.nom }}</td>
                             </tr>
                         {% endfor %}
@@ -124,4 +136,4 @@
         </div>
     </div>
 
-{% endblock %}
+    {% endblock %}

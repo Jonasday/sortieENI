@@ -103,7 +103,7 @@ class EtatSortieUpdate
 
         if ($sortie->getEtat()->getCode() === "O" &&
             $sortie->getDateLimiteInscription() <= $now &&
-            $sortie->getCode() !== "CLO" &&
+            $sortie->getEtat() !== "CLO" &&
             $sortie->getDateHeureDebut() < $now ||
             sizeof($sortie->getLstParticipant()) >= $sortie->getNbInscriptionsMax()
         ) {

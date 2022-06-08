@@ -73,3 +73,8 @@ img {
     display: flex;
     justify-content: center;
 }
+
+.liste {
+    display: flex;
+    justify-content: center;
+}
