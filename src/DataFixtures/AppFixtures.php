@@ -158,6 +158,11 @@ class AppFixtures extends Fixture
 
         public function Sortie(ObjectManager $manager): void{
 
+        $tableSortie = ['Bowling', 'Bar', 'Tournoi de foot', 'Baseball', 'Sieste collective',
+            'Soirée chez moi', 'Spectacle de lumière', 'Théâtre', 'Cinema', 'Basketball',
+            'Piscine', 'Aquagym', 'Poney Club', 'Concert', 'Karting', 'Soccer', 'Speed Dating',
+            'Restaurant', 'Barbecue', 'Poker'];
+
             // Création des sorties
         $etat = $manager->getRepository(Etat::class)->findAll();
         $lieu = $manager->getRepository(Lieu::class)->findAll();
@@ -170,7 +175,7 @@ class AppFixtures extends Fixture
                 $debut = $this->faker->dateTimeBetween('-5 months');
                 $debutPlusDuree = $debut->modify('- 5 days');
 
-                $sortie->setNom($this->faker->word)
+                $sortie->setNom($this->faker->randomElement($tableSortie))
                     ->setDateHeureDebut($debut)
                     ->setDuree($duree)
                     ->setDateLimiteInscription($this->faker->dateTimeBetween($startDate = $debutPlusDuree, $endDate = $debut))
@@ -191,7 +196,7 @@ class AppFixtures extends Fixture
     {
         $campus = $manager->getRepository(Campus::class)->findAll();
 
-        // Création de jonas
+        // Création de Jonas
 
             $plainTextPassword = "Jonas35";
 

@@ -2,83 +2,101 @@
 
 
 {% block body %}
+    <div class="container">
+        <h2>Filtrer les sorties</h2>
 
-    <h2>Filtrer les sorties</h2>
+        {{ form_start(form) }}
+        <div class="row justify-content-start">
+            <div class="col-4 offset-md-1">
+                {{ form_row(form.campus) }}
+                {{ form_row(form.motsClef) }}
+                {{ form_row(form.dateMin) }}
+                {{ form_row(form.dateMax) }}
+            </div>
+            <div class="col-4">
+                {{ form_row(form.sortieOrganisateur) }}
+                {{ form_row(form.sortieInscrit) }}
+                {{ form_row(form.sortiePasInscrit) }}
+                {{ form_row(form.sortiePasse) }}
+            </div>
+            <div class="col">
+                <div class="btn btn-dark">
+                {{ form_row(form.submit) }}
+                </div>
+            </div>
+        </div>
+        {{ form_rest(form) }}
+        <br>
+        <div class="col-md-10 offset-md-1">
+            <div class="row">
+                <table>
 
-    {{ form_start(form) }}
-    {{ form_row(form.campus) }}
-    {{ form_row(form.motsClef) }}
-    {{ form_rest(form) }}
-
-    <div class="col-md-10 offset-md-1">
-        <div class="row">
-            <table>
-
-                <thead> <!-- En-tête du tableau -->
-                <tr>
-                    <th>Nom de la sortie</th>
-                    <th>Date de la sortie</th>
-                    <th>Clôture</th>
-                    <th>Inscrits/Places</th>
-                    <th>Etat</th>
-                    <th>Inscrit</th>
-                    <th>Organisateur</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-
-                <tbody> <!-- Corps du tableau -->
-                {% for item in lstsorties %}
+                    <thead> <!-- En-tête du tableau -->
                     <tr>
-                        {% if item.etat.code != 'AH' and item.etat.code != 'AN'%}
-                            <td>{{ item.nom }}</td>
-                            <td>{{ item.dateHeureDebut|date('H:i d M Y ') }}</td>
-                            <td>{{ item.dateLimiteInscription|date(' d M Y ') }}</td>
-                            <td>{{ item.lstParticipant | length}}/{{ item.nbInscriptionsMax }}</td>
-                            <td>{{ item.etat.libelle }}</td>
+                        <th>Nom de la sortie</th>
+                        <th>Date de la sortie</th>
+                        <th>Clôture</th>
+                        <th>Inscrits/Places</th>
+                        <th>Etat</th>
+                        <th>Inscrit</th>
+                        <th>Organisateur</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
 
-                            <td>
-                                {% if app.user in item.lstParticipant or app.user == item.organisateur %}
-                                    x
-                                {% endif %}
-                            </td>
+                    <tbody> <!-- Corps du tableau -->
+                    {% for item in lstsorties %}
+                        <tr>
+                            {% if item.etat.code != 'AH' and item.etat.code != 'AN' %}
+                                <td>{{ item.nom }}</td>
+                                <td>{{ item.dateHeureDebut|date('H:i d M Y ') }}</td>
+                                <td>{{ item.dateLimiteInscription|date(' d M Y ') }}</td>
+                                <td>{{ item.lstParticipant | length }}/{{ item.nbInscriptionsMax }}</td>
+                                <td>{{ item.etat.libelle }}</td>
 
-                            <td>
-                                <a href="{{ path("profil_research", {'id':item.organisateur.id}) }}">{{ item.organisateur.nom }}</a>
-                            </td>
+                                <td>
+                                    {% if app.user in item.lstParticipant or app.user == item.organisateur %}
+                                        x
+                                    {% endif %}
+                                </td>
 
-                            <td>
+                                <td>
+                                    <a href="{{ path("profil_research", {'id':item.organisateur.id}) }}">{{ item.organisateur.nom }}</a>
+                                </td>
+
+                                <td>
                                     <a href="{{ path("display_sortie", {'id':item.id}) }}">Afficher</a>
 
-                                {% if app.user in item.lstParticipant and app.user != item.organisateur and item.etat.code != 'AEC' and item.etat.code != 'AT' %}
-                                    <a href="{{ path("desist_sortie", {'id':item.id}) }}">Se désister</a>
-                                {% endif %}
+                                    {% if app.user in item.lstParticipant and app.user != item.organisateur and item.etat.code != 'AEC' and item.etat.code != 'AT' %}
+                                        <a href="{{ path("desist_sortie", {'id':item.id}) }}">Se désister</a>
+                                    {% endif %}
 
-                                {% if app.user == item.organisateur and item.etat.code == 'CREA' %}
-                                    <a href="{{ path("modify_sortie", {'id':item.id}) }}">Modifier</a>
-                                {% endif %}
+                                    {% if app.user == item.organisateur and item.etat.code == 'CREA' %}
+                                        <a href="{{ path("modify_sortie", {'id':item.id}) }}">Modifier</a>
+                                    {% endif %}
 
-                                {% if  app.user not in item.lstParticipant and item.etat.code == 'O' and app.user != item.organisateur and item.lstParticipant | length < item.nbInscriptionsMax%}
-                                    <a href="{{ path("register_sortie", {'id':item.id}) }}">S'inscrire</a>
-                                {% endif %}
+                                    {% if  app.user not in item.lstParticipant and item.etat.code == 'O' and app.user != item.organisateur and item.lstParticipant | length < item.nbInscriptionsMax %}
+                                        <a href="{{ path("register_sortie", {'id':item.id}) }}">S'inscrire</a>
+                                    {% endif %}
 
-                                {% if  app.user == item.organisateur and item.etat.code == 'O' %}
-                                    <a href="{{ path("cancel_sortie", {'id':item.id}) }}">Annuler</a>
-                                {% endif %}
-                            </td>
-                        {% endif %}
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                                    {% if  app.user == item.organisateur and item.etat.code == 'O' %}
+                                        <a href="{{ path("cancel_sortie", {'id':item.id}) }}">Annuler</a>
+                                    {% endif %}
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
 
-    <div class="buttons">
-        <a href="{{ path("create_sortie") }}">
-            <input class="btn btn-success"
-                   type="button"
-                   value="Créer une sortie">
-        </a>
+        <div class="buttons">
+            <a href="{{ path("create_sortie") }}">
+                <input class="btn btn-success"
+                       type="button"
+                       value="Créer une sortie">
+            </a>
+        </div>
     </div>
 {% endblock %}

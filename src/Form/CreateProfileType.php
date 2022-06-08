@@ -41,6 +41,7 @@ class CreateProfileType extends AbstractType
             ])
             ->add('campus', EntityType::class, [
                 'class' => Campus::class,
+                'label' => 'Campus : ',
                 'choice_label' => 'nom'
             ])
 
@@ -48,11 +49,6 @@ class CreateProfileType extends AbstractType
                 'label' => 'Email : ',
                 'required' => true
             ])
-
-
-
-
-
 
 
             //->add('roles')
@@ -64,8 +60,6 @@ class CreateProfileType extends AbstractType
 
                     'help' => 'Le mot de passe doit contenir au minimum 8 caractères dont une minuscule, une majuscule, un chiffre et un caractère spécial.',
                 ],
-
-
 
                 'second_options' => [
                     'label' => 'Confirmation du mot de passe :',

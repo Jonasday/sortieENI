@@ -5,95 +5,99 @@
 
 {% block body %}
 
-    <div class="container_photo">
-{% if app.user.image %}
-    <img src="{{ asset('uploads/StockageAvatar/' ~ app.user.image) }}" alt="Avatar du profile" class="photoprofile">
-{% endif %}
-    </div>
-
 
     <div class="container">
-        <h2> Mon profil</h2>
-            {{form_start(form)}}
 
-        <div class="row">
-            <div class="col">
-            {{ form_label(form.pseudo) }}
-            </div>
-            <div class="col">
-            {{ form_widget(form.pseudo) }} <br>
-            </div>
+        <h2>Mon profil</h2>
+        {{ form_start(form) }}
+
+        <div class="container_photo">
+            {% if app.user.image %}
+                <img src="{{ asset('uploads/StockageAvatar/' ~ app.user.image) }}" alt="Avatar du profile"
+                     class="photoprofile">
+            {% endif %}
         </div>
 
-        <div class="row">
-            <div class="col">
-            {{ form_label(form.prenom) }}
-            </div>
-            <div class="col">
-            {{form_widget(form.prenom) }} <br>
-            </div>
-        </div>
+        <br>
 
         <div class="row">
-            <div class="col">
-            {{ form_label(form.nom)}}
+            <div class="col-4 offset-md-3">
+                {{ form_label(form.pseudo) }}
             </div>
             <div class="col">
-            {{form_widget(form.nom)}} <br>
+                {{ form_widget(form.pseudo) }} <br>
             </div>
         </div>
 
         <div class="row">
-            <div class="col">
-            {{form_label(form.telephone)}}
+            <div class="col-4 offset-md-3">
+                {{ form_label(form.prenom) }}
             </div>
             <div class="col">
-            {{form_widget(form.telephone)}} <br>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-            {{form_label(form.email)}}
-            </div>
-            <div class="col">
-            {{form_widget(form.email)}} <br>
+                {{ form_widget(form.prenom) }} <br>
             </div>
         </div>
 
         <div class="row">
-            <div class="col">
-            {{form_label(form.password)}}
+            <div class="col-4 offset-md-3">
+                {{ form_label(form.nom) }}
             </div>
             <div class="col">
-            {{form_widget(form.password)}} <br>
-            </div>
-        </div>
-{#test#}
-        <div class="row">
-            <div class="col">
-            {{form_label(form.campus)}}
-            </div>
-            <div class="col">
-            {{form_widget(form.campus)}} <br>
+                {{ form_widget(form.nom) }} <br>
             </div>
         </div>
 
         <div class="row">
+            <div class="col-4 offset-md-3">
+                {{ form_label(form.telephone) }}
+            </div>
             <div class="col">
-                {{form_row(form.image)}}
+                {{ form_widget(form.telephone) }} <br>
             </div>
         </div>
 
-            {%block buttons%}
-        <div class="buttons">
-
-            <button type="submit" class="btn btn-success" >Enregistrer</button>
-            <button type="submit" class="btn btn-success" >Annuler</button>
+        <div class="row">
+            <div class="col-4 offset-md-3">
+                {{ form_label(form.email) }}
+            </div>
+            <div class="col">
+                {{ form_widget(form.email) }} <br>
+            </div>
         </div>
-            {%endblock%}
 
-            {{ form_end(form) }}
+        <div class="row">
+            <div class="col-4 offset-md-3">
+                {{ form_label(form.password) }}
+            </div>
+            <div class="col">
+                {{ form_widget(form.password) }} <br>
+            </div>
+        </div>
+        {# test #}
+        <div class="row">
+            <div class="col-4 offset-md-3">
+                {{ form_label(form.campus) }}
+            </div>
+            <div class="col">
+                {{ form_widget(form.campus) }} <br>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-4 offset-md-3">
+                {{ form_row(form.image) }}
+            </div>
+        </div>
+
+        {% block buttons %}
+            <div class="buttons">
+
+                <button type="submit" class="btn btn-success">Enregistrer</button>
+                <button type="submit" class="btn btn-success">Annuler</button>
+            </div>
+        {% endblock %}
+
+        {{ form_end(form) }}
 
     </div>
 {% endblock %}

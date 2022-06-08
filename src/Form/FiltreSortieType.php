@@ -19,7 +19,7 @@ class FiltreSortieType extends AbstractType
     {
         $builder
             ->add('campus', EntityType::class,[
-                'label' => 'Campus',
+                'label' => 'Campus : ',
                 'class' => Campus::class,
                 'choice_label' => 'nom',
                 'required' => false,
@@ -44,22 +44,28 @@ class FiltreSortieType extends AbstractType
                 'required' => false,
             ])
             ->add('sortieOrganisateur', CheckboxType::class, [
-                'label' => "Sorties dont je suis l'organisateur/trice",
+                'label' => "Sorties dont je suis l'organisateur/trice ",
                 'required' => false,
             ])
             ->add('sortieInscrit', CheckboxType::class, [
-                'label' => 'Sorties auxquelles je suis inscrit/e',
+                'label' => 'Sorties auxquelles je suis inscrit/e ',
                 'required' => false,
             ])
             ->add('sortiePasInscrit', CheckboxType::class, [
-                'label' => 'Sorties auxquelles je ne suis pas inscrit/e',
+                'label' => 'Sorties auxquelles je ne suis pas inscrit/e ',
                 'required' => false,
             ])
             ->add('sortiePasse', CheckboxType::class, [
-                'label' => 'Sorties passées',
+                'label' => 'Sorties passées ',
                 'required' => false,
             ])
-            ->add('submit', SubmitType::class, ['label' => 'Recherche'])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Recherche',
+                'attr' =>
+                    [
+                        'class' => 'btn btn-dark',
+                    ]
+                ])
         ;
     }
 
