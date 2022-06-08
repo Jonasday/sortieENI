@@ -42,57 +42,74 @@ class SortieRepository extends ServiceEntityRepository
         }
     }
 
+    public function customQuerryUpdate()
+    {
+        $queryBuilder = $this->createQueryBuilder('sortie')
+            ->select('sortie', 'etat')
+            ->innerJoin('sortie.etat','etat');
+
+        $query = $queryBuilder->getQuery();
+        return $query->getResult();
+    }
+
     /**
      * @return Sortie[] Returns an array of Sortie objects
      */
     public function filterFormCustomQuery(Search $search, $currentuser, $etatRepository): array
     {
-        $queryBuilder = $this->createQueryBuilder('p');
+        $queryBuilder = $this->createQueryBuilder('sortie')
+        ->addSelect('participant','campus','lieu','etat', 'organisateur')
+        ->join('sortie.organisateur', 'organisateur')
+        ->join('sortie.lstParticipant', 'participant')
+        ->join('sortie.campus', 'campus')
+        ->join('sortie.lieu', 'lieu')
+        ->join('sortie.etat', 'etat')
+        ;
 
         if ($search->getCampus()){
-            $queryBuilder->andWhere('p.campus = :campus' )
+            $queryBuilder->andWhere('sortie.campus = :campus' )
                     ->setParameter('campus', $search->getCampus());
         }
 
         if ($search->getMotsClef()){
-            $queryBuilder->andWhere('p.nom LIKE :motclef' )
+            $queryBuilder->andWhere('sortie.nom LIKE :motclef' )
                 ->setParameter('motclef', "%{$search->getMotsClef()}%");
         }
 
         if ($search->getDateMin()){
-            $queryBuilder->andWhere('p.dateHeureDebut > :dateMin' )
+            $queryBuilder->andWhere('sortie.dateHeureDebut > :dateMin' )
                 ->setParameter('dateMin', $search->getDateMin());
         }
 
         if ($search->getDateMax()){
-            $queryBuilder->andWhere('p.dateHeureDebut < :dateMax' )
+            $queryBuilder->andWhere('sortie.dateHeureDebut < :dateMax' )
                 ->setParameter('dateMax', $search->getDateMax());
         }
 
         if ($search->isSortieOrganisateur()){
-            $queryBuilder->andWhere('p.organisateur = :user')
+            $queryBuilder->andWhere('sortie.organisateur = :user')
                 ->setParameter('user', $currentuser);
         }
 
         if ($search->isSortieInscrit()){
-            $queryBuilder->andWhere(':user MEMBER OF p.lstParticipant')
+            $queryBuilder->andWhere(':user MEMBER OF sortie.lstParticipant')
                 ->setParameter('user', $currentuser);
         }
 
         if ($search->isSortiePasInscrit()){
-            $queryBuilder->andWhere(':user NOT MEMBER OF p.lstParticipant')
+            $queryBuilder->andWhere(':user NOT MEMBER OF sortie.lstParticipant')
                 ->setParameter('user', $currentuser);
         }
 
         if ($search->isSortiePasse()){
             $etat = $etatRepository->findOneBy(['code' => 'AT']);
-            $queryBuilder->andWhere('p.etat = :etat')
+            $queryBuilder->andWhere('sortie.etat = :etat')
                 ->setParameter('etat', $etat);
         }
 
         // Permet de conditionner l'affichage des sortie en création. Je ne vois que les sorties en cours de création que je créée
         $etat = $etatRepository->findOneBy(['code' => 'CREA']);
-        $queryBuilder->andWhere('p.organisateur != :user AND p.etat != :etat OR p.organisateur = :user AND p.etat != :etat')
+        $queryBuilder->andWhere('sortie.organisateur != :user AND sortie.etat != :etat OR sortie.organisateur = :user')
             ->setParameter('etat', $etat)
             ->setParameter('user', $currentuser);
 

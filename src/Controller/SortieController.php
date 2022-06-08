@@ -46,12 +46,14 @@ class SortieController extends AbstractController
                 $etat = $etatRepository->findOneBy(['code' => 'CREA']);
                 $sortie->setEtat($etat);
                 $sortieRepository->add($sortie, true);
+                return $this->redirectToRoute('home');
             }
 
             if ($form->get('publish')->isClicked()) {
                 $etat = $etatRepository->findOneBy(['code' => 'O']);
                 $sortie->setEtat($etat);
                 $sortieRepository->add($sortie, true);
+                return $this->redirectToRoute('home');
             }
         }
 
@@ -73,6 +75,7 @@ class SortieController extends AbstractController
             'sortie' => $sortie,
             'lstParticipant' => $lstParticipant
         ]);
+
     }
 
     #Modifier une sortie
@@ -91,12 +94,14 @@ class SortieController extends AbstractController
                 $etat = $etatRepository->findOneBy(['code' => 'CREA']);
                 $sortie->setEtat($etat);
                 $sortieRepository->add($sortie, true);
+                return $this->redirectToRoute('home');
             }
 
             if ($form->get('publish')->isClicked()) {
                 $etat = $etatRepository->findOneBy(['code' => 'O']);
                 $sortie->setEtat($etat);
                 $sortieRepository->add($sortie, true);
+                return $this->redirectToRoute('home');
             }
 
         }
@@ -111,21 +116,25 @@ class SortieController extends AbstractController
 
     #Annuler une sortie
     #[Route('/cancel_sortie/{id}', name: 'cancel_sortie')]
-    public function cancelActivity($id, Request $request, SortieRepository $sortieRepository): Response
+    public function cancelActivity($id, Request $request, SortieRepository $sortieRepository, EtatRepository $etatRepository): Response
     {
         $sortie = $sortieRepository->find($id);
 
-//        $form = $this->createForm(cancelActivityType::class, $sortie);
+        $form = $this->createForm(cancelActivityType::class);
 
-//        $form->handleRequest($request);
+        $form->handleRequest($request);
 
-//        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
-//            if ($form->get('delete')->isClicked()) {
-                $sortieRepository->remove($sortie, true);
+            if ($form->get('delete')->isClicked()) {
+                $sortie->removeLstParticipant($this->getUser());
+                $motif = $form->getData();
+                $sortie->setInfosSortie($sortie->getInfosSortie().' ##SORTIE ANNULEE## '.$motif->getMotif());
+                $sortie->setEtat($etatRepository->findOneBy(['code' => 'AN']));
+                $sortieRepository->add($sortie, true);
                 return $this->redirectToRoute('home');
-//            }
-//        }
+           }
+        }
 
         return $this->render('sortie/cancel_sortie.html.twig', [
             'controller_name' => 'SortieController',

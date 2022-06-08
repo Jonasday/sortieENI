@@ -3,7 +3,7 @@
 {% block title %}<h1>Annuler une sortie</h1>{% endblock %}
 
 {% block body %}
-{#    {{ form_start(form) }}#}
+    {{ form_start(form) }}
     <div class="container">
         {% block nomPage %}<h2>Annuler une sortie</h2>{% endblock %}
         <div class="annuler">
@@ -11,15 +11,18 @@
             <p>Date de la sortie : {{ sortie.dateHeureDebut|date("H:i d M y") }}</p>
             <p>Campus : {{ sortie.Campus.nom }}</p>
             <p>Lieu : {{ sortie.Lieu.nom }}</p>
-{#            <p>Motif : <textarea id="motif">{{ sortie.infosSortie }}</textarea></p>#}
+
+            {{ form_label(form.motif) }}
+            {{ form_widget(form.motif) }}
+
         </div>
 
         {% block buttons %}
             <div class="buttons">
 
-{#                {{ form_widget(form.delete) }}#}
-                </a>
-                <a href="{{ path("create_sortie") }}">
+                {{ form_widget(form.delete) }}
+
+                <a href="{{ path("home") }}">
                     <input class="btn btn-success"
                            type="button"
                            value="Annuler">
@@ -27,7 +30,7 @@
 
             </div>
         {% endblock %}
-{#        {{ form_end(form) }}#}
+        {{ form_end(form) }}
     </div>
 {% endblock %}
 

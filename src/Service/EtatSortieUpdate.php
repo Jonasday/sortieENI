@@ -31,17 +31,37 @@ class EtatSortieUpdate
 
     public function update(): void
     {
-        $lstSortie = $this->sortieRepository->findAll();
-        $etatclosed = $this->etatRepository->findOneBy(['code' => 'CLO']);
-        $etatOngoing = $this->etatRepository->findOneBy(['code' => 'AEC']);
-        $etatEnd = $this->etatRepository->findOneBy(['code' => 'AT']);
-        $etatArchived = $this->etatRepository->findOneBy(['code' => 'AH']);
+        $lstSortie = $this->sortieRepository->customQuerryUpdate();
+        $lstEtat = $this->etatRepository->findAll();
 
+        foreach ($lstEtat as $item) {
+            if ($item->getCode() == "O"){
+                $etatopen = $item;
+            }
+            if ($item->getCode() == "CLO"){
+                $etatclosed = $item;
+            }
+            if ($item->getCode() == "AEC"){
+                $etatOngoing = $item;
+            }
+            if ($item->getCode() == "AT"){
+                $etatEnd = $item;
+            }
+            if ($item->getCode() == "AH"){
+                $etatArchived = $item;
+            }
+
+
+        }
 
         foreach ($lstSortie as $item) {
 
             if ($this->updateToClosed($item)) {
                 $item->setEtat($etatclosed);
+            }
+
+            if ($this->updateToOpen($item)) {
+                $item->setEtat($etatopen);
             }
 
             if ($this->updateToOngoingActivity($item)) {
@@ -62,6 +82,20 @@ class EtatSortieUpdate
 
     }
 
+    public function updateToOpen($sortie)
+    {
+        $now = new \DateTime();
+
+        if ($sortie->getEtat()->getCode() === "CLO" &&
+            $sortie->getDateLimiteInscription() >= $now &&
+            $sortie->getEtat()->getCode() !== "O" &&
+            $sortie->getDateHeureDebut() > $now &&
+            sizeof($sortie->getLstParticipant()) < $sortie->getNbInscriptionsMax()
+        ) {
+            return true;
+        }
+        return false;
+    }
 
     public function updateToClosed(Sortie $sortie)
     {
@@ -69,48 +103,51 @@ class EtatSortieUpdate
 
         if ($sortie->getEtat()->getCode() === "O" &&
             $sortie->getDateLimiteInscription() <= $now &&
-            $sortie->getEtat()->getCode() !== "CLO" &&
-            $sortie->getDateHeureDebut() > $now
+            $sortie->getCode() !== "CLO" &&
+            $sortie->getDateHeureDebut() < $now ||
+            sizeof($sortie->getLstParticipant()) >= $sortie->getNbInscriptionsMax()
         ) {
             return true;
         }
         return false;
     }
 
-    public function updateToOngoingActivity(Sortie $sortie)
+    public function updateToOngoingActivity($sortie)
     {
         $now = new \DateTime();
+        $BegingDateSortie = $sortie->getDateHeureDebut();
 
         if ($sortie->getEtat()->getCode() === "CLO" &&
             $sortie->getEtat()->getCode() !== "AEC" &&
             $sortie->getDateHeureDebut() < $now &&
-            $sortie->getDateLimiteInscription()->modify($sortie->getDuree() . ' minutes') >= $now
+            $BegingDateSortie->modify($sortie->getDuree() . ' minutes') > $now
         ) {
             return true;
         }
         return false;
     }
 
-    public function updateToEndActivity(Sortie $sortie)
+    public function updateToEndActivity($sortie)
     {
         $now = new \DateTime();
+        $BegingDateSortie = $sortie->getDateHeureDebut();
 
         if ($sortie->getEtat()->getCode() === "AEC" &&
             $sortie->getEtat()->getCode() !== "AT" &&
-            $sortie->getDateLimiteInscription()->modify($sortie->getDuree() . ' minutes') < $now
+            $BegingDateSortie->modify($sortie->getDuree() . ' minutes') < $now
         ) {
             return true;
         }
         return false;
     }
 
-    public function updateToArchivedActivitiy(Sortie $sortie)
+    public function updateToArchivedActivitiy($sortie)
     {
         $ArchivedActivitiyDate = new \DateTime('-1 month');
-        $endActivityDate = $sortie->getDateLimiteInscription()->modify($sortie->getDuree() . ' minutes');
+        $BegingDateSortie = $sortie->getDateHeureDebut()->modify($sortie->getDuree() . ' minutes');
 
         if ($sortie->getEtat()->getCode() !== "AH" &&
-            $endActivityDate < $ArchivedActivitiyDate
+            $BegingDateSortie < $ArchivedActivitiyDate
         ) {
             return true;
         }

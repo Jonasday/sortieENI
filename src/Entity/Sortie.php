@@ -53,7 +53,7 @@ class Sortie
     private $infosSortie;
 
 
-    #[ORM\ManyToOne(targetEntity: Participant::class, inversedBy: 'ldtSortieOrganise')]
+    #[ORM\ManyToOne(targetEntity: Participant::class, inversedBy: 'lstSortieOrganise')]
     #[ORM\JoinColumn(nullable: false)]
     private $organisateur;
     
@@ -193,9 +193,6 @@ class Sortie
         return $this;
     }
 
-
-
-
     public function getEtat(): ?Etat
     {
         return $this->etat;
@@ -232,6 +229,16 @@ public function getLstParticipant(): Collection
 {
     return $this->lstParticipant;
 }
+
+    /**
+     * @param ArrayCollection $lstParticipant
+     * @return Sortie
+     */
+    public function setLstParticipant(ArrayCollection $lstParticipant): Sortie
+    {
+        $this->lstParticipant = $lstParticipant;
+        return $this;
+    }
 
 public function addLstParticipant(Participant $lstParticipant): self
 {

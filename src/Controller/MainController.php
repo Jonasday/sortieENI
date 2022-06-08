@@ -22,7 +22,7 @@ class MainController extends AbstractController
     public function home(Request $request, EtatSortieUpdate $etatSortieUpdate, SortieRepository $sortieRepository, EtatRepository $etatRepository  ): Response
     {
         // Mise a jour des etat
-//        $etatSortieUpdate->update();
+        $etatSortieUpdate->update();
 
         $search = new Search();
         $currentuser = $this->getUser();
