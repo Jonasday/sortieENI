@@ -230,6 +230,16 @@ public function getLstParticipant(): Collection
     return $this->lstParticipant;
 }
 
+    /**
+     * @param ArrayCollection $lstParticipant
+     * @return Sortie
+     */
+    public function setLstParticipant(ArrayCollection $lstParticipant): Sortie
+    {
+        $this->lstParticipant = $lstParticipant;
+        return $this;
+    }
+
 public function addLstParticipant(Participant $lstParticipant): self
 {
     if (!$this->lstParticipant->contains($lstParticipant)) {
