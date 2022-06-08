@@ -20,6 +20,8 @@ header {
 .bigLogo {
     max-height: 150px;
     max-width: 150px;
+    margin-top: 15px;
+    margin-left: 15px;
 }
 
 footer {
@@ -65,4 +67,9 @@ text-align: center;
 img {
     width: 200px;
     object-fit: cover;
+}
+
+.container_photo {
+    display: flex;
+    justify-content: center;
 }
