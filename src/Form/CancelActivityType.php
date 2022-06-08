@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Sortie;
+use App\Form\Model\CancelSortie;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -23,7 +24,6 @@ class CancelActivityType extends AbstractType
             ])
             ->add('motif', TextareaType::class, [
                 'label' => 'Motif :',
-                'mapped'=> false,
                 'attr' => [
                     'placeholder' => 'Pourquoi souhaitez-vous annuler votre sortie ?'
                 ]
@@ -34,7 +34,7 @@ class CancelActivityType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Sortie::class,
+            'data_class' => CancelSortie::class,
         ]);
     }
 }
