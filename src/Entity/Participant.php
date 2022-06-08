@@ -38,8 +38,6 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'organisateur', targetEntity: Sortie::class, orphanRemoval: true)]
     private $lstSortieOrganise;
 
-
-
     #[ORM\ManyToOne(targetEntity: Campus::class, inversedBy: 'lstParticipant')]
     #[ORM\JoinColumn(nullable: false)]
     private $campus;
@@ -219,7 +217,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->lstSortieOrganise;
     }
 
-    public function addLdtSortieOrganise(Sortie $lstSortieOrganise): self
+    public function addLstSortieOrganise(Sortie $lstSortieOrganise): self
     {
         if (!$this->lstSortieOrganise->contains($lstSortieOrganise)) {
             $this->lstSortieOrganise[] = $lstSortieOrganise;

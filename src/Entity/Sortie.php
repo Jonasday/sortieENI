@@ -53,7 +53,7 @@ class Sortie
     private $infosSortie;
 
 
-    #[ORM\ManyToOne(targetEntity: Participant::class, inversedBy: 'ldtSortieOrganise')]
+    #[ORM\ManyToOne(targetEntity: Participant::class, inversedBy: 'lstSortieOrganise')]
     #[ORM\JoinColumn(nullable: false)]
     private $organisateur;
     
