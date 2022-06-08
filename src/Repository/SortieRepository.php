@@ -45,7 +45,9 @@ class SortieRepository extends ServiceEntityRepository
     public function customQuerryUpdate()
     {
         $queryBuilder = $this->createQueryBuilder('sortie')
-            ->select('sortie', 'etat')
+            ->addSelect('sortie', 'etat','participant','organisateur')
+            ->join('sortie.lstParticipant', 'participant')
+            ->join('sortie.organisateur', 'organisateur')
             ->innerJoin('sortie.etat','etat');
 
         $query = $queryBuilder->getQuery();
@@ -63,8 +65,7 @@ class SortieRepository extends ServiceEntityRepository
         ->join('sortie.lstParticipant', 'participant')
         ->join('sortie.campus', 'campus')
         ->join('sortie.lieu', 'lieu')
-        ->join('sortie.etat', 'etat')
-        ;
+        ->join('sortie.etat', 'etat');
 
         if ($search->getCampus()){
             $queryBuilder->andWhere('sortie.campus = :campus' )

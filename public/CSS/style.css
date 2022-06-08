@@ -73,3 +73,8 @@ img {
     display: flex;
     justify-content: center;
 }
+
+.MDP{
+    display: flex;
+    border: 1px solid black;
+}
