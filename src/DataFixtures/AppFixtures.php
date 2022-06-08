@@ -187,20 +187,6 @@ class AppFixtures extends Fixture
             $manager->flush();
         }
 
-    public function SortieInscription(ObjectManager $manager):void{
-
-        $participant = $manager->getRepository(Participant::class)->findAll();
-        $sortie = $manager->getRepository(Sortie::class)->findAll();
-
-        for ($q=1; $q <= 20; $q++){
-            $sortieInscription = new SortieInscription();
-            $sortieInscription->setSortie($this->faker->randomElement($sortie));
-            $sortieInscription->setParticipant($this->faker->randomElement($participant));
-            $manager->persist($sortieInscription);
-            }
-        $manager->flush();
-    }
-
     public function Admin(ObjectManager $manager): void
     {
         $campus = $manager->getRepository(Campus::class)->findAll();
