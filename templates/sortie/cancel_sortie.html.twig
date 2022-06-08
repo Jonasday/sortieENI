@@ -11,7 +11,9 @@
             <p>Date de la sortie : {{ sortie.dateHeureDebut|date("H:i d M y") }}</p>
             <p>Campus : {{ sortie.Campus.nom }}</p>
             <p>Lieu : {{ sortie.Lieu.nom }}</p>
-{#            <p>Motif : <textarea id="motif">{{ sortie.infosSortie }}</textarea></p>#}
+            <label for="motif">Motif : </label>
+            <textarea id="motif" name="motif" placeholder="Pourquoi souhaitez-vous annuler votre sortie ?" required></textarea>
+
         </div>
 
         {% block buttons %}
