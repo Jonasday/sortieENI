@@ -72,7 +72,7 @@
                                     {% endif %}
 
                                     {% if app.user == item.organisateur and item.etat.code == 'CREA' %}
-                                        <a href="{{ path("modify_sortie", {'id':item.id}) }}">Modifier</a>
+                                        <a href="{{ path("modify_sortie", {'id':item.id}) }}">Modifier</a> - Publier
                                     {% endif %}
 
                                     {% if  app.user not in item.lstParticipant and item.etat.code == 'O' and app.user != item.organisateur and item.lstParticipant | length < item.nbInscriptionsMax %}

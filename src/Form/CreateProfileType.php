@@ -57,12 +57,12 @@ class  CreateProfileType extends AbstractType
                 'label' => 'Mot de passe : ',
                 'first_options' => [
 
-
+                    'label' => ' ',
                     'help' => 'Le mot de passe doit contenir au minimum 8 caractères dont une minuscule, une majuscule, un chiffre et un caractère spécial.',
                 ],
 
                 'second_options' => [
-                    'label' => 'Confirmation du mot de passe :',
+                    'label' => ' ',
                 ],
                 'mapped' => false,
 
