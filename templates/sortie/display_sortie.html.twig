@@ -112,7 +112,7 @@
                         <tbody> <!-- Corps du tableau -->
                         {% for friend in lstParticipant %}
                             <tr>
-                                <td>{{ friend.pseudo }}</td>
+                                <td><a href="{{ path("profil_research", {'id':friend.id}) }}">{{ friend.pseudo }}</a></td>
                                 <td>{{ friend.nom }}</td>
                             </tr>
                         {% endfor %}
