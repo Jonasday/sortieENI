@@ -10,6 +10,7 @@ use App\Entity\Sortie;
 use App\Entity\Ville;
 use App\Repository\VilleRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Generator;
 use Faker\Factory;
@@ -178,7 +179,8 @@ class AppFixtures extends Fixture
                     ->setEtat($this->faker->randomElement($etat))
                     ->setLieu($this->faker->randomElement($lieu))
                     ->setCampus($this->faker->randomElement($campus))
-                    ->setOrganisateur($this->faker->randomElement($participant));
+                    ->setOrganisateur($this->faker->randomElement($participant))
+                    ->setLstParticipant(new ArrayCollection($this->faker->randomElements($participant,$sortie->getNbInscriptionsMax()-1)));
 
                 $manager->persist($sortie);
             }
