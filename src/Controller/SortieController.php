@@ -120,19 +120,17 @@ class SortieController extends AbstractController
     {
         $sortie = $sortieRepository->find($id);
 
-        $form = $this->createForm(cancelActivityType::class, $sortie);
+        $form = $this->createForm(cancelActivityType::class);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             if ($form->get('delete')->isClicked()) {
-                $etatRepository->findOneBy(['code' => 'AN']);
                 $sortie->removeLstParticipant($this->getUser());
                 $motif = $form->getData();
-                dump($motif);
-                $sortie->setInfosSortie($sortie->getInfosSortie());
-
+                $sortie->setInfosSortie($sortie->getInfosSortie().' ##SORTIE ANNULEE## '.$motif->getMotif());
+                $sortie->setEtat($etatRepository->findOneBy(['code' => 'AN']));
                 $sortieRepository->add($sortie, true);
                 return $this->redirectToRoute('home');
            }
