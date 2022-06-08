@@ -115,17 +115,17 @@ class SortieController extends AbstractController
     {
         $sortie = $sortieRepository->find($id);
 
-        $form = $this->createForm(cancelActivityType::class, $sortie);
+//        $form = $this->createForm(cancelActivityType::class, $sortie);
 
-        $form->handleRequest($request);
+//        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+//        if ($form->isSubmitted() && $form->isValid()) {
 
-            if ($form->get('delete')->isClicked()) {
+//            if ($form->get('delete')->isClicked()) {
                 $sortieRepository->remove($sortie, true);
                 return $this->redirectToRoute('home');
-            }
-        }
+//            }
+//        }
 
         return $this->render('sortie/cancel_sortie.html.twig', [
             'controller_name' => 'SortieController',
@@ -140,6 +140,8 @@ class SortieController extends AbstractController
     public function desistActivity($id, SortieRepository $sortieRepository): Response
     {
         $sortie = $sortieRepository->find($id);
+        $sortie->removeLstParticipant($this->getUser());
+        $sortieRepository->add($sortie, true);
 
         return $this->render('sortie/desist_sortie.html.twig', [
             'controller_name' => 'SortieController',
@@ -153,6 +155,8 @@ class SortieController extends AbstractController
     public function registerToActivity($id, SortieRepository $sortieRepository): Response
     {
         $sortie = $sortieRepository->find($id);
+        $sortie->addLstParticipant($this->getUser());
+        $sortieRepository->add($sortie, true);
 
         return $this->render('sortie/register_sortie.html.twig', [
             'controller_name' => 'SortieController',

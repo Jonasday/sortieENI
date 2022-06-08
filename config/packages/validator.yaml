@@ -1,7 +1,12 @@
 framework:
     validation:
         email_validation_mode: html5
-
+#        App\Entity\Sortie:
+#            properties:
+#                dateHeureDebut:
+#                    - GreaterThan: today
+#                dateLimiteInscription:
+#                    - GreaterThanOrEqual: dateHeureDebut
         # Enables validator auto-mapping support.
         # For instance, basic validation constraints will be inferred from Doctrine's metadata.
         #auto_mapping:
@@ -11,3 +16,4 @@ when@test:
     framework:
         validation:
             not_compromised_password: false
+
