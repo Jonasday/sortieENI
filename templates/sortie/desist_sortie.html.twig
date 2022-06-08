@@ -9,7 +9,7 @@
         <p>Lieu : {{ sortie.Lieu.nom }}</p>
         <p>Campus : {{ sortie.Campus.nom }}</p>
 
-        <button type="button" class="btn btn-success" name="home">Retourner à l'accueil</button>
+        <a href="{{ path("home") }}"><button type="button" class="btn btn-success" name="home">Retourner à l'accueil</button></a>
     </div>
 
 {% endblock %}

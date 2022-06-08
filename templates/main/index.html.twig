@@ -28,9 +28,9 @@
                 </thead>
 
                 <tbody> <!-- Corps du tableau -->
-                {% for item in sorties %}
+                {% for item in lstsorties %}
                     <tr>
-                        {% if item.etat.code != 'AH' %}
+                        {% if item.etat.code != 'AH' and item.etat.code != 'AN'%}
                             <td>{{ item.nom }}</td>
                             <td>{{ item.dateHeureDebut|date('H:i d M Y ') }}</td>
                             <td>{{ item.dateLimiteInscription|date(' d M Y ') }}</td>
@@ -48,11 +48,11 @@
                             </td>
 
                             <td>
-                                {% if app.user != item.organisateur %}
+                                {% if app.user != item.organisateur%}
                                     <a href="{{ path("display_sortie", {'id':item.id}) }}">Afficher</a>
                                 {% endif %}
 
-                                {% if app.user in item.lstParticipant and app.user != item.organisateur and item.etat.code == 'AT' %}
+                                {% if app.user in item.lstParticipant and app.user != item.organisateur and item.etat.code != 'AEC' and item.etat.code != 'AT' %}
                                     <a href="{{ path("desist_sortie", {'id':item.id}) }}">Se désister</a>
                                 {% endif %}
 
@@ -60,7 +60,7 @@
                                     <a href="{{ path("modify_sortie", {'id':item.id}) }}">Modifier</a>
                                 {% endif %}
 
-                                {% if  app.user not in item.lstParticipant and item.etat.code == 'O' and app.user != item.organisateur %}
+                                {% if  app.user not in item.lstParticipant and item.etat.code == 'O' and app.user != item.organisateur and item.lstParticipant | length < item.nbInscriptionsMax%}
                                     <a href="{{ path("register_sortie", {'id':item.id}) }}">S'inscrire</a>
                                 {% endif %}
 

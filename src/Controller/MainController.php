@@ -22,7 +22,7 @@ class MainController extends AbstractController
     public function home(Request $request, EtatSortieUpdate $etatSortieUpdate, SortieRepository $sortieRepository, EtatRepository $etatRepository  ): Response
     {
         // Mise a jour des etat
-        $etatSortieUpdate->update();
+//        $etatSortieUpdate->update();
 
         $search = new Search();
         $currentuser = $this->getUser();
@@ -31,7 +31,7 @@ class MainController extends AbstractController
         $form = $this->createForm(FiltreSortieType::class, $search);
 
         //Envoie de toutes les sortie par défault
-        $sortieArray = $sortieRepository->filterFormCustomQuery($search,$currentuser,$etatRepository);
+        $sorties = $sortieRepository->filterFormCustomQuery($search,$currentuser,$etatRepository);
 
 
         // Hydrater $search avec le retour de la requête de type POST
@@ -41,13 +41,13 @@ class MainController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
 
             //Appeler la classe et la fonction pour le filtreSortie
-            $sortieArray = $sortieRepository->filterFormCustomQuery($search,$currentuser,$etatRepository);
+            $sorties = $sortieRepository->filterFormCustomQuery($search,$currentuser,$etatRepository);
 
         }
 
         return $this->render('main/index.html.twig', [
             'form' => $form->createView(),
-            'sorties' => $sortieArray,
+            'lstsorties' => $sorties,
 
         ]);
     }

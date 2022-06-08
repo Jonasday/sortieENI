@@ -25,9 +25,11 @@
         <div class="row">
             <div class="col-md-3">
                 {{ form_label(form.dateHeureDebut) }}
+
             </div>
             <div class="col-md-3">
                 {{ form_widget(form.dateHeureDebut) }}<br>
+                {{ form_errors(form.dateHeureDebut) }}
             </div>
             <div class="col-md-3">
                 {{ form_label(form.ville) }}
@@ -44,6 +46,7 @@
             </div>
             <div class="col-md-3">
                 {{ form_widget(form.dateLimiteInscription) }}<br>
+                {{ form_errors(form.dateLimiteInscription) }}
             </div>
             <div class="col-md-3">
                 {{ form_label(form.lieu) }}
@@ -60,6 +63,7 @@
             </div>
             <div class="col-md-3">
                 {{ form_widget(form.nbInscriptionsMax) }}<br>
+                {{ form_errors(form.nbInscriptionsMax) }}
             </div>
             <div class="col-md-3">
                 {{ form_label(form.rue) }}
@@ -77,12 +81,14 @@
             </div>
             <div class="col-md-3">
                 {{ form_widget(form.duree) }}<br>
+                {{ form_errors(form.duree) }}
             </div>
             <div class="col-md-3">
                 {{ form_label(form.codePostal) }}
             </div>
             <div class="col-md-3">
                 {{ form_widget(form.codePostal) }}<br>
+                {{ form_errors(form.codePostal) }}
                 <br>
             </div>
         </div>
@@ -93,12 +99,14 @@
             </div>
             <div class="col-md-3">
                 {{ form_widget(form.infosSortie) }}<br>
+                {{ form_errors(form.infosSortie) }}
             </div>
             <div class="col-md-3">
                 {{ form_label(form.latitude) }}
             </div>
             <div class="col-md-3">
                 {{ form_widget(form.latitude) }}<br>
+                {{ form_errors(form.latitude) }}
                 <br>
             </div>
         </div>
@@ -108,6 +116,7 @@
                 {{ form_label(form.longitude) }}
                 <div class="col-md-3 offset-md-9">
                     {{ form_widget(form.longitude) }}<br>
+                    {{ form_errors(form.longitude) }}
                 </div>
             </div>
         </div>
