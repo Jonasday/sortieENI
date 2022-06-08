@@ -28,9 +28,6 @@ class CreateActivityType extends AbstractType
             ->add('nom', TextType::class, [
                 'label' => 'Nom de la sortie : ',
                 'required' => true,
-                'constraints' => [
-                    new NotBlank(),
-                    new Regex('/[0-9]{3,}[a-zA-Z]{7,}/')]
                 ])
             ->add('dateHeureDebut', DateTimeType::class, [
                 'label' => 'Date et heure de la sortie : ',
