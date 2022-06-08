@@ -171,14 +171,14 @@ class AppFixtures extends Fixture
 
             for ($x=1; $x <= 30; $x++){
                 $sortie = new Sortie();
-                $duree = $this->faker->numberBetween(10, 50);
-                $debut = $this->faker->dateTimeBetween('-5 months');
-                $debutPlusDuree = $debut->modify('- 5 days');
+                $duree = $this->faker->numberBetween(10, 60);
+                $debut = $this->faker->dateTimeBetween('-1 months', '+2 week');
+                $debutDeFin = $debut->modify('- 5 days');
 
                 $sortie->setNom($this->faker->randomElement($tableSortie))
                     ->setDateHeureDebut($debut)
                     ->setDuree($duree)
-                    ->setDateLimiteInscription($this->faker->dateTimeBetween($startDate = $debutPlusDuree, $endDate = $debut))
+                    ->setDateLimiteInscription($this->faker->dateTimeBetween($startDate = $debutDeFin, $endDate = $debut->modify('- 1 days')))
                     ->setNbInscriptionsMax($this->faker->numberBetween(0,20))
                     ->setInfosSortie(join(" ", $this->faker->words(10)))
                     ->setEtat($this->faker->randomElement($etat))

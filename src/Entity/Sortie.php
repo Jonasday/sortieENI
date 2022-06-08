@@ -34,7 +34,7 @@ class Sortie
 
     /**
      * @Assert\LessThanOrEqual(propertyPath="dateHeureDebut", message="La date de clôture des inscriptions doit être avant le début de la sortie !")
-     * @Assert\GreaterThanOrEqual("today", message="La date de clôture des inscriptions ne peut être antérieure à aujourd'hui !")
+     * @Assert\GreaterThan("today", message="La date de clôture des inscriptions ne peut être antérieure à aujourd'hui !")
      */
     #[ORM\Column(type: 'datetime')]
     private $dateLimiteInscription;

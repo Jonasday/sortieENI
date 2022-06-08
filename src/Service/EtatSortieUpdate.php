@@ -87,7 +87,7 @@ class EtatSortieUpdate
         $now = new \DateTime();
 
         if ($sortie->getEtat()->getCode() === "CLO" &&
-            $sortie->getDateLimiteInscription() >= $now &&
+            $sortie->getDateLimiteInscription() > $now &&
             $sortie->getEtat()->getCode() !== "O" &&
             $sortie->getDateHeureDebut() > $now &&
             sizeof($sortie->getLstParticipant()) < $sortie->getNbInscriptionsMax()
@@ -103,8 +103,7 @@ class EtatSortieUpdate
 
         if ($sortie->getEtat()->getCode() === "O" &&
             $sortie->getDateLimiteInscription() <= $now &&
-            $sortie->getEtat() !== "CLO" &&
-            $sortie->getDateHeureDebut() < $now ||
+            $sortie->getEtat()->getCode() !== "CLO" ||
             sizeof($sortie->getLstParticipant()) >= $sortie->getNbInscriptionsMax()
         ) {
             return true;
@@ -115,7 +114,7 @@ class EtatSortieUpdate
     public function updateToOngoingActivity($sortie)
     {
         $now = new \DateTime();
-        $BegingDateSortie = $sortie->getDateHeureDebut();
+        $BegingDateSortie = clone $sortie->getDateHeureDebut();
 
         if ($sortie->getEtat()->getCode() === "CLO" &&
             $sortie->getEtat()->getCode() !== "AEC" &&
@@ -130,7 +129,7 @@ class EtatSortieUpdate
     public function updateToEndActivity($sortie)
     {
         $now = new \DateTime();
-        $BegingDateSortie = $sortie->getDateHeureDebut();
+        $BegingDateSortie = clone $sortie->getDateHeureDebut();
 
         if ($sortie->getEtat()->getCode() === "AEC" &&
             $sortie->getEtat()->getCode() !== "AT" &&
@@ -143,11 +142,12 @@ class EtatSortieUpdate
 
     public function updateToArchivedActivitiy($sortie)
     {
+        $BegingDateSortie = clone $sortie->getDateHeureDebut();
         $ArchivedActivitiyDate = new \DateTime('-1 month');
-        $BegingDateSortie = $sortie->getDateHeureDebut()->modify($sortie->getDuree() . ' minutes');
+        $EndDateSortie = $BegingDateSortie->modify($sortie->getDuree() . ' minutes');
 
         if ($sortie->getEtat()->getCode() !== "AH" &&
-            $BegingDateSortie < $ArchivedActivitiyDate
+            $EndDateSortie < $ArchivedActivitiyDate
         ) {
             return true;
         }
