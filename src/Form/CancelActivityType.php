@@ -23,6 +23,7 @@ class CancelActivityType extends AbstractType
             ])
             ->add('motif', TextareaType::class, [
                 'label' => 'Motif :',
+                'mapped'=> false,
                 'attr' => [
                     'placeholder' => 'Pourquoi souhaitez-vous annuler votre sortie ?'
                 ]

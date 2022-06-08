@@ -67,7 +67,6 @@ class SortieController extends AbstractController
     {
         $sortie = $sortieRepository->find($id);
         $lstParticipant = $sortie->getLstParticipant();
-        dump($sortie);
 
         return $this->render('sortie/display_sortie.html.twig', [
             'id' => $id,
@@ -113,7 +112,7 @@ class SortieController extends AbstractController
 
     #Annuler une sortie
     #[Route('/cancel_sortie/{id}', name: 'cancel_sortie')]
-    public function cancelActivity($id, Request $request, SortieRepository $sortieRepository): Response
+    public function cancelActivity($id, Request $request, SortieRepository $sortieRepository, EtatRepository $etatRepository): Response
     {
         $sortie = $sortieRepository->find($id);
 
@@ -124,7 +123,13 @@ class SortieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             if ($form->get('delete')->isClicked()) {
-                $sortieRepository->remove($sortie, true);
+                $etatRepository->findOneBy(['code' => 'AN']);
+                $sortie->removeLstParticipant($this->getUser());
+                $motif = $form->getData();
+                dump($motif);
+                $sortie->setInfosSortie($sortie->getInfosSortie());
+
+                $sortieRepository->add($sortie, true);
            }
         }
 
