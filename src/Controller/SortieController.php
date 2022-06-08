@@ -130,6 +130,7 @@ class SortieController extends AbstractController
                 $sortie->setInfosSortie($sortie->getInfosSortie().' ##SORTIE ANNULEE## '.$motif->getMotif());
                 $sortie->setEtat($etatRepository->findOneBy(['code' => 'AN']));
                 $sortieRepository->add($sortie, true);
+                return $this->redirectToRoute('home');
            }
         }
 
