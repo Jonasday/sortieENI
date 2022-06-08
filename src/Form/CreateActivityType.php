@@ -122,25 +122,25 @@ class CreateActivityType extends AbstractType
                     ]
             ]);
 
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-
-            function (FormEvent $event) {
-                $form = $event->getForm();
-
-                // this would be your entity, i.e. SportMeetup
-                $data = $event->getData();
-
-                $ville = $data->getVille();
-                $lieux = null === $ville ? [] : $ville->getLstLieu();
-
-                $form->add('lieu', EntityType::class, [
-                    'class' => Lieu::class,
-                    'placeholder' => 'Choisir un lieu...',
-                    'choices' => $lieux,
-                ]);
-            }
-        );
+//        $builder->addEventListener(
+//            FormEvents::PRE_SET_DATA,
+//
+//            function (FormEvent $event) {
+//                $form = $event->getForm();
+//
+//                // this would be your entity, i.e. SportMeetup
+//                $data = $event->getData();
+//
+//                $ville = $data->getVille();
+//                $lieux = null === $ville ? [] : $ville->getLstLieu();
+//
+//                $form->add('lieu', EntityType::class, [
+//                    'class' => Lieu::class,
+//                    'placeholder' => 'Choisir un lieu...',
+//                    'choices' => $lieux,
+//                ]);
+//            }
+//        );
     }
 
     public function configureOptions(OptionsResolver $resolver): void

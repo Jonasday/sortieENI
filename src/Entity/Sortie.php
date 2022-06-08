@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\SortieRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -55,14 +56,7 @@ class Sortie
     #[ORM\ManyToOne(targetEntity: Participant::class, inversedBy: 'ldtSortieOrganise')]
     #[ORM\JoinColumn(nullable: false)]
     private $organisateur;
-
-    #[ORM\ManyToMany(targetEntity: Participant::class, mappedBy: 'lstSortie')]
-    private $lstParticipant;
-
-    public function __construct()
-    {
-        $this->lstParticipant = new ArrayCollection();
-    }
+    
 
     #[ORM\ManyToOne(targetEntity: Campus::class, inversedBy: 'lstSortie')]
     #[ORM\JoinColumn(nullable: false)]
@@ -77,6 +71,14 @@ class Sortie
     #[ORM\ManyToOne(targetEntity: Etat::class, inversedBy: 'lstSortie')]
     #[ORM\JoinColumn(nullable: false)]
     private $etat;
+
+    #[ORM\ManyToMany(targetEntity: Participant::class, inversedBy: 'lstSortie')]
+    private $lstParticipant;
+
+    public function __construct()
+    {
+        $this->lstParticipant = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -192,29 +194,7 @@ class Sortie
     }
 
 
-    public function getLstParticipant()
-    {
-        return $this->lstParticipant;
-    }
 
-    public function addLstParticipant(Participant $lstParticipant): self
-    {
-        if (!$this->lstParticipant->contains($lstParticipant)) {
-            $this->lstParticipant[] = $lstParticipant;
-            $lstParticipant->addLstSortie($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLstParticipant(Participant $lstParticipant): self
-    {
-        if ($this->lstParticipant->removeElement($lstParticipant)) {
-            $lstParticipant->removeLstSortie($this);
-        }
-
-        return $this;
-    }
 
     public function getEtat(): ?Etat
     {
@@ -244,5 +224,29 @@ class Sortie
 //
 //        return false;
 //    }
+
+/**
+ * @return Collection<int, Participant>
+ */
+public function getLstParticipant(): Collection
+{
+    return $this->lstParticipant;
+}
+
+public function addLstParticipant(Participant $lstParticipant): self
+{
+    if (!$this->lstParticipant->contains($lstParticipant)) {
+        $this->lstParticipant[] = $lstParticipant;
+    }
+
+    return $this;
+}
+
+public function removeLstParticipant(Participant $lstParticipant): self
+{
+    $this->lstParticipant->removeElement($lstParticipant);
+
+    return $this;
+}
 
 }

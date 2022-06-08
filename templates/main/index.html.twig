@@ -28,7 +28,7 @@
                 </thead>
 
                 <tbody> <!-- Corps du tableau -->
-                {% for item in sorties %}
+                {% for item in lstsorties %}
                     <tr>
                         {% if item.etat.code != 'AH' and item.etat.code != 'AN'%}
                             <td>{{ item.nom }}</td>

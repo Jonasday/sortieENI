@@ -38,6 +38,8 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'organisateur', targetEntity: Sortie::class, orphanRemoval: true)]
     private $lstSortieOrganise;
 
+
+
     #[ORM\ManyToOne(targetEntity: Campus::class, inversedBy: 'lstParticipant')]
     #[ORM\JoinColumn(nullable: false)]
     private $campus;
@@ -51,13 +53,14 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $image;
 
-    #[ORM\OneToMany(mappedBy: 'participant', targetEntity: SortieInscription::class)]
-    private $lstSortieInscrit;
+    #[ORM\ManyToMany(targetEntity: Sortie::class, mappedBy: 'lstParticipant')]
+    private $lstSortie;
 
     public function __construct()
     {
-        $this->lstSortieInscrit = new ArrayCollection();
+        $this->lstSortie = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -262,38 +265,32 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getLstSortieInscrit(): ?SortieInscription
+    /**
+     * @return Collection<int, Sortie>
+     */
+    public function getLstSortie(): Collection
     {
-        return $this->lstSortieInscrit;
+        return $this->lstSortie;
     }
 
-    public function setLstSortieInscrit(?SortieInscription $lstSortieInscrit): self
+    public function addLstSortie(Sortie $lstSortie): self
     {
-        $this->lstSortieInscrit = $lstSortieInscrit;
-
-        return $this;
-    }
-
-    public function addLstSortieInscrit(SortieInscription $lstSortieInscrit): self
-    {
-        if (!$this->lstSortieInscrit->contains($lstSortieInscrit)) {
-            $this->lstSortieInscrit[] = $lstSortieInscrit;
-            $lstSortieInscrit->setParticipant($this);
+        if (!$this->lstSortie->contains($lstSortie)) {
+            $this->lstSortie[] = $lstSortie;
+            $lstSortie->addLstParticipant($this);
         }
 
         return $this;
     }
 
-    public function removeLstSortieInscrit(SortieInscription $lstSortieInscrit): self
+    public function removeLstSortie(Sortie $lstSortie): self
     {
-        if ($this->lstSortieInscrit->removeElement($lstSortieInscrit)) {
-            // set the owning side to null (unless already changed)
-            if ($lstSortieInscrit->getParticipant() === $this) {
-                $lstSortieInscrit->setParticipant(null);
-            }
+        if ($this->lstSortie->removeElement($lstSortie)) {
+            $lstSortie->removeLstParticipant($this);
         }
 
         return $this;
     }
+
 
 }
