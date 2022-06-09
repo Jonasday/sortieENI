@@ -82,7 +82,13 @@ class SortieController extends AbstractController
     #[Route('/modify_sortie/{id}', name: 'modify_sortie')]
     public function modifyActivity($id, Request $request, SortieRepository $sortieRepository, EtatRepository $etatRepository): Response
     {
+
         $sortie = $sortieRepository->find($id);
+
+        if ($this->getUser() != $sortie->getOrganisateur())
+        {
+                throw $this->createNotFoundException("Vous ne pouvez pas modifier une sortie dont vous n'étes pas l'organisateur");
+        }
 
         $form = $this->createForm(createActivityType::class, $sortie);
 
@@ -105,6 +111,7 @@ class SortieController extends AbstractController
             }
 
         }
+
         return $this->render('sortie/modify_sortie.html.twig', [
             'controller_name' => 'SortieController',
             'form' => $form->createView(),
@@ -119,6 +126,11 @@ class SortieController extends AbstractController
     public function cancelActivity($id, Request $request, SortieRepository $sortieRepository, EtatRepository $etatRepository): Response
     {
         $sortie = $sortieRepository->find($id);
+
+        if ($this->getUser() != $sortie->getOrganisateur())
+        {
+            throw $this->createNotFoundException("Vous ne pouvez pas annuler une sortie dont vous n'étes pas l'organisateur");
+        }
 
         $form = $this->createForm(cancelActivityType::class);
 
@@ -149,6 +161,7 @@ class SortieController extends AbstractController
     public function desistActivity($id, SortieRepository $sortieRepository): Response
     {
         $sortie = $sortieRepository->find($id);
+
         $sortie->removeLstParticipant($this->getUser());
         $sortieRepository->add($sortie, true);
 
@@ -164,6 +177,12 @@ class SortieController extends AbstractController
     public function registerToActivity($id, SortieRepository $sortieRepository): Response
     {
         $sortie = $sortieRepository->find($id);
+
+        if ($sortie->getEtat()->getCode() == 'CLO' || $this->getUser() )
+        {
+            throw $this->createAccessDeniedException("Vous ne pouvez pas vous inscrire à une sortie clôturée");
+        }
+
         $sortie->addLstParticipant($this->getUser());
         $sortieRepository->add($sortie, true);
 

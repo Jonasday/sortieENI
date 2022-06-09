@@ -102,7 +102,6 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('user', $currentuser);
         }
 
-
         if ($search->isSortiePasse()){
             $etat = $etatRepository->findOneBy(['code' => 'AT']);
             $queryBuilder->andWhere('sortie.etat = :etat')
