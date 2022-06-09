@@ -20,7 +20,7 @@
 
         <br>
 
-        <div class="row">
+        <div class="blocProfile row">
             <div class="col-4 offset-md-3">
                 {{ form_label(form.pseudo) }}
             </div>
@@ -29,7 +29,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="blocProfile row">
             <div class="col-4 offset-md-3">
                 {{ form_label(form.prenom) }}
             </div>
@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="blocProfile row">
             <div class="col-4 offset-md-3">
                 {{ form_label(form.nom) }}
             </div>
@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="blocProfile row">
             <div class="col-4 offset-md-3">
                 {{ form_label(form.telephone) }}
             </div>
@@ -56,7 +56,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="blocProfile row">
             <div class="col-4 offset-md-3">
                 {{ form_label(form.email) }}
             </div>
@@ -65,7 +65,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="blocProfile row">
             <div class="MDP col-4 offset-md-3">
                 <p>Mot de passe :</p>
                 <p>Confirmation du mot de passe :</p>
@@ -76,7 +76,7 @@
             </div>
         </div>
         {# test #}
-        <div class="row">
+        <div class="blocProfile row">
             <div class="col-4 offset-md-3">
                 {{ form_label(form.campus) }}
             </div>
@@ -85,9 +85,12 @@
             </div>
         </div>
         <br>
-        <div class="row">
+        <div class="blocProfile row">
             <div class="col-4 offset-md-3">
-                {{ form_row(form.image) }}
+                {{ form_label(form.image) }}
+            </div>
+            <div class="col">
+                {{ form_widget(form.image) }} <br>
             </div>
         </div>
 

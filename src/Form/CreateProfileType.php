@@ -56,7 +56,6 @@ class  CreateProfileType extends AbstractType
                 'type' => PasswordType::class,
                 'label' => 'Mot de passe : ',
                 'first_options' => [
-
                     'label' => ' ',
                     'help' => 'Le mot de passe doit contenir au minimum 8 caractères dont une minuscule, une majuscule, un chiffre et un caractère spécial.',
                 ],

@@ -102,17 +102,17 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('user', $currentuser);
         }
 
-        if ($search->isSortiePasse()){
-            $etat = $etatRepository->findOneBy(['code' => 'AT']);
-            $queryBuilder->andWhere('sortie.etat = :etat')
-                ->setParameter('etat', $etat);
-        }
-
         // Permet de conditionner l'affichage des sortie en création. Je ne vois que les sorties en cours de création que je créée
         $etat = $etatRepository->findOneBy(['code' => 'CREA']);
         $queryBuilder->andWhere('sortie.organisateur != :user AND sortie.etat != :etat OR sortie.organisateur = :user')
             ->setParameter('etat', $etat)
             ->setParameter('user', $currentuser);
+
+        if ($search->isSortiePasse()){
+            $etat = $etatRepository->findOneBy(['code' => 'AT']);
+            $queryBuilder->andWhere('sortie.etat = :etat')
+                ->setParameter('etat', $etat);
+        }
 
         $query = $queryBuilder->getQuery();
         return $query->getResult();

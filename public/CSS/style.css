@@ -78,3 +78,26 @@ img {
     display: flex;
     justify-content: center;
 }
+
+.MDP{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 125px;
+}
+
+.blocProfile{
+    margin-bottom: 15px;
+}
+
+.help-text{
+
+    font-style: italic;
+}
+
+
+thead tr {
+    background-color: grey;
+    color: #fff;
+    text-align: center;
+}
