@@ -250,7 +250,7 @@ class AppFixtures extends Fixture
             ->setActif($this->faker->boolean($chanceOfGettingTrue = 50))
             ->setCampus($this->faker->randomElement($campus))
             ->setPseudo("Arthur")
-            ->setImage('Avatar.jpg')
+            ->setImage('Sans-titre-629a054518e36.png')
             ->setPassword(
                 $this->hasher->hashPassword(
                     $admin,
