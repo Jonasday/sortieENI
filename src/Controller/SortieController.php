@@ -94,8 +94,8 @@ class SortieController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        if ($this->getUser() != $sortie->getOrganisateur())
-        {
+        if ($this->getUser() != $sortie->getOrganisateur()){
+
                 throw $this->createAccessDeniedException("Vous ne pouvez pas modifier une sortie dont vous n'étes pas l'organisateur");
         }
 
