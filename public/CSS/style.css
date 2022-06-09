@@ -101,3 +101,19 @@ thead tr {
     color: #fff;
     text-align: center;
 }
+
+.texteError{
+
+    text-align: center;
+
+
+}
+.redirectHome{
+    text-decoration: underline mediumspringgreen;
+
+}
+
+.redirectHome:hover{
+    color: mediumspringgreen;
+    font-weight: bolder;
+}

@@ -68,7 +68,7 @@ class ProfilController extends AbstractController
         $profil=$participantRepository->find($id);
 
         if(!$profil){
-            throw $this->createNotFoundException("Le profile recherché n'existe pas");
+            throw $this->createNotFoundException();
         }
 
         return $this->render('profil/research_other_profiles.html.twig', [

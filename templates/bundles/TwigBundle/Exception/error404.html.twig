@@ -1,0 +1,12 @@
+{# templates/bundles/TwigBundle/Exception/error404.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Page non trouvée</h2>
+    <div class="texteError">
+        <p>
+            La page demandée n'a pas pu être localisée. Vérifiez l'absence de toute URL
+            mal orthographiée ou <a class="redirectHome" href="{{ path('home') }}">return to the homepage</a>.
+        </p>
+    </div>
+{% endblock %}

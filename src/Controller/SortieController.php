@@ -68,6 +68,11 @@ class SortieController extends AbstractController
     public function displayActivity($id, SortieRepository $sortieRepository): Response
     {
         $sortie = $sortieRepository->find($id);
+
+        if ($sortie == null){
+            throw $this->createNotFoundException();
+        }
+
         $lstParticipant = $sortie->getLstParticipant();
 
         return $this->render('sortie/display_sortie.html.twig', [
@@ -85,9 +90,13 @@ class SortieController extends AbstractController
 
         $sortie = $sortieRepository->find($id);
 
+        if ($sortie == null){
+            throw $this->createNotFoundException();
+        }
+
         if ($this->getUser() != $sortie->getOrganisateur())
         {
-                throw $this->createNotFoundException("Vous ne pouvez pas modifier une sortie dont vous n'étes pas l'organisateur");
+                throw $this->createAccessDeniedException("Vous ne pouvez pas modifier une sortie dont vous n'étes pas l'organisateur");
         }
 
         $form = $this->createForm(createActivityType::class, $sortie);
@@ -127,9 +136,13 @@ class SortieController extends AbstractController
     {
         $sortie = $sortieRepository->find($id);
 
+        if ($sortie == null){
+            throw $this->createNotFoundException();
+        }
+
         if ($this->getUser() != $sortie->getOrganisateur())
         {
-            throw $this->createNotFoundException("Vous ne pouvez pas annuler une sortie dont vous n'étes pas l'organisateur");
+            throw $this->createAccessDeniedException("Vous ne pouvez pas annuler une sortie dont vous n'étes pas l'organisateur");
         }
 
         $form = $this->createForm(cancelActivityType::class);
@@ -162,6 +175,15 @@ class SortieController extends AbstractController
     {
         $sortie = $sortieRepository->find($id);
 
+        if ($sortie == null){
+            throw $this->createNotFoundException();
+        }
+
+        if (!in_array($this->getUser(), $sortie->getLstParticipant()))
+        {
+            throw $this->createAccessDeniedException("Vous ne pouvez pas vous désinscrire d'une sortie à laquelle vous n'êtes pas inscrit");
+        }
+
         $sortie->removeLstParticipant($this->getUser());
         $sortieRepository->add($sortie, true);
 
@@ -176,11 +198,16 @@ class SortieController extends AbstractController
     #[Route('/register_sortie/{id}', name: 'register_sortie')]
     public function registerToActivity($id, SortieRepository $sortieRepository): Response
     {
-        $sortie = $sortieRepository->find($id);
 
-        if ($sortie->getEtat()->getCode() == 'CLO' || $this->getUser() )
+            $sortie = $sortieRepository->find($id);
+
+        if ($sortie == null){
+            throw $this->createNotFoundException("La sortie recherchée n'existe pas");
+        }
+
+        if ($sortie->getEtat()->getCode() == 'CLO' || in_array($this->getUser(), $sortie->getLstParticipant()))
         {
-            throw $this->createAccessDeniedException("Vous ne pouvez pas vous inscrire à une sortie clôturée");
+            throw $this->createAccessDeniedException("Vous ne pouvez pas vous inscrire à une sortie clôturée ou dans laquelle vous êtes déjà inscrit");
         }
 
         $sortie->addLstParticipant($this->getUser());
